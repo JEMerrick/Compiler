@@ -1,16 +1,17 @@
-#ifndef ast_unary_hpp
-#define ast_unary_hpp
+#ifndef H_UNARY
+#define H_UNARY
 
 #include <string>
 #include <iostream>
 
+
 class Unary
-    : public Expression
+    : public Base
 {
 private:
-    ExpressionPtr expr;
+    BasePtr expr;
 protected:
-    Unary(const ExpressionPtr _expr)
+    Unary(const BasePtr _expr)
         : expr(_expr)
     {}
 public:
@@ -21,7 +22,7 @@ public:
 
     virtual const char *getOpcode() const =0;
 
-    ExpressionPtr getExpr() const
+    BasePtr getExpr() const
     { return expr; }
 
     virtual void print(std::ostream &dst) const override
@@ -38,7 +39,7 @@ class NegOperator
     : public Unary
 {
 public:
-    NegOperator(const ExpressionPtr _expr)
+    NegOperator(const BasePtr _expr)
         : Unary(_expr)
     {}
 

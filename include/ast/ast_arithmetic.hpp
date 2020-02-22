@@ -1,17 +1,15 @@
-#ifndef ast_functions_hpp
-#define ast_functions_hpp
-
-#include "ast_expression.hpp"
+#ifndef H_FUNC
+#define H_FUNC
 
 #include <cmath>
 
 class Function
-    : public Expression
+    : public Base
 {
 private:
-    ExpressionPtr arg;
+    BasePtr arg;
 protected:
-    Function(ExpressionPtr _arg)
+    Function(BasePtr _arg)
         : arg(_arg)
     {}
 public:
@@ -22,7 +20,7 @@ public:
 
     virtual const char * getFunction() const =0;
 
-    ExpressionPtr getArg() const
+    BasePtr getArg() const
     { return arg; }
 
     virtual void print(std::ostream &dst) const override
@@ -43,7 +41,7 @@ class LogFunction
     : public Function
 {
 public:
-    LogFunction(ExpressionPtr _arg)
+    LogFunction(BasePtr _arg)
         : Function(_arg)
     {}
 
@@ -62,7 +60,7 @@ class ExpFunction
     : public Function
 {
 public:
-    ExpFunction(ExpressionPtr _arg)
+    ExpFunction(BasePtr _arg)
         : Function(_arg)
     {}
 
@@ -81,7 +79,7 @@ class SqrtFunction
     : public Function
 {
 public:
-    SqrtFunction(ExpressionPtr _arg)
+    SqrtFunction(BasePtr _arg)
         : Function(_arg)
     {}
 

@@ -1,18 +1,18 @@
-#ifndef ast_operators_hpp
-#define ast_operators_hpp
+#ifndef H_OP
+#define H_OP
 
 #include <string>
 #include <iostream>
 #include <math.h>
 
 class Operator
-    : public Expression
+    : public Base
 {
 private:
-    ExpressionPtr left;
-    ExpressionPtr right;
+    BasePtr left;
+    BasePtr right;
 protected:
-    Operator(ExpressionPtr _left, ExpressionPtr _right)
+    Operator(BasePtr _left, BasePtr _right)
         : left(_left)
         , right(_right)
     {}
@@ -23,44 +23,34 @@ public:
         delete right;
     }
 
-    virtual const char *getOpcode() const =0;
-
-    ExpressionPtr getLeft() const
-    { return left; }
-
-    ExpressionPtr getRight() const
-    { return right; }
-
-    virtual void print(std::ostream &dst) const override
-    {
-        dst<<"( ";
-        left->print(dst);
-        dst<<" ";
-        dst<<getOpcode();
-        dst<<" ";
-        right->print(dst);
-        dst<<" )";
-    }
+    virtual void printMIPS (std::ostream &out) const{}
+    virtual void printC (std::ostream &out) const{}
+    virtual void printPy (std::ostream &out) const{}
 };
 
 class AddOperator
     : public Operator
 {
-protected:
-    virtual const char *getOpcode() const override
-    { return "+"; }
+
 public:
-    AddOperator(ExpressionPtr _left, ExpressionPtr _right)
+    AddOperator(BasePtr _left, BasePtr _right)
         : Operator(_left, _right)
     {}
     
-    virtual double evaluate(
-        const std::map<std::string,double> &bindings
-    ) const override 
-    {
-        double vl=getLeft()->evaluate(bindings);
-        double vr=getRight()->evaluate(bindings);
-        return vl+vr;
+    virtual void printMIPS (std::ostream &out) const override{
+        /*
+         Find a reg to put left into
+         Find a reg to put right into
+         printMIPS left
+         printMIPS right
+         ADDU DestReg, LREG, RREG
+         */
+    }
+    virtual void printC (std::ostream &out) const override{
+        out << "( " << left -> printC(out) << " + " << right -> printC(out) << " )";
+    }
+    virtual void printPy (std::ostream &out) const override{
+        
     }
 };
 
@@ -71,17 +61,24 @@ protected:
     virtual const char *getOpcode() const override
     { return "-"; }
 public:
-    SubOperator(ExpressionPtr _left, ExpressionPtr _right)
+    SubOperator(BasePtr _left, BasePtr _right)
         : Operator(_left, _right)
     {}
     
-    virtual double evaluate(
-        const std::map<std::string,double> &bindings
-    ) const override 
-    {
-        double vl=getLeft()->evaluate(bindings);
-        double vr=getRight()->evaluate(bindings);
-        return vl-vr;
+    virtual void printMIPS (std::ostream &out) const override{
+        /*
+         Find a reg to put left into
+         Find a reg to put right into
+         printMIPS left
+         printMIPS right
+         SUBU, DestReg, LREG, RREG
+         */
+    }
+    virtual void printC (std::ostream &out) const override{
+        out << "( " << left -> printC(out) << " - " << right -> printC(out) << " )";
+    }
+    virtual void printPy (std::ostream &out) const override{
+        
     }
 };
 
@@ -93,18 +90,24 @@ protected:
     virtual const char *getOpcode() const override
     { return "*"; }
 public:
-    MulOperator(ExpressionPtr _left, ExpressionPtr _right)
+    MulOperator(BasePtr _left, BasePtr _right)
         : Operator(_left, _right)
     {}
 
-    virtual double evaluate(
-        const std::map<std::string,double> &bindings
-    ) const override
-    {
-        double vl=getLeft()->evaluate(bindings);
-        double vr=getRight()->evaluate(bindings);
-        return vl*vr;
+    virtual void printMIPS (std::ostream &out) const override{
+        /*
+         Find a reg to put left into
+         Find a reg to put right into
+         printMIPS left
+         printMIPS right
+         some MIPS instructions
+         */
     }
+    virtual void printC (std::ostream &out) const override{
+        out << "( " << left -> printC(out) << " * " << right -> printC(out) << " )";
+    }
+    virtual void printPy (std::ostream &out) const override{
+        
 };
 
 class DivOperator
@@ -114,18 +117,24 @@ protected:
     virtual const char *getOpcode() const override
     { return "/"; }
 public:
-    DivOperator(ExpressionPtr _left, ExpressionPtr _right)
+    DivOperator(BasePtr _left, BasePtr _right)
         : Operator(_left, _right)
     {}
 
-    virtual double evaluate(
-        const std::map<std::string,double> &bindings
-    ) const override
-    {
-        double vl=getLeft()->evaluate(bindings);
-        double vr=getRight()->evaluate(bindings);
-        return vl/vr;
+    virtual void printMIPS (std::ostream &out) const override{
+        /*
+         Find a reg to put left into
+         Find a reg to put right into
+         printMIPS left
+         printMIPS right
+         some MIPS instructions
+         */
     }
+    virtual void printC (std::ostream &out) const override{
+        out << "( " << left -> printC(out) << " + " << right -> printC(out) << " )";
+    }
+    virtual void printPy (std::ostream &out) const override{
+        
 };
 
 class ExpOperator
@@ -135,7 +144,7 @@ protected:
     virtual const char *getOpcode() const override
     { return "^"; }
 public:
-    ExpOperator(ExpressionPtr _left, ExpressionPtr _right)
+    ExpOperator(BasePtr _left, BasePtr _right)
         : Operator(_left, _right)
     {}
 
