@@ -31,7 +31,11 @@ sqrt            { return T_SQRT; }
 auto            { return T_AUTO; }
 break           { return T_BREAK; }
 case            { return T_CASE; }
-char            { return T_CHAR; } 
+char            { return T_CHAR; }
+const           { return T_CONST; }
+continue        { return T_CONTINUE; }
+default         { return T_DEFAULT; }
+... is this what I'm supposed to do lmao
 
 [0-9]+([.][0-9]*)? { yylval.number=strtod(yytext, 0); return T_NUMBER; }
 [a-z]+          { yylval.string=new std::string(yytext); return T_VARIABLE; }
