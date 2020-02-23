@@ -9,7 +9,7 @@ extern "C" int fileno(FILE *stream);
 
 %%
 [*]             { return T_TIMES; }
-[/]             {return T_DIVIDE; }
+[/]             { return T_DIVIDE; }
 [+]             { return T_PLUS; }
 [\^]            { return T_EXPONENT; }
 [-]             { return T_MINUS; }
@@ -20,6 +20,18 @@ extern "C" int fileno(FILE *stream);
 log             { return T_LOG; }
 exp             { return T_EXP; }
 sqrt            { return T_SQRT; }
+
+[&]             { return T_AND; }
+[|]             { return T_OR; }
+[~]             { return T_XOR; }
+[<<]            { return T_LSHIFT; }
+[>>]            { return T_RSHIFT; }
+[%]             { return T_MOD; }
+
+[auto]          { return T_AUTO; }
+[break]         { return T_BREAK; }
+[case]          { return T_CASE; }
+[char]          { return T_CHAR; } 
 
 [0-9]+([.][0-9]*)? { yylval.number=strtod(yytext, 0); return T_NUMBER; }
 [a-z]+          { yylval.string=new std::string(yytext); return T_VARIABLE; }
