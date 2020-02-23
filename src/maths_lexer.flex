@@ -28,11 +28,6 @@ sqrt            { return T_SQRT; }
 [>>]            { return T_RSHIFT; }
 [%]             { return T_MOD; }
 
-[auto]          { return T_AUTO; }
-[break]         { return T_BREAK; }
-[case]          { return T_CASE; }
-[char]          { return T_CHAR; } 
-
 [0-9]+([.][0-9]*)? { yylval.number=strtod(yytext, 0); return T_NUMBER; }
 [a-z]+          { yylval.string=new std::string(yytext); return T_VARIABLE; }
 
