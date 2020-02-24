@@ -8,6 +8,17 @@ extern "C" int fileno(FILE *stream);
 %}
 
 %%
+
+"int"           { return T_INT; }
+"return"        { return T_RETURN; }
+
+[{]             { return T_LCURL; }
+[}]             { return T_RCURL; }
+[(]             { return T_LCURVE; }
+[)]             { return T_RCURVE; }
+
+
+
 [*]             { return T_TIMES; }
 [/]             { return T_DIVIDE; }
 [+]             { return T_PLUS; }
@@ -23,7 +34,7 @@ sqrt            { return T_SQRT; }
 
 [&]             { return T_AND; }
 [|]             { return T_OR; }
-[~]             { return T_XOR; }
+[^]             { return T_XOR; }
 [<<]            { return T_LSHIFT; }
 [>>]            { return T_RSHIFT; }
 [%]             { return T_MOD; }
@@ -35,7 +46,7 @@ char            { return T_CHAR; }
 const           { return T_CONST; }
 continue        { return T_CONTINUE; }
 default         { return T_DEFAULT; }
-... is this what I'm supposed to do lmao
+
 
 [0-9]+([.][0-9]*)? { yylval.number=strtod(yytext, 0); return T_NUMBER; }
 [a-z]+          { yylval.string=new std::string(yytext); return T_VARIABLE; }
