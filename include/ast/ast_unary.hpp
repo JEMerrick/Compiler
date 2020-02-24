@@ -20,19 +20,9 @@ public:
         delete expr;
     }
 
-    virtual const char *getOpcode() const =0;
-
-    BasePtr getExpr() const
-    { return expr; }
-
-    virtual void print(std::ostream &dst) const override
-    {
-        dst << "( ";
-        dst << getOpcode();
-        dst << " ";
-        expr->print(dst);
-        dst << " )";
-    }
+    virtual void printMIPS (std::ostream &out) const{}
+    virtual void printC (std::ostream &out) const{}
+    virtual void printPy (std::ostream &out) const{}
 };
 
 class NegOperator
@@ -43,16 +33,10 @@ public:
         : Unary(_expr)
     {}
 
-    virtual const char *getOpcode() const override
-    { return "-"; }
 
-    virtual double evaluate(
-        const std::map<std::string, double> &bindings
-    ) const override
-    {
-        double myNum = getExpr()->evaluate(bindings);
-        return -myNum;
-    }
+    virtual void printMIPS (std::ostream &out) const{}
+    virtual void printC (std::ostream &out) const{}
+    virtual void printPy (std::ostream &out) const{}
 };
 
 #endif
