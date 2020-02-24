@@ -36,12 +36,14 @@ public:
     BitAnd(BasePtr _left, BasePtr _right)
         : BitOp(_left, _right)
     {}
-    
+
     virtual void printMIPS (std::ostream &out) const override{
     }
     virtual void printC (std::ostream &out) const override{
+      out << "( " << (left -> printC(out)) << " & " << (right -> printC(out)) << " )";
     }
     virtual void printPy (std::ostream &out) const override{
+      out << "( " << (left -> printC(out)) << " & " << (right -> printC(out)) << " )";
     }
 };
 
@@ -53,12 +55,14 @@ public:
     BitOr(BasePtr _left, BasePtr _right)
         : BitOp(_left, _right)
     {}
-    
+
     virtual void printMIPS (std::ostream &out) const override{
     }
     virtual void printC (std::ostream &out) const override{
+      out << "( " << (left -> printC(out)) << " | " << (right -> printC(out)) << " )";
     }
     virtual void printPy (std::ostream &out) const override{
+      out << "( " << (left -> printC(out)) << " | " << (right -> printC(out)) << " )";
     }
 };
 
@@ -70,7 +74,7 @@ public:
     ExorOperator(BasePtr _left, BasePtr _right)
         : BitOp(_left, _right)
     {}
-    
+
     virtual void printMIPS (std::ostream &out) const override{
     }
     virtual void printC (std::ostream &out) const override{
@@ -87,7 +91,7 @@ public:
     LshiftOperator(BasePtr _left, BasePtr _right)
         : BitOp(_left, _right)
     {}
-    
+
     virtual void printMIPS (std::ostream &out) const override{
     }
     virtual void printC (std::ostream &out) const override{
@@ -104,7 +108,7 @@ public:
     RshiftOperator(BasePtr _left, BasePtr _right)
         : BitOp(_left, _right)
     {}
-    
+
     virtual void printMIPS (std::ostream &out) const override{
     }
     virtual void printC (std::ostream &out) const override{
