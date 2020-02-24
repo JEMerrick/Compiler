@@ -40,7 +40,7 @@ default         { return T_DEFAULT; }
 
 
 [a-zA-Z_][a-zA-Z_0-9]* { yylval.string=new std::string(yytext); return T_IDENTIFIER; }
-[0-9]+([.][0-9]*)? { yylval.number=strtod(yytext, 0); return T_NUMBER; }
+[-]?[0-9]+ { yylval.number=strtod(yytext, 0); return T_INT; }
 
 
 [ \t\r\n]+		{;}
