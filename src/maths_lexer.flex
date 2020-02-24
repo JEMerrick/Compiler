@@ -11,6 +11,7 @@ extern "C" int fileno(FILE *stream);
 
 "int"           { return T_INT; }
 "return"        { return T_RETURN; }
+[;]             { return T_SEMIC; }
 
 [{]             { return T_LCURL; }
 [}]             { return T_RCURL; }
