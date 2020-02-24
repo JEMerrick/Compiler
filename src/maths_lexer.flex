@@ -17,18 +17,31 @@ extern "C" int fileno(FILE *stream);
 [(]             { return T_LCURVE; }
 [)]             { return T_RCURVE; }
 
+[~]             { return T_BNOT; }
+[!]             { return T_NOT; }
+
 [*]             { return T_TIMES; }
 [/]             { return T_DIVIDE; }
 [+]             { return T_PLUS; }
-[\^]            { return T_EXPONENT; }
 [-]             { return T_MINUS; }
+[%]             { return T_MOD; }
 
-[&]             { return T_AND; }
-[|]             { return T_OR; }
-[^]             { return T_XOR; }
+[&&]            { return T_AND; }
+[||]            { return T_OR; }
+[==]            { return T_EQUAL; }
+[!=]            { return T_NEQUAL; }
+[<]             { return T_LT; }
+[>]             { return T_GT; }
+[<=]            { return T_LEQUAL; }
+[>=]            { return T_GEQUAL; }
+
+[&]             { return T_BAND; }
+[|]             { return T_BOR; }
+[^]             { return T_BXOR; }
 [<<]            { return T_LSHIFT; }
 [>>]            { return T_RSHIFT; }
-[%]             { return T_MOD; }
+
+[=]             { return T_ASSIGN; }
 
 auto            { return T_AUTO; }
 break           { return T_BREAK; }
