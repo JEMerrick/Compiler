@@ -1,23 +1,23 @@
-#ifndef H_OP
-#define H_OP
+#ifndef H_ARITHOPS
+#define H_ARITHOPS
 
 #include <string>
 #include <iostream>
 #include <math.h>
 
-class Operator
+class ArithOp
     : public Base
 {
 private:
     BasePtr left;
     BasePtr right;
 protected:
-    Operator(BasePtr _left, BasePtr _right)
+    ArithOp(BasePtr _left, BasePtr _right)
         : left(_left)
         , right(_right)
     {}
 public:
-    virtual ~Operator()
+    virtual ~ArithOp()
     {
         delete left;
         delete right;
@@ -29,12 +29,12 @@ public:
 };
 
 class AddOperator
-    : public Operator
+    : public ArithOp
 {
 
 public:
     AddOperator(BasePtr _left, BasePtr _right)
-        : Operator(_left, _right)
+        : ArithOp(_left, _right)
     {}
     
     virtual void printMIPS (std::ostream &out) const override{
@@ -48,14 +48,11 @@ public:
 };
 
 class SubOperator
-    : public Operator
+    : public ArithOp
 {
-protected:
-    virtual const char *getOpcode() const override
-    { return "-"; }
 public:
     SubOperator(BasePtr _left, BasePtr _right)
-        : Operator(_left, _right)
+        : ArithOp(_left, _right)
     {}
     
     virtual void printMIPS (std::ostream &out) const override{
@@ -70,12 +67,12 @@ public:
 
 
 class MulOperator
-    : public Operator
+    : public ArithOp
 {
 
 public:
     MulOperator(BasePtr _left, BasePtr _right)
-        : Operator(_left, _right)
+        : ArithOp(_left, _right)
     {}
 
     virtual void printMIPS (std::ostream &out) const override{
@@ -89,18 +86,36 @@ public:
 };
 
 class DivOperator
-    : public Operator
+    : public ArithOp
 {
 
 public:
     DivOperator(BasePtr _left, BasePtr _right)
-        : Operator(_left, _right)
+        : ArithOp(_left, _right)
     {}
 
     virtual void printMIPS (std::ostream &out) const override{
     }
     virtual void printC (std::ostream &out) const override{
-        out << "( " << left -> printC(out) << " + " << right -> printC(out) << " )";
+        out << "( " << left -> printC(out) << " / " << right -> printC(out) << " )";
+    }
+    virtual void printPy (std::ostream &out) const override{
+        
+};
+
+class ModOperator
+    : public ArithOp
+{
+
+public:
+    ModOperator(BasePtr _left, BasePtr _right)
+        : ArithOp(_left, _right)
+    {}
+
+    virtual void printMIPS (std::ostream &out) const override{
+    }
+    virtual void printC (std::ostream &out) const override{
+        out << "( " << left -> printC(out) << " % " << right -> printC(out) << " )";
     }
     virtual void printPy (std::ostream &out) const override{
         
