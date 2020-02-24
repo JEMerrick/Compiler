@@ -17,18 +17,11 @@ extern "C" int fileno(FILE *stream);
 [(]             { return T_LCURVE; }
 [)]             { return T_RCURVE; }
 
-//
-
 [*]             { return T_TIMES; }
 [/]             { return T_DIVIDE; }
 [+]             { return T_PLUS; }
 [\^]            { return T_EXPONENT; }
 [-]             { return T_MINUS; }
-
-
-log             { return T_LOG; }
-exp             { return T_EXP; }
-sqrt            { return T_SQRT; }
 
 [&]             { return T_AND; }
 [|]             { return T_OR; }
@@ -46,8 +39,7 @@ continue        { return T_CONTINUE; }
 default         { return T_DEFAULT; }
 
 
-[a-zA-Z_][a-zA-Z_0-9]* { yylval.identifier=new std::string(yytext); return T_IDENTIFIER; }
-
+[a-zA-Z_][a-zA-Z_0-9]* { yylval.string=new std::string(yytext); return T_IDENTIFIER; }
 [0-9]+([.][0-9]*)? { yylval.number=strtod(yytext, 0); return T_NUMBER; }
 
 
