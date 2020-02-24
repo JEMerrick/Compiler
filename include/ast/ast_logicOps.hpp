@@ -1,13 +1,17 @@
 #ifndef H_LOGICOPS
 #define H_LOGICOPS
 
+#include <iostream>
+
+#include "ast_base.hpp"
+
 class LogicOp
     : public Base
 {
-private:
+protected:
     BasePtr left;
     BasePtr right;
-protected:
+
     LogicOp(BasePtr _left, BasePtr _right)
         : left(_left)
         , right(_right)

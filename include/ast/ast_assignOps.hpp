@@ -1,13 +1,17 @@
 #ifndef H_ASSIGNOPS
 #define H_ASSIGNOPS
 
+#include <iostream>
+
+#include "ast_base.hpp"
+
 class AssignOp
     : public Base
 {
-private:
+protected:
     BasePtr left;
     BasePtr right;
-protected:
+
     AssignOp(BasePtr _left, BasePtr _right)
         : left(_left)
         , right(_right)

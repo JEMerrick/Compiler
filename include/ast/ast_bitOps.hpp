@@ -1,13 +1,17 @@
 #ifndef H_BITOPS
 #define H_BITOPS
 
+#include <iostream>
+
+#include "ast_base.hpp"
+
 class BitOp
     : public Base
 {
-private:
+protected:
     BasePtr left;
     BasePtr right;
-protected:
+
     BitOp(BasePtr _left, BasePtr _right)
         : left(_left)
         , right(_right)
@@ -24,12 +28,12 @@ public:
     virtual void printPy (std::ostream &out) const{}
 };
 
-class AndOperator
+class BitAnd
     : public BitOp
 {
 
 public:
-    AndOperator(BasePtr _left, BasePtr _right)
+    BitAnd(BasePtr _left, BasePtr _right)
         : BitOp(_left, _right)
     {}
     
@@ -41,12 +45,12 @@ public:
     }
 };
 
-class OrOperator
+class BitOr
     : public BitOp
 {
 
 public:
-    OrOperator(BasePtr _left, BasePtr _right)
+    BitOr(BasePtr _left, BasePtr _right)
         : BitOp(_left, _right)
     {}
     

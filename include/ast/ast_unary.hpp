@@ -4,13 +4,14 @@
 #include <string>
 #include <iostream>
 
+#include "ast_base.hpp"
 
 class Unary
     : public Base
 {
-private:
-    BasePtr expr;
 protected:
+    BasePtr expr;
+
     Unary(const BasePtr _expr)
         : expr(_expr)
     {}

@@ -1,13 +1,17 @@
 #ifndef H_CONDITIONS
 #define H_CONDITIONS
 
+#include <iostream>
+
+#include "ast_base.hpp"
+
 class Conditions
     : public Base
 {
-private:
+protected:
     BasePtr left;
     BasePtr right;
-protected:
+
     Conditions(BasePtr _left, BasePtr _right)
         : left(_left)
         , right(_right)

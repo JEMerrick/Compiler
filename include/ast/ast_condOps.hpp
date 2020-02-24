@@ -1,13 +1,17 @@
 #ifndef H_CONDOPS
 #define H_CONDOPS
 
+#include <iostream>
+
+#include "ast_base.hpp"
+
 class CondOp
     : public Base
 {
-private:
+protected:
     BasePtr left;
     BasePtr right;
-protected:
+
     CondOp(BasePtr _left, BasePtr _right)
         : left(_left)
         , right(_right)

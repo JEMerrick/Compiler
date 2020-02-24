@@ -4,6 +4,7 @@
 #include <string>
 #include <iostream>
 #include <map>
+#include <vector>
 
 #include <memory>
 
@@ -24,7 +25,7 @@ class Base {
         virtual void printPy (std::ostream &out) const{}
     
     
-}
+};
 
 
 

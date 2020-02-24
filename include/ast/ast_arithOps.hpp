@@ -5,13 +5,14 @@
 #include <iostream>
 #include <math.h>
 
-class ArithOp
-    : public Base
+#include "ast_base.hpp"
+
+class ArithOp : public Base
 {
-private:
+protected:
     BasePtr left;
     BasePtr right;
-protected:
+
     ArithOp(BasePtr _left, BasePtr _right)
         : left(_left)
         , right(_right)
@@ -40,7 +41,7 @@ public:
     virtual void printMIPS (std::ostream &out) const override{
     }
     virtual void printC (std::ostream &out) const override{
-        out << "( " << left -> printC(out) << " + " << right -> printC(out) << " )";
+       // out << "( " << (left -> printC(out)) << " + " << (right -> printC(out)) << " )";
     }
     virtual void printPy (std::ostream &out) const override{
         
@@ -58,7 +59,7 @@ public:
     virtual void printMIPS (std::ostream &out) const override{
     }
     virtual void printC (std::ostream &out) const override{
-        out << "( " << left -> printC(out) << " - " << right -> printC(out) << " )";
+       // out << "( " << (left -> printC(out)) << " - " << (right -> printC(out)) << " )";
     }
     virtual void printPy (std::ostream &out) const override{
         
@@ -79,7 +80,7 @@ public:
 
     }
     virtual void printC (std::ostream &out) const override{
-        out << "( " << left -> printC(out) << " * " << right -> printC(out) << " )";
+      //  out << "( " << (left -> printC(out)) << " * " << (right -> printC(out)) << " )";
     }
     virtual void printPy (std::ostream &out) const override{
         
@@ -97,7 +98,7 @@ public:
     virtual void printMIPS (std::ostream &out) const override{
     }
     virtual void printC (std::ostream &out) const override{
-        out << "( " << left -> printC(out) << " / " << right -> printC(out) << " )";
+        out << "( " << (left -> printC(out)) << " / " << (right -> printC(out)) << " )";
     }
     virtual void printPy (std::ostream &out) const override{
         
@@ -115,7 +116,7 @@ public:
     virtual void printMIPS (std::ostream &out) const override{
     }
     virtual void printC (std::ostream &out) const override{
-        out << "( " << left -> printC(out) << " % " << right -> printC(out) << " )";
+       // out << "( " << (left -> printC(out)) << " % " << (right -> printC(out)) << " )";
     }
     virtual void printPy (std::ostream &out) const override{
         

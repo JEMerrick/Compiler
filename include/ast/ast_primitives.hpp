@@ -4,10 +4,12 @@
 #include <string>
 #include <iostream>
 
+#include "ast_base.hpp"
+
 class Variable
     : public Base
 {
-private:
+protected:
     std::string id;
 public:
     Variable(const std::string &_id)
@@ -30,7 +32,7 @@ public:
 class Number
     : public Base
 {
-private:
+protected:
     double value;
 public:
     Number(double _value)

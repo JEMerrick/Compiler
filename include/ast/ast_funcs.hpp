@@ -1,13 +1,17 @@
 #ifndef H_FUNCS
 #define H_FUNCS
 
+#include <iostream>
+
+#include "ast_base.hpp"
+
 class Functions
     : public Base
 {
-private:
+protected:
     BasePtr left;
     BasePtr right;
-protected:
+
     Functions(BasePtr _left, BasePtr _right)
         : left(_left)
         , right(_right)
@@ -77,3 +81,5 @@ public:
         
     }
 };
+
+#endif

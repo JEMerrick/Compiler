@@ -1,13 +1,17 @@
 #ifndef H_LOOPS
 #define H_LOOPS
 
+#include <iostream>
+
+#include "ast_base.hpp"
+
 class Loop
     : public Base
 {
-private:
+protected:
     BasePtr left;
     BasePtr right;
-protected:
+
     Loop(BasePtr _left, BasePtr _right)
         : left(_left)
         , right(_right)
