@@ -57,7 +57,7 @@ EXPR :    TERM                          { $$ = $1; }
 TERM :    UNARY                         { $$ = $1; }
         | TERM T_TIMES UNARY            { $$ = new MulOperator( $1, $3 ); }
         | TERM T_DIVIDE UNARY           { $$ = new DivOperator( $1, $3 ); }
-        | TERM T_EXPONENT UNARY          { $$ = new ExpOperator( $1, $3 ); }
+        | TERM T_MOD UNARY              { $$ = new ModOperator( $1, $3 ); }
 
 UNARY :   FACTOR                        { $$ = $1; }
         | T_MINUS UNARY                 { $$ = new NegOperator( $2 ); }
