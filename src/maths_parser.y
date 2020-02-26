@@ -63,7 +63,7 @@ UNARY :   FACTOR                        { $$ = $1; }
         | T_MINUS UNARY                 { $$ = new NegOperator( $2 ); }
 
 
-FACTOR :  T_INT                         { $$ = new Number( $1 ); }
+FACTOR :  T_NUMBER                      { $$ = new Number( $1 ); }
         | T_VARIABLE                    { $$ = new Variable( *$1 );}
         | T_LCURVE EXPR T_RCURVE        { $$ = $2; }
 
