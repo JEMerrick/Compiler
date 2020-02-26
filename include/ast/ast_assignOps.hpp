@@ -36,12 +36,14 @@ public:
     AssignEqualOperator(BasePtr _left, BasePtr _right)
         : AssignOp(_left, _right)
     {}
-    
+
     virtual void printMIPS (std::ostream &out) const override{
     }
     virtual void printC (std::ostream &out) const override{
+      out << "( " << (left -> printC(out)) << " = " << (right -> printC(out)) << " )";
     }
     virtual void printPy (std::ostream &out) const override{
+      out << "( " << (left -> printC(out)) << " = " << (right -> printC(out)) << " )";
     }
 };
 

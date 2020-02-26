@@ -20,10 +20,17 @@
   std::string *string;
 }
 
-%token T_TIMES T_DIVIDE T_PLUS T_MINUS T_EXPONENT
-%token T_LBRACKET T_RBRACKET
-%token T_LOG T_EXP T_SQRT
-%token T_NUMBER T_VARIABLE
+%token T_INT T_RETURN T_SEMIC
+%token T_LCURL T_RCURL T_LCURVE T_RCURVE
+%token T_BNOT T_NOT
+%token T_TIMES T_DIVIDE T_PLUS T_MINUS T_MOD
+%token T_AND T_OR T_EQUAL T_NEQUAL T_LT T_GT T_LEQUAL T_GEQUAL
+%token T_BAND T_BOR T_BXOR T_LSHIFT T_RSHIFT
+%token T_ASSIGN
+%token T_AUTO T_BREAK T_CASE T_CHAR T_CONST T_CONTINUE T_DEFAULT
+%token T_DO T_DOUBLE T_ELSE T_ENUM T_EXTERN T_FLOAT T_FOR T_GOTO
+%token T_IF T_INLINE T_LONG T_REG T_RESTRICT T_SHORT T_SIGNED
+%token T_SIZEOF T_STATIC T_STRUCT T_SWITCH T_TYPEDEF T_UNION
 
 %type <expr> EXPR TERM UNARY FACTOR
 %type <number> T_NUMBER
@@ -45,23 +52,23 @@ ROOT : EXPR { g_root = $1; }
 EXPR :    TERM                          { $$ = $1; }
         | EXPR T_PLUS TERM              { $$ = new AddOperator( $1, $3 ); }
         | EXPR T_MINUS TERM             { $$ = new SubOperator( $1, $3 ); }
-        
-        
+
+
 TERM :    UNARY                         { $$ = $1; }
         | TERM T_TIMES UNARY            { $$ = new MulOperator( $1, $3 ); }
         | TERM T_DIVIDE UNARY           { $$ = new DivOperator( $1, $3 ); }
         | TERM T_EXPONENT UNARY          { $$ = new ExpOperator( $1, $3 ); }
-        
+
 UNARY :   FACTOR                        { $$ = $1; }
         | T_MINUS UNARY                 { $$ = new NegOperator( $2 ); }
         | UNARY T_EXPONENT UNARY        { $$ = new ExpOperator( $1, $3 ); }
-        
+
 
 FACTOR :  T_NUMBER                      { $$ = new Number( $1 ); }
         | T_VARIABLE                    { $$ = new Variable( *$1 );}
-        | T_LBRACKET EXPR T_RBRACKET    { $$ = $2; }
-        | FUNCTION_NAME T_LBRACKET EXPR T_RBRACKET { if(*$1 == "log"){$$ = new LogFunction ( $3 );} if(*$1 == "exp"){$$ = new ExpFunction ( $3 );} if(*$1 == "sqrt"){$$ = new SqrtFunction ( $3 );}}
-        
+        | T_LCURVE EXPR T_RCURVE   { $$ = $2; }
+        | FUNCTION_NAME T_LCURVE EXPR T_RCURVE { if(*$1 == "log"){$$ = new LogFunction ( $3 );} if(*$1 == "exp"){$$ = new ExpFunction ( $3 );} if(*$1 == "sqrt"){$$ = new SqrtFunction ( $3 );}}
+
 
 /* TODO-6 : Add support log(x), by modifying the rule for FACTOR. */
 

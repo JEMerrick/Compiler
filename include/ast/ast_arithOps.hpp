@@ -37,14 +37,14 @@ public:
     AddOperator(BasePtr _left, BasePtr _right)
         : ArithOp(_left, _right)
     {}
-    
+
     virtual void printMIPS (std::ostream &out) const override{
     }
     virtual void printC (std::ostream &out) const override{
-       // out << "( " << (left -> printC(out)) << " + " << (right -> printC(out)) << " )";
+       out << "( " << (left -> printC(out)) << " + " << (right -> printC(out)) << " )";
     }
     virtual void printPy (std::ostream &out) const override{
-        
+       out << "( " << (left -> printC(out)) << " + " << (right -> printC(out)) << " )";
     }
 };
 
@@ -55,14 +55,14 @@ public:
     SubOperator(BasePtr _left, BasePtr _right)
         : ArithOp(_left, _right)
     {}
-    
+
     virtual void printMIPS (std::ostream &out) const override{
     }
     virtual void printC (std::ostream &out) const override{
-       // out << "( " << (left -> printC(out)) << " - " << (right -> printC(out)) << " )";
+       out << "( " << (left -> printC(out)) << " - " << (right -> printC(out)) << " )";
     }
     virtual void printPy (std::ostream &out) const override{
-        
+       out << "( " << (left -> printC(out)) << " - " << (right -> printC(out)) << " )";
     }
 };
 
@@ -80,10 +80,10 @@ public:
 
     }
     virtual void printC (std::ostream &out) const override{
-      //  out << "( " << (left -> printC(out)) << " * " << (right -> printC(out)) << " )";
+      out << "( " << (left -> printC(out)) << " * " << (right -> printC(out)) << " )";
     }
     virtual void printPy (std::ostream &out) const override{
-        
+      out << "( " << (left -> printC(out)) << " * " << (right -> printC(out)) << " )";
 };
 
 class DivOperator
@@ -98,10 +98,10 @@ public:
     virtual void printMIPS (std::ostream &out) const override{
     }
     virtual void printC (std::ostream &out) const override{
-        out << "( " << (left -> printC(out)) << " / " << (right -> printC(out)) << " )";
+      out << "( " << (left -> printC(out)) << " / " << (right -> printC(out)) << " )";
     }
     virtual void printPy (std::ostream &out) const override{
-        
+      out << "( " << (left -> printC(out)) << " / " << (right -> printC(out)) << " )";
 };
 
 class ModOperator
@@ -116,10 +116,10 @@ public:
     virtual void printMIPS (std::ostream &out) const override{
     }
     virtual void printC (std::ostream &out) const override{
-       // out << "( " << (left -> printC(out)) << " % " << (right -> printC(out)) << " )";
+      out << "( " << (left -> printC(out)) << " % " << (right -> printC(out)) << " )";
     }
     virtual void printPy (std::ostream &out) const override{
-        
+      out << "( " << (left -> printC(out)) << " % " << (right -> printC(out)) << " )";
 };
 
 
