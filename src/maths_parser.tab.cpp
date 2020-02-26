@@ -99,7 +99,7 @@ extern int yydebug;
 
   #include <cassert>
 
-  extern const Expression *g_root; // A way of getting the AST out
+  extern const Base *g_root; // A way of getting the AST out
 
   //! This is to fix problems when generating C++
   // We are declaring the functions provided by Flex, so
@@ -136,7 +136,7 @@ union YYSTYPE
 {
 #line 17 "src/maths_parser.y" /* yacc.c:355  */
 
-  const Expression *expr;
+  const Base *expr;
   double number;
   std::string *string;
 
@@ -1581,9 +1581,9 @@ yyreturn:
 #line 73 "src/maths_parser.y" /* yacc.c:1906  */
 
 
-const Expression *g_root; // Definition of variable (to match declaration earlier)
+const Base *g_root; // Definition of variable (to match declaration earlier)
 
-const Expression *parseAST()
+const Base *parseAST()
 {
   g_root=0;
   yyparse();

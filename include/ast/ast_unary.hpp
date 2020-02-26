@@ -48,7 +48,7 @@ class LogicNotOperator
     : public Unary
 {
 public:
-    NegOperator(const BasePtr _expr)
+    LogicNotOperator(const BasePtr _expr)
         : Unary(_expr)
     {}
 
@@ -63,7 +63,7 @@ class BitNotOperator
     : public Unary
 {
 public:
-    NegOperator(const BasePtr _expr)
+    BitNotOperator(const BasePtr _expr)
         : Unary(_expr)
     {}
 
