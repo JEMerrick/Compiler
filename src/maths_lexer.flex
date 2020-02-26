@@ -75,7 +75,7 @@ extern "C" int fileno(FILE *stream);
 
 
 
-[a-zA-Z_][a-zA-Z_0-9]* { yylval.string=new std::string(yytext); return T_IDENTIFIER; }
+[a-zA-Z_]([a-zA-Z_] | [0-9])* { yylval.string=new std::string(yytext); return T_IDENTIFIER; }
 [-]?[0-9]+ { yylval.number=strtod(yytext, 0); return T_INT; }
 
 
