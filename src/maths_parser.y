@@ -31,6 +31,7 @@
 %token T_DO T_DOUBLE T_ELSE T_ENUM T_EXTERN T_FLOAT T_FOR T_GOTO
 %token T_IF T_INLINE T_LONG T_REG T_RESTRICT T_SHORT T_SIGNED
 %token T_SIZEOF T_STATIC T_STRUCT T_SWITCH T_TYPEDEF T_UNION
+%token T_VARIABLE T_NUMBER
 
 %type <expr> EXPR TERM UNARY FACTOR
 %type <number> T_NUMBER
@@ -60,7 +61,6 @@ TERM :    UNARY                         { $$ = $1; }
 
 UNARY :   FACTOR                        { $$ = $1; }
         | T_MINUS UNARY                 { $$ = new NegOperator( $2 ); }
-        | UNARY T_EXPONENT UNARY        { $$ = new ExpOperator( $1, $3 ); }
 
 
 FACTOR :  T_NUMBER                      { $$ = new Number( $1 ); }
