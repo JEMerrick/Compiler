@@ -71,9 +71,9 @@ FACTOR :  T_NUMBER                      { $$ = new Number( $1 ); }
 
 
 /* TODO-7 : Extend support to other functions. Requires modifications here, and to FACTOR. */
-FUNCTION_NAME : T_LOG { $$ = new std::string("log"); }
+/*FUNCTION_NAME : T_LOG { $$ = new std::string("log"); }
                | T_EXP { $$ = new std::string("exp"); }
-               | T_SQRT { $$ = new std::string("sqrt"); }
+               | T_SQRT { $$ = new std::string("sqrt"); } */
 
 %%
 
