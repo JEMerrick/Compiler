@@ -34,7 +34,7 @@
 %token T_VARIABLE T_NUMBER FUNCTION_NAME
 
 %type <expr> EXPR TERM UNARY FACTOR
-%type <number> T_INT
+%type <number> T_NUMBER
 %type <string> T_VARIABLE FUNCTION_NAME
 
 %start ROOT
