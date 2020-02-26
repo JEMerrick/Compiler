@@ -2,9 +2,9 @@
 
 int main()
 {
-    const Base *ast=parseAST();
+    const Base* ast = parseAST();
 
-    ast->print(std::cout);
+    ast->printC(std::cout);
     std::cout<<std::endl;
 
     return 0;
