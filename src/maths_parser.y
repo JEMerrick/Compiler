@@ -33,6 +33,7 @@
 %token T_SIZEOF T_STATIC T_STRUCT T_SWITCH T_TYPEDEF T_UNION
 
 %type <expr> EXPR TERM UNARY FACTOR
+%type <expr> ASSIGN CONDITIONAL LOGICAL
 %type <number> T_NUMBER
 %type <string> T_VARIABLE T_LOG T_EXP T_SQRT FUNCTION_NAME
 
@@ -52,6 +53,9 @@ ROOT : EXPR { g_root = $1; }
 EXPR :    TERM                          { $$ = $1; }
         | EXPR T_PLUS TERM              { $$ = new AddOperator( $1, $3 ); }
         | EXPR T_MINUS TERM             { $$ = new SubOperator( $1, $3 ); }
+        | EXPR T_AND TERM               { $$ = new AndOperator( $1, $3 ); }
+        | EXPR T_OR TERM                { $$ = new OrOperator( $1, $3 ); }
+
 
 
 TERM :    UNARY                         { $$ = $1; }
