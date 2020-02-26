@@ -5,37 +5,26 @@
 
 #include "ast_base.hpp"
 
-class Loop
-    : public Base
-{
-protected:
-    BasePtr left;
-    BasePtr right;
-
-    Loop(BasePtr _left, BasePtr _right)
-        : left(_left)
-        , right(_right)
-    {}
-public:
-    virtual ~Loop()
-    {
-        delete left;
-        delete right;
-    }
-
-    virtual void printMIPS (std::ostream &out) const{}
-    virtual void printC (std::ostream &out) const{}
-    virtual void printPy (std::ostream &out) const{}
-};
 
 class For
-    : public Loop
+    : public Base
 {
-
+    
+protected:
+    BasePtr condition; 
+    BasePtr branch;
+    BasePtr initial;
+    
 public:
-    For(BasePtr _left, BasePtr _right)
-        : Loop(_left, _right)
+    For(BasePtr _condition, BasePtr _branch, BasePtr _initial)
+        : condition (_condition), branch (_branch), initial(_initial)
     {}
+    
+    ~For(){
+        delete condition;
+        delete initial;
+        delete branch;
+    }
     
     virtual void printMIPS (std::ostream &out) const override{
     }
@@ -47,13 +36,22 @@ public:
 };
 
 class While
-    : public Loop
+    : public Base
 {
-
+    
+protected:
+    BasePtr condition; 
+    BasePtr branch;
+    
 public:
-    While(BasePtr _left, BasePtr _right)
-        : Loop(_left, _right)
+    While(BasePtr _condition, BasePtr _branch)
+        : condition (_condition), branch (_branch)
     {}
+    
+    ~While(){
+        delete condition;
+        delete branch;    
+    }
     
     virtual void printMIPS (std::ostream &out) const override{
     }
@@ -65,13 +63,22 @@ public:
 };
 
 class Do
-    : public Loop
+    : public Base
 {
 
+protected:
+    BasePtr condition; 
+    BasePtr branch;
+    
 public:
-    Do(BasePtr _left, BasePtr _right)
-        : Loop(_left, _right)
+    Do(BasePtr _condition, BasePtr _branch)
+        : condition (_condition), branch (_branch)
     {}
+    
+    ~Do(){
+        delete condition;
+        delete branch;
+    }
     
     virtual void printMIPS (std::ostream &out) const override{
     }
@@ -83,13 +90,14 @@ public:
 };
 
 class Break
-    : public Loop
+    : public Base
 {
 
 public:
-    Break(BasePtr _left, BasePtr _right)
-        : Loop(_left, _right)
+    Break(BasePtr _condition, BasePtr _branch)
     {}
+    
+    ~Break{}
     
     virtual void printMIPS (std::ostream &out) const override{
     }
@@ -101,13 +109,14 @@ public:
 };
 
 class Continue
-    : public Loop
+    : public Base
 {
 
 public:
-    Continue(BasePtr _left, BasePtr _right)
-        : Loop(_left, _right)
+    Continue(BasePtr _condition, BasePtr _branch)
     {}
+    
+    Continue{}~
     
     virtual void printMIPS (std::ostream &out) const override{
     }
