@@ -33,7 +33,6 @@
 %token T_SIZEOF T_STATIC T_STRUCT T_SWITCH T_TYPEDEF T_UNION
 
 %type <expr> EXPR TERM UNARY FACTOR
-%type <expr> ASSIGN CONDITIONAL LOGICAL
 %type <number> T_NUMBER
 %type <string> T_VARIABLE T_LOG T_EXP T_SQRT FUNCTION_NAME
 
@@ -53,10 +52,6 @@ ROOT : EXPR { g_root = $1; }
 EXPR :    TERM                          { $$ = $1; }
         | EXPR T_PLUS TERM              { $$ = new AddOperator( $1, $3 ); }
         | EXPR T_MINUS TERM             { $$ = new SubOperator( $1, $3 ); }
-        | EXPR T_AND TERM               { $$ = new AndOperator( $1, $3 ); }
-        | EXPR T_OR TERM                { $$ = new OrOperator( $1, $3 ); }
-
-
 
 TERM :    UNARY                         { $$ = $1; }
         | TERM T_TIMES UNARY            { $$ = new MulOperator( $1, $3 ); }
@@ -70,11 +65,10 @@ UNARY :   FACTOR                        { $$ = $1; }
 
 FACTOR :  T_NUMBER                      { $$ = new Number( $1 ); }
         | T_VARIABLE                    { $$ = new Variable( *$1 );}
-        | T_LCURVE EXPR T_RCURVE   { $$ = $2; }
-        | FUNCTION_NAME T_LCURVE EXPR T_RCURVE { if(*$1 == "log"){$$ = new LogFunction ( $3 );} if(*$1 == "exp"){$$ = new ExpFunction ( $3 );} if(*$1 == "sqrt"){$$ = new SqrtFunction ( $3 );}}
+        | T_LCURVE EXPR T_RCURVE        { $$ = $2; }
 
 
-/* TODO-6 : Add support log(x), by modifying the rule for FACTOR. */
+
 
 /* TODO-7 : Extend support to other functions. Requires modifications here, and to FACTOR. */
 FUNCTION_NAME : T_LOG { $$ = new std::string("log"); }
