@@ -61,18 +61,65 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    T_TIMES = 258,
-    T_DIVIDE = 259,
-    T_PLUS = 260,
-    T_MINUS = 261,
-    T_EXPONENT = 262,
-    T_LBRACKET = 263,
-    T_RBRACKET = 264,
-    T_LOG = 265,
-    T_EXP = 266,
-    T_SQRT = 267,
-    T_NUMBER = 268,
-    T_VARIABLE = 269
+    T_INT = 258,
+    T_RETURN = 259,
+    T_SEMIC = 260,
+    T_LCURL = 261,
+    T_RCURL = 262,
+    T_LCURVE = 263,
+    T_RCURVE = 264,
+    T_BNOT = 265,
+    T_NOT = 266,
+    T_TIMES = 267,
+    T_DIVIDE = 268,
+    T_PLUS = 269,
+    T_MINUS = 270,
+    T_MOD = 271,
+    T_AND = 272,
+    T_OR = 273,
+    T_EQUAL = 274,
+    T_NEQUAL = 275,
+    T_LT = 276,
+    T_GT = 277,
+    T_LEQUAL = 278,
+    T_GEQUAL = 279,
+    T_BAND = 280,
+    T_BOR = 281,
+    T_BXOR = 282,
+    T_LSHIFT = 283,
+    T_RSHIFT = 284,
+    T_ASSIGN = 285,
+    T_AUTO = 286,
+    T_BREAK = 287,
+    T_CASE = 288,
+    T_CHAR = 289,
+    T_CONST = 290,
+    T_CONTINUE = 291,
+    T_DEFAULT = 292,
+    T_DO = 293,
+    T_DOUBLE = 294,
+    T_ELSE = 295,
+    T_ENUM = 296,
+    T_EXTERN = 297,
+    T_FLOAT = 298,
+    T_FOR = 299,
+    T_GOTO = 300,
+    T_IF = 301,
+    T_INLINE = 302,
+    T_LONG = 303,
+    T_REG = 304,
+    T_RESTRICT = 305,
+    T_SHORT = 306,
+    T_SIGNED = 307,
+    T_SIZEOF = 308,
+    T_STATIC = 309,
+    T_STRUCT = 310,
+    T_SWITCH = 311,
+    T_TYPEDEF = 312,
+    T_UNION = 313,
+    T_VARIABLE = 314,
+    T_NUMBER = 315,
+    FUNCTION_NAME = 316
   };
 #endif
 
@@ -87,7 +134,7 @@ union YYSTYPE
   double number;
   std::string *string;
 
-#line 91 "src/maths_parser.tab.hpp" /* yacc.c:1909  */
+#line 138 "src/maths_parser.tab.hpp" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
