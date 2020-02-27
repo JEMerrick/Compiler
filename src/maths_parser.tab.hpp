@@ -39,86 +39,71 @@
 #if YYDEBUG
 extern int yydebug;
 #endif
-/* "%code requires" blocks.  */
-#line 1 "src/maths_parser.y" /* yacc.c:1909  */
-
-  #include "ast.hpp"
-
-  #include <cassert>
-
-  extern const Base *g_root; // A way of getting the AST out
-
-  //! This is to fix problems when generating C++
-  // We are declaring the functions provided by Flex, so
-  // that Bison generated code can call them.
-  int yylex(void);
-  void yyerror(const char *);
-
-#line 58 "src/maths_parser.tab.hpp" /* yacc.c:1909  */
 
 /* Token type.  */
 #ifndef YYTOKENTYPE
 # define YYTOKENTYPE
   enum yytokentype
   {
-    IDENTIFIER = 258,
-    CONSTANT = 259,
-    STRING_LITERAL = 260,
-    SIZEOF = 261,
-    PTR_OP = 262,
-    INC_OP = 263,
-    DEC_OP = 264,
-    LEFT_OP = 265,
-    RIGHT_OP = 266,
-    LE_OP = 267,
-    GE_OP = 268,
-    EQ_OP = 269,
-    NE_OP = 270,
-    AND_OP = 271,
-    OR_OP = 272,
-    MUL_ASSIGN = 273,
-    DIV_ASSIGN = 274,
-    MOD_ASSIGN = 275,
-    ADD_ASSIGN = 276,
-    SUB_ASSIGN = 277,
-    LEFT_ASSIGN = 278,
-    RIGHT_ASSIGN = 279,
-    AND_ASSIGN = 280,
-    XOR_ASSIGN = 281,
-    OR_ASSIGN = 282,
-    TYPE_NAME = 283,
-    TYPEDEF = 284,
-    EXTERN = 285,
-    STATIC = 286,
-    AUTO = 287,
-    REGISTER = 288,
-    CHAR = 289,
-    SHORT = 290,
-    INT = 291,
-    LONG = 292,
-    SIGNED = 293,
-    UNSIGNED = 294,
-    FLOAT = 295,
-    DOUBLE = 296,
-    CONST = 297,
-    VOLATILE = 298,
-    VOID = 299,
-    STRUCT = 300,
-    UNION = 301,
-    ENUM = 302,
-    ELLIPSIS = 303,
-    CASE = 304,
-    DEFAULT = 305,
-    IF = 306,
-    ELSE = 307,
-    SWITCH = 308,
-    WHILE = 309,
-    DO = 310,
-    FOR = 311,
-    GOTO = 312,
-    CONTINUE = 313,
-    BREAK = 314,
-    RETURN = 315
+    T_INT = 258,
+    T_RETURN = 259,
+    T_SEMIC = 260,
+    T_LCURL = 261,
+    T_RCURL = 262,
+    T_LCURVE = 263,
+    T_RCURVE = 264,
+    T_BNOT = 265,
+    T_NOT = 266,
+    T_TIMES = 267,
+    T_DIVIDE = 268,
+    T_PLUS = 269,
+    T_MINUS = 270,
+    T_MOD = 271,
+    T_AND = 272,
+    T_OR = 273,
+    T_EQUAL = 274,
+    T_NEQUAL = 275,
+    T_LT = 276,
+    T_GT = 277,
+    T_LEQUAL = 278,
+    T_GEQUAL = 279,
+    T_BAND = 280,
+    T_BOR = 281,
+    T_BXOR = 282,
+    T_LSHIFT = 283,
+    T_RSHIFT = 284,
+    T_ASSIGN = 285,
+    T_AUTO = 286,
+    T_BREAK = 287,
+    T_CASE = 288,
+    T_CHAR = 289,
+    T_CONST = 290,
+    T_CONTINUE = 291,
+    T_DEFAULT = 292,
+    T_DO = 293,
+    T_DOUBLE = 294,
+    T_ELSE = 295,
+    T_ENUM = 296,
+    T_EXTERN = 297,
+    T_FLOAT = 298,
+    T_FOR = 299,
+    T_GOTO = 300,
+    T_IF = 301,
+    T_INLINE = 302,
+    T_LONG = 303,
+    T_REG = 304,
+    T_RESTRICT = 305,
+    T_SHORT = 306,
+    T_SIGNED = 307,
+    T_SIZEOF = 308,
+    T_STATIC = 309,
+    T_STRUCT = 310,
+    T_SWITCH = 311,
+    T_TYPEDEF = 312,
+    T_UNION = 313,
+    T_VARIABLE = 314,
+    T_NUMBER = 315,
+    FUNCTION_NAME = 316
   };
 #endif
 
@@ -127,13 +112,13 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 17 "src/maths_parser.y" /* yacc.c:1909  */
+#line 3 "src/maths_parser.y" /* yacc.c:1909  */
 
   const Base *expr;
   double number;
   std::string *string;
 
-#line 137 "src/maths_parser.tab.hpp" /* yacc.c:1909  */
+#line 122 "src/maths_parser.tab.hpp" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
