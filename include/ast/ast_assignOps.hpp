@@ -2,25 +2,23 @@
 #define H_ASSIGNOPS
 
 #include <iostream>
-
+#include <string>
 #include "ast_base.hpp"
 
 class AssignOp
     : public Base
 {
 protected:
-    BasePtr left;
-    BasePtr right;
-
-    AssignOp(BasePtr _left, BasePtr _right)
-        : left(_left)
-        , right(_right)
-    {}
+    std::string variable
+    
 public:
+    AssignOp(std::string _variable)
+        : variable(_variable)
+    {}
+    
     virtual ~AssignOp()
     {
-        delete left;
-        delete right;
+        delete variable;
     }
 
     virtual void printMIPS (std::ostream &out) const{}
@@ -31,16 +29,17 @@ public:
 class AssignEqualOperator
     : public AssignOp
 {
-
+protected:
+    BasePtr myExpr
 public:
-    AssignEqualOperator(BasePtr _left, BasePtr _right)
-        : AssignOp(_left, _right)
+    AssignEqualOperator(std::string _variable, BasePtr _expr)
+        : AssignOp(_variable), myExpr(_expr)
     {}
 
     virtual void printMIPS (std::ostream &out) const override{
     }
     virtual void printC (std::ostream &out) const override{
-     // out << "( " << (left -> printC(out)) << " = " << (right -> printC(out)) << " )";
+      out << "( " << variable << " = " << (myExpr -> printC(out)) << " )";
     }
     virtual void printPy (std::ostream &out) const override{
      // out << "( " << (left -> printC(out)) << " = " << (right -> printC(out)) << " )";
