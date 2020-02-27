@@ -89,15 +89,15 @@ public:
     }
 };
 
-class Break
+class BBreak
     : public Base
 {
 
 public:
-    Break()
+    BBreak()
     {}
     
-    ~Break{}
+    ~BBreak{}
     
     virtual void printMIPS (std::ostream &out) const override{
     }

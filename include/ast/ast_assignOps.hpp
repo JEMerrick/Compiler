@@ -9,7 +9,7 @@ class AssignOp
     : public Base
 {
 protected:
-    std::string variable
+    std::string variable;
     
 public:
     AssignOp(std::string _variable)
@@ -30,7 +30,7 @@ class AssignEqualOperator
     : public AssignOp
 {
 protected:
-    BasePtr myExpr
+    BasePtr myExpr;
 public:
     AssignEqualOperator(std::string _variable, BasePtr _expr)
         : AssignOp(_variable), myExpr(_expr)

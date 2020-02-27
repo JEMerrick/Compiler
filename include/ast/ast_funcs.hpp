@@ -19,8 +19,8 @@ public:
     {}
     
     virtual ~Functions(){
-        delete type;
-        delete funcName;
+        //delete type;
+        //delete funcName;
         delete varList;
     }
     
