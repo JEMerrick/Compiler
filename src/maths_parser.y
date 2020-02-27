@@ -35,6 +35,9 @@
 %start ROOT
 
 %%
+
+ROOT : EXPR { g_root = $1; }
+
 primary_expression
 	: IDENTIFIER
 	| CONSTANT
@@ -435,28 +438,6 @@ function_definition
 	| declarator declaration_list compound_statement
 	| declarator compound_statement
 	;
-
-/* ROOT : EXPR { g_root = $1; }
-
-EXPR :    TERM                          { $$ = $1; }
-        | EXPR T_PLUS TERM              { $$ = new AddOperator( $1, $3 ); }
-        | EXPR T_MINUS TERM             { $$ = new SubOperator( $1, $3 ); }
-
-TERM :    UNARY                         { $$ = $1; }
-        | TERM T_TIMES UNARY            { $$ = new MulOperator( $1, $3 ); }
-        | TERM T_DIVIDE UNARY           { $$ = new DivOperator( $1, $3 ); }
-        | TERM T_MOD UNARY              { $$ = new ModOperator( $1, $3 ); }
-
-UNARY :   FACTOR                        { $$ = $1; }
-        | T_MINUS UNARY                 { $$ = new NegOperator( $2 ); }
-
-
-FACTOR :  T_NUMBER                      { $$ = new Number( $1 ); }
-        | T_VARIABLE                    { $$ = new Variable( *$1 );}
-        | T_LCURVE EXPR T_RCURVE        { $$ = $2; }
-
-
-FUNCTION_NAME : T_LOG { $$ = new std::string("log"); } */
 
 %%
 
