@@ -32,12 +32,9 @@
 
 %token CASE DEFAULT IF ELSE SWITCH WHILE DO FOR GOTO CONTINUE BREAK RETURN
 
-%start ROOT
+%start translation_unit
 
 %%
-
-ROOT : EXPR { g_root = $1; }
-
 primary_expression
 	: IDENTIFIER
 	| CONSTANT
