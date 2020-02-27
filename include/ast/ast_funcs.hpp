@@ -2,6 +2,7 @@
 #define H_FUNCS
 
 #include <iostream>
+#include <string>
 
 #include "ast_base.hpp"
 
@@ -9,23 +10,27 @@ class Functions
     : public Base
 {
 protected:
-    BasePtr left;
-    BasePtr right;
-
-    Functions(BasePtr _left, BasePtr _right)
-        : left(_left)
-        , right(_right)
-    {}
+    std::string type;
+    std::string funcName;
+    BasePtr varList;
 public:
-    virtual ~Functions()
-    {
-        delete left;
-        delete right;
+    Functions(std::string _type, std::string _funcName, BasePtr _varList)
+        : type(_type), funcName(_funcName), varList(_varList)
+    {}
+    
+    virtual ~Functions(){
+        delete type;
+        delete funcName;
+        delete varList;
     }
-
-    virtual void printMIPS (std::ostream &out) const{}
-    virtual void printC (std::ostream &out) const{}
-    virtual void printPy (std::ostream &out) const{}
+    
+    virtual void printMIPS (std::ostream &out) const override{
+    }
+    virtual void printC (std::ostream &out) const override{
+    }
+    virtual void printPy (std::ostream &out) const override{
+        
+    }
 };
 
 class DecFunc
@@ -33,8 +38,8 @@ class DecFunc
 {
 
 public:
-    DecFunc(BasePtr _left, BasePtr _right)
-        : Functions(_left, _right)
+    DecFunc(std::string _type, std::string _funcName, BasePtr _varList)
+        : Functions(_type, _funcName, _varList)
     {}
     
     virtual void printMIPS (std::ostream &out) const override{
@@ -51,8 +56,8 @@ class DefFunc
 {
 
 public:
-    DefFunc(BasePtr _left, BasePtr _right)
-        : Functions(_left, _right)
+    DefFunc(std::string _type, std::string _funcName, BasePtr _varList)
+        : Functions(_type, _funcName, _varList)
     {}
     
     virtual void printMIPS (std::ostream &out) const override{
@@ -69,8 +74,8 @@ class CallFunc
 {
 
 public:
-    CallFunc(BasePtr _left, BasePtr _right)
-        : Functions(_left, _right)
+    CallFunc(std::string _type, std::string _funcName, BasePtr _varList)
+        : Functions(_type, _funcName, _varList)
     {}
     
     virtual void printMIPS (std::ostream &out) const override{

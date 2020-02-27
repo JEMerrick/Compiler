@@ -94,7 +94,7 @@ class Break
 {
 
 public:
-    Break(BasePtr _condition, BasePtr _branch)
+    Break()
     {}
     
     ~Break{}
@@ -113,7 +113,7 @@ class Continue
 {
 
 public:
-    Continue(BasePtr _condition, BasePtr _branch)
+    Continue()
     {}
     
     Continue{}~
