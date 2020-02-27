@@ -109,8 +109,6 @@ L?\"(\\.|[^\\"])*\"	{ return(STRING_LITERAL); }
 "|"			      { return('|'); }
 "?"			      { return('?'); }
 
-
-
 [ \t\r\n]+		{;}
 
 .               { fprintf(stderr, "Invalid token\n"); exit(1); }
