@@ -97,7 +97,7 @@ public:
     BBreak()
     {}
     
-    ~BBreak{}
+    ~BBreak(){}
     
     virtual void printMIPS (std::ostream &out) const override{
     }
@@ -108,15 +108,15 @@ public:
     }
 };
 
-class Continue
+class CContinue
     : public Base
 {
 
 public:
-    Continue()
+    CContinue()
     {}
     
-    Continue{}~
+    ~CContinue(){}
     
     virtual void printMIPS (std::ostream &out) const override{
     }

@@ -18,7 +18,7 @@ public:
     
     virtual ~AssignOp()
     {
-        delete variable;
+        //delete variable;
     }
 
     virtual void printMIPS (std::ostream &out) const{}
