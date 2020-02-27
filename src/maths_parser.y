@@ -44,10 +44,7 @@ UNARY :   FACTOR                        { $$ = $1; }
 FACTOR :  T_NUMBER                      { $$ = new Number( $1 ); }
         | T_VARIABLE                    { $$ = new Variable( *$1 );}
         | T_LCURVE EXPR T_RCURVE        { $$ = $2; }
-/* TODO-7 : Extend support to other functions. Requires modifications here, and to FACTOR. */
-/*FUNCTION_NAME : T_LOG { $$ = new std::string("log"); }
-               | T_EXP { $$ = new std::string("exp"); }
-               | T_SQRT { $$ = new std::string("sqrt"); } */
+        
 %%
 const Base *g_root; // Definition of variable (to match declaration earlier)
 const Base *parseAST()
