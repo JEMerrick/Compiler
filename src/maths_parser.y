@@ -421,7 +421,7 @@ jump_statement
 
 translation_unit
 	: external_declaration
-	| translation_unit external_declaration {g_root = $1}
+	| translation_unit external_declaration 
 	;
 
 external_declaration
