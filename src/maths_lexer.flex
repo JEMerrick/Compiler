@@ -96,18 +96,18 @@ L?\"(\\.|[^\\"])*\"	{ return(STRING_LITERAL); }
 ("]"|":>")		{ return(']'); }
 "."			{ return('.'); }
 "&"			{ return('&'); }
-"!"			{ count(); return('!'); }
-"~"			{ count(); return('~'); }
-"-"			{ count(); return('-'); }
-"+"			{ count(); return('+'); }
-"*"			{ count(); return('*'); }
-"/"			{ count(); return('/'); }
-"%"			{ count(); return('%'); }
-"<"			{ count(); return('<'); }
-">"			{ count(); return('>'); }
-"^"			{ count(); return('^'); }
-"|"			{ count(); return('|'); }
-"?"			{ count(); return('?'); }
+"!"			{ return('!'); }
+"~"			{ return('~'); }
+"-"			{ return('-'); }
+"+"			{ return('+'); }
+"*"			{ return('*'); }
+"/"			{ return('/'); }
+"%"			{ return('%'); }
+"<"			{ return('<'); }
+">"			{ return('>'); }
+"^"			{ return('^'); }
+"|"			{ return('|'); }
+"?"			{ return('?'); }
 
 
 
