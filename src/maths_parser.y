@@ -35,7 +35,7 @@
 
 %type <expr> EXPR TERM UNARY FACTOR
 %type <number> T_NUMBER
-%type <string> T_VARIABLE FUNCTION_NAME
+%type <string> T_VARIABLE FUNCTION_NAME 
 
 %start ROOT
 
