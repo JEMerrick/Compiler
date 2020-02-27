@@ -18,6 +18,12 @@ public:
         : type(_type), funcName(_funcName), varList(_varList)
     {}
     
+    virtual ~Functions(){
+        delete type;
+        delete funcName;
+        delete varList;
+    }
+    
     virtual void printMIPS (std::ostream &out) const override{
     }
     virtual void printC (std::ostream &out) const override{
