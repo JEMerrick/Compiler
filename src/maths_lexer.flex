@@ -49,7 +49,7 @@ extern "C" int fileno(FILE *stream);
 "volatile"	  	{ return(VOLATILE); }
 "while"			    { return(WHILE); }
 
-{L}({L}|{D})*		{ return(check_type()); }
+
 
 0[xX]{H}+{IS}?		{ return(CONSTANT); }
 0{D}+{IS}?		{ return(CONSTANT); }
