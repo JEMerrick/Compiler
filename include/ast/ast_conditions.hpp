@@ -9,18 +9,20 @@ class Conditions
     : public Base
 {
 protected:
-    BasePtr left;
-    BasePtr right;
+    BasePtr condition; 
+    BasePtr branch;
 
-    Conditions(BasePtr _left, BasePtr _right)
-        : left(_left)
-        , right(_right)
-    {}
+
 public:
+    Conditions(BasePtr _condition, BasePtr _branch)
+        : condition(_condition)
+        , branch(_branch)
+    {}
+    
     virtual ~Conditions()
     {
-        delete left;
-        delete right;
+        delete condition;
+        delete branch;
     }
 
     virtual void printMIPS (std::ostream &out) const{}
@@ -33,8 +35,8 @@ class If
 {
 
 public:
-    If(BasePtr _left, BasePtr _right)
-        : Conditions(_left, _right)
+    If(BasePtr _condition, BasePtr _branch)
+        : Conditions(_condition, _branch)
     {}
     
     virtual void printMIPS (std::ostream &out) const override{
@@ -48,10 +50,11 @@ public:
 class IfElse
     : public Conditions
 {
-
+protected:
+    BasePtr elseBranch;
 public:
-    IfElse(BasePtr _left, BasePtr _right)
-        : Conditions(_left, _right)
+    IfElse(BasePtr _condition, BasePtr _branch, BasePtr _elseBranch)
+        : Conditions(_condition, _branch), elseBranch(_elseBranch)
     {}
     
     virtual void printMIPS (std::ostream &out) const override{
