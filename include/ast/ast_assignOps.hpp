@@ -10,12 +10,12 @@ class AssignOp
 {
 protected:
     std::string variable;
-    
+
 public:
     AssignOp(std::string _variable)
         : variable(_variable)
     {}
-    
+
     virtual ~AssignOp()
     {}
 
@@ -37,7 +37,11 @@ public:
     virtual void printMIPS (std::ostream &out) const override{
     }
     virtual void printC (std::ostream &out) const override{
-      //out << "( " << variable << " = " << (myExpr -> printC(out)) << " )";
+        out << "( ";
+        out << variable;
+        out << " = ";
+        myExpr -> printC(out);
+        out << " )";
     }
     virtual void printPy (std::ostream &out) const override{
      // out << "( " << (left -> printC(out)) << " = " << (right -> printC(out)) << " )";
