@@ -36,13 +36,22 @@ public:
     EqualOperator(BasePtr _left, BasePtr _right)
         : CondOp(_left, _right)
     {}
-    
+
     virtual void printMIPS (std::ostream &out) const override{
     }
     virtual void printC (std::ostream &out) const override{
+        out << "( ";
+        left -> printC(out);
+        out << " == ";
+        right -> printC(out);
+        out << " )";
     }
     virtual void printPy (std::ostream &out) const override{
-        
+        out << "( ";
+        left -> printPy(out);
+        out << " != ";
+        right -> printPy(out);
+        out << " )";
     }
 };
 
@@ -54,13 +63,13 @@ public:
     NotEqOperator(BasePtr _left, BasePtr _right)
         : CondOp(_left, _right)
     {}
-    
+
     virtual void printMIPS (std::ostream &out) const override{
     }
     virtual void printC (std::ostream &out) const override{
     }
     virtual void printPy (std::ostream &out) const override{
-        
+
     }
 };
 
@@ -72,13 +81,13 @@ public:
     LessOperator(BasePtr _left, BasePtr _right)
         : CondOp(_left, _right)
     {}
-    
+
     virtual void printMIPS (std::ostream &out) const override{
     }
     virtual void printC (std::ostream &out) const override{
     }
     virtual void printPy (std::ostream &out) const override{
-        
+
     }
 };
 
@@ -90,13 +99,13 @@ public:
     GreaterOperator(BasePtr _left, BasePtr _right)
         : CondOp(_left, _right)
     {}
-    
+
     virtual void printMIPS (std::ostream &out) const override{
     }
     virtual void printC (std::ostream &out) const override{
     }
     virtual void printPy (std::ostream &out) const override{
-        
+
     }
 };
 
@@ -108,13 +117,13 @@ public:
     LeqOperator(BasePtr _left, BasePtr _right)
         : CondOp(_left, _right)
     {}
-    
+
     virtual void printMIPS (std::ostream &out) const override{
     }
     virtual void printC (std::ostream &out) const override{
     }
     virtual void printPy (std::ostream &out) const override{
-        
+
     }
 };
 
@@ -126,13 +135,13 @@ public:
     GeqOperator(BasePtr _left, BasePtr _right)
         : CondOp(_left, _right)
     {}
-    
+
     virtual void printMIPS (std::ostream &out) const override{
     }
     virtual void printC (std::ostream &out) const override{
     }
     virtual void printPy (std::ostream &out) const override{
-        
+
     }
 };
 
