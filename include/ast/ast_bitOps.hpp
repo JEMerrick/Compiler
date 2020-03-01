@@ -101,6 +101,11 @@ public:
         out << " )";
     }
     virtual void printPy (std::ostream &out) const override{
+        out << "( ";
+        left -> printPy(out);
+        out << " ^ ";
+        right -> printPy(out);
+        out << " )";
     }
 };
 
