@@ -44,7 +44,11 @@ public:
         out << " )";
     }
     virtual void printPy (std::ostream &out) const override{
-     // out << "( " << (left -> printC(out)) << " = " << (right -> printC(out)) << " )";
+        out << "( ";
+        out << variable;
+        out << " = ";
+        myExpr -> printPy(out);
+        out << " )";
     }
 };
 
