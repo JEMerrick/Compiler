@@ -41,9 +41,11 @@ public:
     {}
 
     virtual void printMIPS (std::ostream &out) const override{
-        out << "add ";
-        left -> printC(out);
-        right -> printC(out);
+        out << "( ";
+        left -> printMIPS(out);
+        out << " + ";
+        right -> printMIPS(out);
+        out << " )";
     }
     virtual void printC (std::ostream &out) const override{
         out << "( ";
@@ -98,6 +100,9 @@ public:
     {}
 
     virtual void printMIPS (std::ostream &out) const override{
+        out << "sub ";
+        left -> printC(out);
+        right -> printC(out);
 
     }
     virtual void printC (std::ostream &out) const override{
