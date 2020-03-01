@@ -94,6 +94,11 @@ public:
     virtual void printMIPS (std::ostream &out) const override{
     }
     virtual void printC (std::ostream &out) const override{
+        out << "( ";
+        left -> printC(out);
+        out << " ^ ";
+        right -> printC(out);
+        out << " )";
     }
     virtual void printPy (std::ostream &out) const override{
     }
