@@ -131,7 +131,7 @@ public:
         out << "( ";
         left -> printPy(out);
         out << " << ";
-        right -> printPys(out);
+        right -> printPy(out);
         out << " )";
     }
 };

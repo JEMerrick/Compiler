@@ -129,7 +129,7 @@ public:
     }
     virtual void printPy (std::ostream &out) const override{
         out << "( ";
-        left -> printPY(out);
+        left -> printPy(out);
         out << " > ";
         right -> printPy(out);
         out << " )";
