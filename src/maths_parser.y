@@ -49,18 +49,18 @@ PROG :  DECLR {$$ = $1;}
 DECLR : FUNDEC { $$ = $1;}
         //Global var also here
         
-FUNDEC : TYPE T_VARIABLE T_LBRAC PARAM_LIST T_RBRAC T_LCURL SCOPE T_RCURL {}
+FUNDEC : TYPE T_VARIABLE T_LBRAC PARAM_LIST T_RBRAC T_LCURL SCOPE T_RCURL {/*what here*/}
 
 TYPE : T_INT { $$ = $1; }
 
-PARAM_LIST : PARAM_LIST T_COMMA TYPE T_VARIABLE {}
-             TYPE T_VARIABLE {}
+PARAM_LIST : PARAM_LIST T_COMMA TYPE T_VARIABLE {/*what here*/}
+             TYPE T_VARIABLE {/*what here*/}
 
-SCOPE : SCOPE EXPR_ST {}
-        | EXPR_ST {}
+SCOPE : SCOPE EXPR_ST {/*what here*/}
+        | EXPR_ST {/*what here*/}
 
-EXPR_ST : T_SEMIC {}
-        | EXPR T_SEMIC {}
+EXPR_ST : T_SEMIC {/*what here*/}
+        | EXPR T_SEMIC {/*what here*/}
 
 EXPR : EXPR_ASSIGN { $$ = $1; }
 
@@ -69,42 +69,42 @@ EXPR_ASSIGN : EXPR_COND { $$ = $1; }
 EXPR_COND : OR { $$ = $1; }
 
 OR : AND { $$ = $1; }
-    | AND T_OR BOR {}
+    | AND T_OR BOR {$$ = new OrOperator($1, $3); }
 
 AND : BOR { $$ = $1; }
-    | AND T_AND BOR {}
+    | AND T_AND BOR {$$ = new AndOperator($1, $3);}
 
 BOR : BXOR { $$ = $1; }
-    | BOR T_BOR BXOR {}
+    | BOR T_BOR BXOR {$$ = new BitOr($1, $3);}
 
 BXOR : BAND { $$ = $1; }
-    | BOR T_BXOR BXOR {}
+    | BOR T_BXOR BXOR {$$ = new ExorOperator($1, $3);}
 
 BAND : EQUAL { $$ = $1; }
-    | BAND T_BAND EQUAL {}
+    | BAND T_BAND EQUAL {$$ = new OrOperator($1, $3);}
 
 EQUAL : LESS { $$ = $1; }
-    | EQUAL T_EQUAL LESS {}
-    | EQUAL T_NEQUAL LESS {}
+    | EQUAL T_EQUAL LESS {$$ = new EqualOperator($1, $3);}
+    | EQUAL T_NEQUAL LESS {$$ = new NotEqOperator($1, $3);}
 
 LESS : SHIFT { $$ = $1; }
-    | LESS T_LT SHIFT {}
-    | LESS T_GT SHIFT {}
-    | LESS T_LEQUAL SHIFT {}
-    | LESS T_GEQUAL SHIFT {}
+    | LESS T_LT SHIFT {$$ = new LessOperator($1, $3);}
+    | LESS T_GT SHIFT {$$ = new GreaterOperator($1, $3);}
+    | LESS T_LEQUAL SHIFT {$$ = new LeqOperator($1, $3);}
+    | LESS T_GEQUAL SHIFT {$$ = new GeqOperator($1, $3);}
 
 SHIFT : ADD { $$ = $1; }
-        | SHIFT T_LSHIFT ADD {}
-        | SHIFT T_RSHIFT ADD {}
+        | SHIFT T_LSHIFT ADD {$$ = new OrOperator($1, $3);}
+        | SHIFT T_RSHIFT ADD {$$ = new OrOperator($1, $3);}
 
 ADD : MUL { $$ = $1; }
-    | ADD T_PLUS MUL {}
-    | ADD T_MINUS MUL {}
+    | ADD T_PLUS MUL {$$ = new OrOperator($1, $3);}
+    | ADD T_MINUS MUL {$$ = new OrOperator($1, $3);}
     
 MUL : UNARY { $$ = $1; }
-    | MUL T_TIMES UNARY {}
-    | MUL T_DIVIDE UNARY {}
-    | MUL T_MOD UNARY {}
+    | MUL T_TIMES UNARY {$$ = new OrOperator($1, $3);}
+    | MUL T_DIVIDE UNARY {$$ = new OrOperator($1, $3);}
+    | MUL T_MOD UNARY {$$ = new OrOperator($1, $3);}
 
 UNARY :
     //PRE / POST FIX
