@@ -26,7 +26,7 @@ public:
         delete right;
     }
 
-    virtual void printMIPS (std::ostream &out) const{}
+    virtual void printMIPS (std::string reg, std::ostream &out) const{}
     virtual void printC (std::ostream &out) const{}
     virtual void printPy (std::ostream &out) const{}
 };
@@ -40,20 +40,17 @@ public:
         : ArithOp(_left, _right)
     {}
 
-    virtual void printMIPS (std::ostream &out) const override{
-        if(left->printMIPS(out)[0] === '$'){
-          out << "add $1, ";
-          left -> printMIPS(out);
-          out << ", ";
-          right -> printMIPS(out);
-        }
-        else{
-          out << "addi $1, ";
-          left -> printMIPS(out);
-          out << ", ";
-          right -> printMIPS(out);
-        }
+    virtual void printMIPS (std::string reg, std::ostream &out) const override{
+          std::string r1 = "$" + loopy();
+          left -> printMIPS(r1, out);
 
+          //ADDI RX 0, 5
+          //ADDI RY 0, 5
+          //ADDU RZ RY RX
+
+          std::string r2 = "$" + loopy();
+          right -> printMIPS(r2, out);
+          out << "add " << reg << ", " << r1 << ", " << r2;
     }
     virtual void printC (std::ostream &out) const override{
         out << "( ";

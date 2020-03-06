@@ -17,13 +17,18 @@ public:
     {}
 
     virtual void printMIPS (std::ostream &out) const{
-        
+      if(localVars){
+        update
+      }
+      else{
+        error
+      }
     }
     virtual void printC (std::ostream &out) const{
         out << id;
     }
     virtual void printPy (std::ostream &out) const{
-        
+
     }
 
 
@@ -39,14 +44,14 @@ public:
         : value(_value)
     {}
 
-    virtual void printMIPS (std::ostream &out) const{
-        
+    virtual void printMIPS (std::string reg, std::ostream &out) const{
+      out << "addi " << reg << "$0, " << value;
     }
     virtual void printC (std::ostream &out) const{
         out << value;
     }
     virtual void printPy (std::ostream &out) const{
-        
+
     }
 
 };
