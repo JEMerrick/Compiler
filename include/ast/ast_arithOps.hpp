@@ -41,10 +41,19 @@ public:
     {}
 
     virtual void printMIPS (std::ostream &out) const override{
-        out << "add $1, ";
-        left -> printMIPS(out);
-        out << ", ";
-        right -> printMIPS(out);
+        if(left->printMIPS(out)[0] === '$'){
+          out << "add $1, ";
+          left -> printMIPS(out);
+          out << ", ";
+          right -> printMIPS(out);
+        }
+        else{
+          out << "addi $1, ";
+          left -> printMIPS(out);
+          out << ", ";
+          right -> printMIPS(out);
+        }
+
     }
     virtual void printC (std::ostream &out) const override{
         out << "( ";
