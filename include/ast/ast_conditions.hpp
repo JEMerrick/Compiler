@@ -9,7 +9,7 @@ class Conditions
     : public Base
 {
 protected:
-    BasePtr condition; 
+    BasePtr condition;
     BasePtr branch;
 
 
@@ -18,7 +18,7 @@ public:
         : condition(_condition)
         , branch(_branch)
     {}
-    
+
     virtual ~Conditions()
     {
         delete condition;
@@ -38,10 +38,15 @@ public:
     If(BasePtr _condition, BasePtr _branch)
         : Conditions(_condition, _branch)
     {}
-    
+
     virtual void printMIPS (std::ostream &out) const override{
     }
     virtual void printC (std::ostream &out) const override{
+      out << "if (";
+      left -> printC(condition);
+      out << ") {";
+      right -> printC(branch);
+      out << " }";
     }
     virtual void printPy (std::ostream &out) const override{
     }
@@ -56,7 +61,7 @@ public:
     IfElse(BasePtr _condition, BasePtr _branch, BasePtr _elseBranch)
         : Conditions(_condition, _branch), elseBranch(_elseBranch)
     {}
-    
+
     virtual void printMIPS (std::ostream &out) const override{
     }
     virtual void printC (std::ostream &out) const override{
