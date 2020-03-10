@@ -17,11 +17,12 @@ public:
     {}
 
     virtual void printMIPS (std::ostream &out) const{
-      if(localVars){
-        update
+      if(localVars[id] == 0){
+        //update std::map <std::string, int> localVars;
+        localVars[id]++;
       }
       else{
-        error
+        out << "error";
       }
     }
     virtual void printC (std::ostream &out) const{
