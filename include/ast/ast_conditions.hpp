@@ -71,8 +71,25 @@ public:
     virtual void printMIPS (std::ostream &out) const override{
     }
     virtual void printC (std::ostream &out) const override{
+      out << "if (";
+      left -> printC(condition);
+      out << ") \n";
+      out << "{";
+      right -> printC(branch);
+      out << " }";
+      out << "else {";
+      right -> printC(elseBranch);
+      out << " }";
     }
     virtual void printPy (std::ostream &out) const override{
+      out << "if ";
+      left -> printPy(condition);
+      out << ": \n";
+      out << "  ";
+      right -> printC(branch);
+      out << "else: \n";
+      out << "  ";
+      right -> printC(elseBranch);
     }
 };
 #endif
