@@ -28,6 +28,9 @@
 %token T_EQUAL T_NEQUAL T_GT T_LT T_LEQUAL T_GEQUAL
 %token T_BNOT T_NOT T_AND T_OR T_BAND T_BOR T_BXOR
 
+%token T_WHILE T_DO T_IF T_ELSE
+%token T_INT T_VOID T_CHAR T_SHORT T_LONG T_FLOAT T_DOUBLE T_SIGNED T_RETURN
+
 %type <expr> PROG 
 %type <expr> 
 %type <number> T_INT
@@ -49,18 +52,30 @@ PROG :  DECLR {$$ = $1;}
 DECLR : FUNDEC { $$ = $1;}
         //Global var also here
         
-FUNDEC : TYPE T_VARIABLE T_LBRAC PARAM_LIST T_RBRAC T_LCURL SCOPE T_RCURL {/*what here*/}
+FUNDEC : TYPE T_VARIABLE T_LBRAC PARAM_LIST T_RBRAC T_LCURL SCOPE T_RCURL {}
+        | TYPE T_VARIABLE T_LBRAC T_RBRAC TLCURL SCOPE T_RCURL {}
+        | TYPE T_VARIABLE T_LBRAC PARAM_LIST T_RBRAC T_SEMIC {}
+        | TYPE T_VARIABLE T_LBRAC T_RBRAC T_SEMIC {}
 
 TYPE : T_INT { $$ = $1; }
+        | T_VOID { $$ = $1; }
+        | T_CHAR { $$ = $1; }
+        | T_SHORT { $$ = $1; }
+        | T_LONG { $$ = $1; }
+        | T_FLOAT { $$ = $1; }
+        | T_DOUBLE { $$ = $1; }
+        | T_SIGNED  { $$ = $1; }
+        | T_RETURN { $$ = $1; }
+        
 
-PARAM_LIST : PARAM_LIST T_COMMA TYPE T_VARIABLE {/*what here*/}
-             TYPE T_VARIABLE {/*what here*/}
+PARAM_LIST : PARAM_LIST T_COMMA TYPE T_VARIABLE {}
+             TYPE T_VARIABLE {}
 
-SCOPE : SCOPE EXPR_ST {/*what here*/}
-        | EXPR_ST {/*what here*/}
+SCOPE : SCOPE STMT {}
+        | STMT {}
 
-EXPR_ST : T_SEMIC {/*what here*/}
-        | EXPR T_SEMIC {/*what here*/}
+EXPR_ST : T_SEMIC {}
+        | EXPR T_SEMIC {}
 
 EXPR : EXPR_ASSIGN { $$ = $1; }
 
@@ -109,6 +124,35 @@ MUL : UNARY { $$ = $1; }
 UNARY :
     //PRE / POST FIX
     //should we also do -x here?
+
+STMT : JMP_ST { $$ = $1; }
+        | EXPR_ST { $$ = $1; }
+        | IF_ST { $$ = $1; }
+        | ITER_ST { $$ = $1; }
+        | NEW_SCOPE { $$ = $1; }
+        | DEC_ST { $$ = $1; }
+        
+JMP_ST : T_RETURN T_SEMIC {}
+        | T_RETURN EXPR T_SEMIC {}
+        //BREAK, GOTO, CONTINUE N THAT HERE
+        
+IF_ST : T_IF T_LBRAC EXPR T_RBRAC STMT {}
+        | T_IF T_LBRAC EXPR T_RBRAC STMT T_ELSE STMT {}
+
+ITER_ST : T_WHILE T_LBRAC EXPR T_RBRAC STMT {}
+        | T_DO STMT T_WHILE T_LBRAC EXPR T_RBRAC T_SEMIC {}
+        | T_FOR T_LBRAC EXPR_ST EXPR_ST T_RBRAC STMT {}
+        | T_FOR T_LBRAC EXPR_ST EXPR_ST EXPR T_RBRAC STMT {}
+
+NEW_SCOPE : T_LCURL SCOPE T_RCURL {}
+
+DEC_ST : TYPE DEC_LIST T_SEMIC {}
+
+DEC_LIST : VAR_DEC {}
+        | VAR_LIST T_COMMA VAR_DEC {}
+        
+VAR_DEC : T_VARIABLE T_EQUAL EXPR {}
+        | T_VARIABLE {}
 
 
 %%

@@ -61,6 +61,9 @@ extern "C" int fileno(FILE *stream);
 "switch"        { return T_SWITCH; }
 "typedef"       { return T_TYPEDEF; }
 "union"         { return T_UNION; }
+"void"          { return T_VOID; }
+"while"         { return T_WHILE; }
+
 
 
 
