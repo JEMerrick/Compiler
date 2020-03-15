@@ -29,6 +29,7 @@ class Base {
           while(regFlag[i] != 0){
             i++;
           }
+          regFlag[i] = 1;
           return i;
         }
 

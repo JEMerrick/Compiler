@@ -42,7 +42,7 @@ public:
 
     virtual void printMIPS (std::string reg, std::ostream &out) const override{
           std::string r1 = "$" + loopy();
-          regFlag[loopy()] = 1;
+          regFlag[loopy()] = 0;
           left -> printMIPS(r1, out);
 
           //ADDI RX 0, 5
@@ -50,7 +50,7 @@ public:
           //ADDU RZ RY RX
 
           std::string r2 = "$" + loopy();
-          regFlag[loopy()] = 1;
+          regFlag[loopy()] = 0;
           right -> printMIPS(r2, out);
           out << "add " << reg << ", " << r1 << ", " << r2;
     }
