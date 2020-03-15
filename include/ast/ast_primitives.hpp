@@ -16,7 +16,13 @@ public:
         : id(_id)
     {}
 
-    virtual void printMIPS (std::ostream &out) const{
+    virtual void printMIPS (std::string reg, std::ostream &out) const{
+      if(localVars[id] != NULL){
+        out << "lw " << reg << "$0, " << value;
+      }
+      else{
+        
+      }
 
     }
     virtual void printC (std::ostream &out) const{

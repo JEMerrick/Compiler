@@ -26,7 +26,7 @@ class Base {
 
         void loopy(){
           int i = 0;
-          while(regFlag[i] !!!= 0){
+          while(regFlag[i] != 0){
             i++;
           }
           return i;
