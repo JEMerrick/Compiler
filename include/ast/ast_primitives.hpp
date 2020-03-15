@@ -17,9 +17,9 @@ public:
     {}
 
     virtual void printMIPS (std::ostream &out) const{
-      if(localVars[id] == 0){
+      if(localVars[id] != NULL){
         //update std::map <std::string, int> localVars;
-        localVars[id]++;
+        out << localVars[id];
       }
       else{
         out << "error";
