@@ -22,7 +22,7 @@ public:
         out << "lw " << reg << r1 << value;
       }
       else{
-
+      
       }
 
     }
