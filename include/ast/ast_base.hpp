@@ -23,7 +23,7 @@ class Base {
         virtual void printMIPS (std::string reg, std::ostream &out) const = 0;
         virtual void printC (std::ostream &out) const = 0;
         virtual void printPy (std::ostream &out) const = 0;
-
+        
         int loopy(){
           int i = 0;
           while(regFlag[i] != 0){
@@ -32,10 +32,7 @@ class Base {
           regFlag[i] = 1;
           return i;
         }
-
-
 };
-
 
 
 #endif
