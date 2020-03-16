@@ -23,9 +23,9 @@ public:
         delete right;
     }
 
-    virtual void printMIPS (std::string reg, std::ostream &out) const{}
-    virtual void printC (std::ostream &out) const{}
-    virtual void printPy (std::ostream &out) const{}
+    virtual void printMIPS (std::string reg, std::ostream &out) const = 0;
+    virtual void printC (std::ostream &out) const = 0;
+    virtual void printPy (std::ostream &out) const = 0;
 };
 
 class EqualOperator

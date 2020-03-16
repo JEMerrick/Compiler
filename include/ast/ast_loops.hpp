@@ -26,13 +26,9 @@ public:
         delete branch;
     }
 
-    virtual void printMIPS (std::string reg, std::ostream &out) const override{
-    }
-    virtual void printC (std::ostream &out) const override{
-    }
-    virtual void printPy (std::ostream &out) const override{
-
-    }
+    virtual void printMIPS (std::string reg, std::ostream &out) const = 0;
+    virtual void printC (std::ostream &out) const = 0;
+    virtual void printPy (std::ostream &out) const = 0;
 };
 
 class While

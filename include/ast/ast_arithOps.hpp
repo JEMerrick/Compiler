@@ -26,9 +26,9 @@ public:
         delete right;
     }
 
-    virtual void printMIPS (std::string reg, std::ostream &out) const{}
-    virtual void printC (std::ostream &out) const{}
-    virtual void printPy (std::ostream &out) const{}
+    virtual void printMIPS (std::string reg, std::ostream &out) const = 0;
+    virtual void printC (std::ostream &out) const = 0;
+    virtual void printPy (std::ostream &out) const = 0;
 };
 
 class AddOperator
@@ -150,20 +150,13 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out) const override{
-    }
-    virtual void printC (std::ostream &out) const override{
       std::string r1 = "$1";
       left -> printMIPS(r1, out);
-
-      //ADDI RX 0, 5
-      //ADDI RY 0, 5
-      //DIV RZ RY RX
-
-      // std::string r2 = "$" + loopy();
-      // regFlag[loopy()] = 0;
       std::string r2 = "$2";
       right -> printMIPS(r2, out);
       out << "div " << reg << ", " << r1 << ", " << r2;
+    }
+    virtual void printC (std::ostream &out) const override{
     }
     virtual void printPy (std::ostream &out) const override{
         left -> printPy(out);
@@ -184,13 +177,6 @@ public:
     virtual void printMIPS (std::string reg, std::ostream &out) const override{
       std::string r1 = "$1";
       left -> printMIPS(r1, out);
-
-      //ADDI RX 0, 5
-      //ADDI RY 0, 5
-      //MOD RZ RY RX
-
-      // std::string r2 = "$" + loopy();
-      // regFlag[loopy()] = 0;
       std::string r2 = "$2";
       right -> printMIPS(r2, out);
       out << "mod " << reg << ", " << r1 << ", " << r2;
