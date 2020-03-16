@@ -62,11 +62,9 @@ public:
         out << " )";
     }
     virtual void printPy (std::ostream &out) const override{
-        out << "( ";
         left -> printPy(out);
         out << " + ";
         right -> printPy(out);
-        out << " )";
     }
 };
 
@@ -86,18 +84,14 @@ public:
       out << "sub " << reg << ", " << r1 << ", " << r2;
     }
     virtual void printC (std::ostream &out) const override{
-        out << "( ";
         left -> printC(out);
         out << " - ";
         right -> printC(out);
-        out << " )";
     }
     virtual void printPy (std::ostream &out) const override{
-        out << "( ";
         left -> printPy(out);
         out << " - ";
         right -> printPy(out);
-        out << " )";
     }
 };
 
@@ -125,11 +119,9 @@ public:
         right -> printC(out);
         out << " )";
     virtual void printPy (std::ostream &out) const override{
-        out << "( ";
         left -> printPy(out);
         out << " * ";
         right -> printPy(out);
-        out << " )";
     }
 };
 
@@ -151,11 +143,9 @@ public:
       out << "div " << reg << ", " << r1 << ", " << r2;
     }
     virtual void printPy (std::ostream &out) const override{
-        out << "( ";
         left -> printPy(out);
         out << " / ";
         right -> printPy(out);
-        out << " )";
     }
 };
 
@@ -176,18 +166,14 @@ public:
       out << "mod " << reg << ", " << r1 << ", " << r2;
     }
     virtual void printC (std::ostream &out) const override{
-        out << "( ";
         left -> printC(out);
         out << " % ";
         right -> printC(out);
-        out << " )";
     }
     virtual void printPy (std::ostream &out) const override{
-        out << "( ";
         left -> printPy(out);
         out << " % ";
         right -> printPy(out);
-        out << " )";
 };
 
 
