@@ -30,7 +30,7 @@ public:
       out << "def ";
       funcName -> printPy();
       out << ": \n";
-      out << ""
+      out << "";
     }
 };
 
@@ -76,7 +76,7 @@ public:
     virtual void printPy (std::ostream &out) const override{
       out << "def ";
       funcName - > printPy();
-      out << ": \n"
+      out << ": \n";
       out << "  return 0;";
     }
 };

@@ -38,9 +38,9 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out) const override{
-      std::string r1 = "$" + loopy();
+      std::string r1 = "$1";
       left -> printMIPS(r1, out);
-      std::string r2 = "$" + loopy();
+      std::string r2 = "$2";
       right -> printMIPS(r2, out);
       out << "and " << reg << ", " << r1 << ", " << r2;
     }
@@ -70,9 +70,9 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out) const override{
-      std::string r1 = "$" + loopy();
+      std::string r1 = "$1";
       left -> printMIPS(r1, out);
-      std::string r2 = "$" + loopy();
+      std::string r2 = "$2";
       right -> printMIPS(r2, out);
       out << "or " << reg << ", " << r1 << ", " << r2;
     }
@@ -102,9 +102,9 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out) const override{
-      std::string r1 = "$" + loopy();
+      std::string r1 = "$1";
       left -> printMIPS(r1, out);
-      std::string r2 = "$" + loopy();
+      std::string r2 = "$2";
       right -> printMIPS(r2, out);
       out << "xor " << reg << ", " << r1 << ", " << r2;
     }
@@ -134,9 +134,9 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out) const override{
-      std::string r1 = "$" + loopy();
+      std::string r1 = "1";
       left -> printMIPS(r1, out);
-      std::string r2 = "$" + loopy();
+      std::string r2 = "$2";
       right -> printMIPS(r2, out);
       out << "sll " << reg << ", " << r1 << ", " << r2;
     }
@@ -166,9 +166,9 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out) const override{
-      std::string r1 = "$" + loopy();
+      std::string r1 = "$1";
       left -> printMIPS(r1, out);
-      std::string r2 = "$" + loopy();
+      std::string r2 = "$2";
       right -> printMIPS(r2, out);
       out << "slr " << reg << ", " << r1 << ", " << r2;
     }
