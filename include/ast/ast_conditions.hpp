@@ -25,7 +25,7 @@ public:
         delete branch;
     }
 
-    virtual void printMIPS (std::ostream &out) const{}
+    virtual void printMIPS (std::string reg, std::ostream &out) const{}
     virtual void printC (std::ostream &out) const{}
     virtual void printPy (std::ostream &out) const{}
 };
@@ -39,7 +39,7 @@ public:
         : Conditions(_condition, _branch)
     {}
 
-    virtual void printMIPS (std::ostream &out) const override{
+    virtual void printMIPS (std::string reg, std::ostream &out) const override{
     }
     virtual void printC (std::ostream &out) const override{
       out << "if (";
@@ -68,7 +68,7 @@ public:
         : Conditions(_condition, _branch), elseBranch(_elseBranch)
     {}
 
-    virtual void printMIPS (std::ostream &out) const override{
+    virtual void printMIPS (std::string reg, std::ostream &out) const override{
     }
     virtual void printC (std::ostream &out) const override{
       out << "if (";

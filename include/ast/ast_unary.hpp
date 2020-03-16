@@ -21,7 +21,7 @@ public:
         delete expr;
     }
 
-    virtual void printMIPS (std::ostream &out) const{}
+    virtual void printMIPS (std::string reg, std::ostream &out) const{}
     virtual void printC (std::ostream &out) const{}
     virtual void printPy (std::ostream &out) const{}
 };
@@ -37,7 +37,7 @@ public:
     {}
 
 
-    virtual void printMIPS (std::ostream &out) const{}
+    virtual void printMIPS (std::string reg, std::ostream &out) const{}
     virtual void printC (std::ostream &out) const{}
     virtual void printPy (std::ostream &out) const{}
 };
@@ -53,7 +53,7 @@ public:
     {}
 
 
-    virtual void printMIPS (std::ostream &out) const{}
+    virtual void printMIPS (std::string reg, std::ostream &out) const{}
     virtual void printC (std::ostream &out) const{}
     virtual void printPy (std::ostream &out) const{}
 };
@@ -68,7 +68,7 @@ public:
     {}
 
 
-    virtual void printMIPS (std::ostream &out) const{}
+    virtual void printMIPS (std::string reg, std::ostream &out) const{}
     virtual void printC (std::ostream &out) const{}
     virtual void printPy (std::ostream &out) const{}
 };

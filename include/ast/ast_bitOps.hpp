@@ -23,7 +23,7 @@ public:
         delete right;
     }
 
-    virtual void printMIPS (std::ostream &out) const{}
+    virtual void printMIPS (std::string reg, std::ostream &out) const{}
     virtual void printC (std::ostream &out) const{}
     virtual void printPy (std::ostream &out) const{}
 };
@@ -37,7 +37,7 @@ public:
         : BitOp(_left, _right)
     {}
 
-    virtual void printMIPS (std::ostream &out) const override{
+    virtual void printMIPS (std::string reg, std::ostream &out) const override{
       std::string r1 = "$" + loopy();
       left -> printMIPS(r1, out);
       std::string r2 = "$" + loopy();
@@ -69,7 +69,7 @@ public:
         : BitOp(_left, _right)
     {}
 
-    virtual void printMIPS (std::ostream &out) const override{
+    virtual void printMIPS (std::string reg, std::ostream &out) const override{
       std::string r1 = "$" + loopy();
       left -> printMIPS(r1, out);
       std::string r2 = "$" + loopy();
@@ -101,7 +101,7 @@ public:
         : BitOp(_left, _right)
     {}
 
-    virtual void printMIPS (std::ostream &out) const override{
+    virtual void printMIPS (std::string reg, std::ostream &out) const override{
       std::string r1 = "$" + loopy();
       left -> printMIPS(r1, out);
       std::string r2 = "$" + loopy();
@@ -133,7 +133,7 @@ public:
         : BitOp(_left, _right)
     {}
 
-    virtual void printMIPS (std::ostream &out) const override{
+    virtual void printMIPS (std::string reg, std::ostream &out) const override{
       std::string r1 = "$" + loopy();
       left -> printMIPS(r1, out);
       std::string r2 = "$" + loopy();
@@ -165,7 +165,7 @@ public:
         : BitOp(_left, _right)
     {}
 
-    virtual void printMIPS (std::ostream &out) const override{
+    virtual void printMIPS (std::string reg, std::ostream &out) const override{
       std::string r1 = "$" + loopy();
       left -> printMIPS(r1, out);
       std::string r2 = "$" + loopy();

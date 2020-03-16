@@ -22,7 +22,7 @@ public:
         delete varList;
     }
 
-    virtual void printMIPS (std::ostream &out) const override{
+    virtual void printMIPS (std::string reg, std::ostream &out) const override{
     }
     virtual void printC (std::ostream &out) const override{
     }
@@ -43,7 +43,7 @@ public:
         : Functions(_type, _funcName, _varList)
     {}
 
-    virtual void printMIPS (std::ostream &out) const override{
+    virtual void printMIPS (std::string reg, std::ostream &out) const override{
     }
     virtual void printC (std::ostream &out) const override{
       type-> printC(out);
@@ -69,7 +69,7 @@ public:
         : Functions(_type, _funcName, _varList)
     {}
 
-    virtual void printMIPS (std::ostream &out) const override{
+    virtual void printMIPS (std::string reg, std::ostream &out) const override{
     }
     virtual void printC (std::ostream &out) const override{
     }
@@ -90,7 +90,7 @@ public:
         : Functions(_type, _funcName, _varList)
     {}
 
-    virtual void printMIPS (std::ostream &out) const override{
+    virtual void printMIPS (std::string reg, std::ostream &out) const override{
     }
     virtual void printC (std::ostream &out) const override{
       funcName -> printC(out);
