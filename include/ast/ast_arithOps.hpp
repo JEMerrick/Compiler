@@ -41,20 +41,16 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out) const override{
-          // std::string r1 = "$" + loopy();
-          // regFlag[loopy()] = 0;
-          std::string r1 = "$1";
+          std::string r1 = "$" + loopy();
+          regFlag[loopy()] = 0;
           left -> printMIPS(r1, out);
-
           //ADDI RX 0, 5
-          //ADDI RY 0, 5
-          //ADDU RZ RY RX
-
-          // std::string r2 = "$" + loopy();
-          // regFlag[loopy()] = 0;
-          std::string r2 = "$2";
+          std::string r2 = "$" + loopy();
+          regFlag[loopy()] = 0;
           right -> printMIPS(r2, out);
+          //ADDI RY 0, 5
           out << "add " << reg << ", " << r1 << ", " << r2;
+          //ADDU RZ RY RX
     }
     virtual void printC (std::ostream &out) const override{
         out << "( ";
