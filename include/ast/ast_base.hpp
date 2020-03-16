@@ -24,14 +24,14 @@ class Base {
         virtual void printC (std::ostream &out) const{}
         virtual void printPy (std::ostream &out) const{}
 
-        void loopy(){
-          int i = 0;
-          while(regFlag[i] != 0){
-            i++;
-          }
-          regFlag[i] = 1;
-          return i;
-        }
+        // void loopy(){
+        //   int i = 0;
+        //   while(regFlag[i] != 0){
+        //     i++;
+        //   }
+        //   regFlag[i] = 1;
+        //   return i;
+        // }
 
 
 };
