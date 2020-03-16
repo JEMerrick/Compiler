@@ -108,7 +108,6 @@ public:
 class MulOperator
     : public ArithOp
 {
-
 public:
     MulOperator(BasePtr _left, BasePtr _right)
         : ArithOp(_left, _right)
@@ -190,6 +189,7 @@ public:
         left -> printPy(out);
         out << " % ";
         right -> printPy(out);
+    }
 };
 
 
