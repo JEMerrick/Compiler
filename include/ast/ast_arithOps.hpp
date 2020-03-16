@@ -133,6 +133,7 @@ public:
         out << " * ";
         right -> printC(out);
         out << " )";
+      }
     virtual void printPy (std::ostream &out) const override{
         left -> printPy(out);
         out << " * ";
