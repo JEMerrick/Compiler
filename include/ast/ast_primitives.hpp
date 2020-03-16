@@ -18,11 +18,11 @@ public:
 
     virtual void printMIPS (std::string reg, std::ostream &out) const{
       if(localVars[id] != NULL){
-        std::string r1 = "$" + loopy();
+        std::string r1 = "$1";
         out << "lw " << reg << r1 << value;
       }
       else{
-      
+
       }
 
     }

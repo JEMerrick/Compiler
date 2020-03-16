@@ -27,10 +27,6 @@ public:
     virtual void printC (std::ostream &out) const override{
     }
     virtual void printPy (std::ostream &out) const override{
-      out << "def ";
-      funcName -> printPy();
-      out << ": \n";
-      out << "";
     }
 };
 
@@ -46,14 +42,6 @@ public:
     virtual void printMIPS (std::string reg, std::ostream &out) const override{
     }
     virtual void printC (std::ostream &out) const override{
-      type-> printC(out);
-      out << " ";
-      funcName -> printC(out);
-      out << "(";
-      varList -> printC(out);
-      out << ") { \n";
-      out << "return 0; \n";
-      out << "}";
     }
     virtual void printPy (std::ostream &out) const override{
 
@@ -74,10 +62,6 @@ public:
     virtual void printC (std::ostream &out) const override{
     }
     virtual void printPy (std::ostream &out) const override{
-      out << "def ";
-      funcName - > printPy();
-      out << ": \n";
-      out << "  return 0;";
     }
 };
 
@@ -93,10 +77,6 @@ public:
     virtual void printMIPS (std::string reg, std::ostream &out) const override{
     }
     virtual void printC (std::ostream &out) const override{
-      funcName -> printC(out);
-      out << "(";
-      varList -> printC(out);
-      out << ")";
     }
     virtual void printPy (std::ostream &out) const override{
 
