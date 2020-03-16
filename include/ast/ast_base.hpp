@@ -24,7 +24,7 @@ class Base {
         virtual void printC (std::ostream &out) const = 0;
         virtual void printPy (std::ostream &out) const = 0;
 
-        void loopy(){
+        int loopy(){
           int i = 0;
           while(regFlag[i] != 0){
             i++;
