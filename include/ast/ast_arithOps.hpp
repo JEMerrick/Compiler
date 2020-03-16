@@ -76,7 +76,7 @@ public:
         : ArithOp(_left, _right)
     {}
 
-    virtual void printMIPS (std::ostream &out) const override{
+    virtual void printMIPS (std::string reg, std::ostream &out) const override{
       std::string r1 = "$" + loopy();
       left -> printMIPS(r1, out);
       std::string r2 = "$" + loopy();
@@ -105,7 +105,7 @@ public:
         : ArithOp(_left, _right)
     {}
 
-    virtual void printMIPS (std::ostream &out) const override{
+    virtual void printMIPS (std::string reg, std::ostream &out) const override{
       std::string r1 = "$" + loopy();
       left -> printMIPS(r1, out);
       std::string r2 = "$" + loopy();
@@ -133,7 +133,7 @@ public:
         : ArithOp(_left, _right)
     {}
 
-    virtual void printMIPS (std::ostream &out) const override{
+    virtual void printMIPS (std::string reg, std::ostream &out) const override{
     }
     virtual void printC (std::ostream &out) const override{
       std::string r1 = "$" + loopy();
@@ -158,7 +158,7 @@ public:
         : ArithOp(_left, _right)
     {}
 
-    virtual void printMIPS (std::ostream &out) const override{
+    virtual void printMIPS (std::string reg, std::ostream &out) const override{
       std::string r1 = "$" + loopy();
       left -> printMIPS(r1, out);
       std::string r2 = "$" + loopy();
