@@ -42,21 +42,17 @@ public:
       left -> printMIPS(r1, out);
       std::string r2 = "$2";
       right -> printMIPS(r2, out);
-      out << "and " << reg << ", " << r1 << ", " << r2;
+      out << "AND " << reg << ", " << r1 << ", " << r2;
     }
     virtual void printC (std::ostream &out) const override{
-        out << "( ";
         left -> printC(out);
         out << " & ";
         right -> printC(out);
-        out << " )";
     }
     virtual void printPy (std::ostream &out) const override{
-        out << "( ";
         left -> printPy(out);
         out << " & ";
         right -> printPy(out);
-        out << " )";
     }
 };
 
