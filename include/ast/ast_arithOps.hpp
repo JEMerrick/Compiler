@@ -140,6 +140,11 @@ public:
       out << "MFLO " << reg << std::endl;
     }
     virtual void printC (std::ostream &out) const override{
+      out << "( ";
+      left -> printC(out);
+      out << " / ";
+      right -> printC(out);
+      out << " )";
     }
     virtual void printPy (std::ostream &out) const override{
         left -> printPy(out);
@@ -162,12 +167,15 @@ public:
       left -> printMIPS(r1, out);
       std::string r2 = "$2";
       right -> printMIPS(r2, out);
-      out << "mod " << reg << ", " << r1 << ", " << r2;
+      out << "DIV " << r1 << ", " << r2;
+      out << "MFHI " << reg << std::endl;
     }
     virtual void printC (std::ostream &out) const override{
+        out << "( ";
         left -> printC(out);
         out << " % ";
         right -> printC(out);
+        out << " )";
     }
     virtual void printPy (std::ostream &out) const override{
         left -> printPy(out);
