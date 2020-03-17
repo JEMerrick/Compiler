@@ -70,21 +70,17 @@ public:
       left -> printMIPS(r1, out);
       std::string r2 = "$2";
       right -> printMIPS(r2, out);
-      out << "or " << reg << ", " << r1 << ", " << r2;
+      out << "OR " << reg << ", " << r1 << ", " << r2;
     }
     virtual void printC (std::ostream &out) const override{
-        out << "( ";
         left -> printC(out);
         out << " | ";
         right -> printC(out);
-        out << " )";
     }
     virtual void printPy (std::ostream &out) const override{
-        out << "( ";
         left -> printPy(out);
         out << " | ";
         right -> printPy(out);
-        out << " )";
     }
 };
 
@@ -102,21 +98,17 @@ public:
       left -> printMIPS(r1, out);
       std::string r2 = "$2";
       right -> printMIPS(r2, out);
-      out << "xor " << reg << ", " << r1 << ", " << r2;
+      out << "XOR " << reg << ", " << r1 << ", " << r2;
     }
     virtual void printC (std::ostream &out) const override{
-        out << "( ";
         left -> printC(out);
         out << " ^ ";
         right -> printC(out);
-        out << " )";
     }
     virtual void printPy (std::ostream &out) const override{
-        out << "( ";
         left -> printPy(out);
         out << " ^ ";
         right -> printPy(out);
-        out << " )";
     }
 };
 
@@ -134,21 +126,17 @@ public:
       left -> printMIPS(r1, out);
       std::string r2 = "$2";
       right -> printMIPS(r2, out);
-      out << "sll " << reg << ", " << r1 << ", " << r2;
+      out << "SLLV " << reg << ", " << r1 << ", " << r2;
     }
     virtual void printC (std::ostream &out) const override{
-        out << "( ";
         left -> printC(out);
         out << " << ";
         right -> printC(out);
-        out << " )";
     }
     virtual void printPy (std::ostream &out) const override{
-        out << "( ";
         left -> printPy(out);
         out << " << ";
         right -> printPy(out);
-        out << " )";
     }
 };
 
@@ -166,21 +154,17 @@ public:
       left -> printMIPS(r1, out);
       std::string r2 = "$2";
       right -> printMIPS(r2, out);
-      out << "slr " << reg << ", " << r1 << ", " << r2;
+      out << "SRLV " << reg << ", " << r1 << ", " << r2;
     }
     virtual void printC (std::ostream &out) const override{
-        out << "( ";
         left -> printC(out);
         out << " >> ";
         right -> printC(out);
-        out << " )";
     }
     virtual void printPy (std::ostream &out) const override{
-        out << "( ";
         left -> printPy(out);
         out << " >> ";
         right -> printPy(out);
-        out << " )";
     }
 };
 
