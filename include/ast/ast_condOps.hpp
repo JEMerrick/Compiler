@@ -38,20 +38,26 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out) const override{
+      std::string r1 = "$1";
+      left -> printMIPS(r1, out);
+      std::string r2 = "$2";
+      right -> printMIPS(r2, out);
+
+      //out << "ADDI " << reg << ", $0, 0" << std::endl;
+      out << "BNE " << r1 << ", " << r2 << ", " << "L" << std::endl;
+      //out << "ADDI " << reg << ", $0, 1" << std::endl;
+      out << "L:" << std::endl;
+
     }
     virtual void printC (std::ostream &out) const override{
-        out << "( ";
         left -> printC(out);
         out << " == ";
         right -> printC(out);
-        out << " )";
     }
     virtual void printPy (std::ostream &out) const override{
-        out << "( ";
         left -> printPy(out);
         out << " == ";
         right -> printPy(out);
-        out << " )";
     }
 };
 
