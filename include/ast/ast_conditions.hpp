@@ -78,7 +78,10 @@ public:
       condition->printMIPS(r1, out);
       out << "BEQ " << r1 << ", $0, " << "L" << std::endl;
       branch->printMIPS(reg, out);
+      out << "J:" << std::endl;
       out << "L:" << std::endl;
+      elseBranch->printMIPS(reg, out);
+      out << "A:" << std::endl;
     }
     virtual void printC (std::ostream &out) const override{
       out << "if (";
