@@ -40,6 +40,11 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out) const override{
+      std::string r1 = "$1";
+      condition->printMIPS(r1, out);
+      out << "BEQ " << r1 << ", $0, " << "L" << std::endl;
+      branch->printMIPS(reg, out);
+      out << "L:" << std::endl;
     }
     virtual void printC (std::ostream &out) const override{
       out << "if (";
@@ -50,9 +55,9 @@ public:
       out << " }";
     }
     virtual void printPy (std::ostream &out) const override{
-      out << "if ";
+      out << "if (";
       condition -> printPy(out);
-      out << ": \n";
+      out << ") :\n";
       out << "  ";
       branch -> printC(out);
     }
