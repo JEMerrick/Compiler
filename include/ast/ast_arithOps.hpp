@@ -49,7 +49,7 @@ public:
           regFlag[loopy()] = 0;
           right -> printMIPS(r2, out);
           //ADDI RY 0, 5
-          out << "add " << reg << ", " << r1 << ", " << r2;
+          out << "ADDU " << reg << ", " << r1 << ", " << r2;
           //ADDU RZ RY RX
     }
     virtual void printC (std::ostream &out) const override{
@@ -75,7 +75,11 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out) const override{
-
+      std::string r1 = "$1";
+      left -> printMIPS(r1, out);
+      std::string r2 = "$2";
+      right -> printMIPS(r2, out);
+      out << "SUBU " << reg << ", " << r1 << ", " << r2;
     }
     virtual void printC (std::ostream &out) const override{
         left -> printC(out);
@@ -101,16 +105,9 @@ public:
     virtual void printMIPS (std::string reg, std::ostream &out) const override{
       std::string r1 = "$1";
       left -> printMIPS(r1, out);
-
-      //ADDI RX 0, 5
-      //ADDI RY 0, 5
-      //MUL RZ RY RX
-
-      // std::string r2 = "$" + loopy();
-      // regFlag[loopy()] = 0;
       std::string r2 = "$2";
       right -> printMIPS(r2, out);
-      out << "mul " << reg << ", " << r1 << ", " << r2;
+      out << "MUL " << reg << ", " << r1 << ", " << r2;
     }
     virtual void printC (std::ostream &out) const override{
         out << "( ";
@@ -139,7 +136,8 @@ public:
       left -> printMIPS(r1, out);
       std::string r2 = "$2";
       right -> printMIPS(r2, out);
-      out << "div " << reg << ", " << r1 << ", " << r2;
+      out << "DIV " << r1 << ", " << r2;
+      out << "MFLO " << reg << std::endl;
     }
     virtual void printC (std::ostream &out) const override{
     }
