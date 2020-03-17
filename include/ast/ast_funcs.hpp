@@ -76,7 +76,7 @@ public:
     virtual void printC (std::ostream &out) const override{
     }
     virtual void printPy (std::ostream &out) const override{
-
+      out << "def " << funcName << "(";
     }
 };
 
