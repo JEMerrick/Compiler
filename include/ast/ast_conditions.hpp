@@ -84,7 +84,7 @@ public:
       out << " } else {\n";
       elseBranch->printC(out);
       out << std::endl;
-      out << "}"
+      out << "}";
     }
     virtual void printPy (std::ostream &out) const override{
       out << "if (";
