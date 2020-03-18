@@ -21,6 +21,8 @@ int findreg(){
   return i;
 }
 
+int indent = 0;
+
 std::string makelabel(){
   return "L_" + std::to_string(count++);
 }

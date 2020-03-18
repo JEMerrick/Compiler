@@ -48,18 +48,21 @@ public:
     }
     virtual void printC (std::ostream &out) const override{
       out << "if (";
-      condition -> printC(out);
+      condition->printC(out);
       out << ") \n";
       out << "{";
-      branch -> printC(out);
+      branch->printC(out);
       out << " }";
     }
     virtual void printPy (std::ostream &out) const override{
+      for(int i = indent; i > 0; i--){
+        out << "  ";
+      }
       out << "if (";
-      condition -> printPy(out);
+      condition->printPy(out);
       out << ") :\n";
       out << "  ";
-      branch -> printC(out);
+      branch->printPy(out);
     }
 };
 
