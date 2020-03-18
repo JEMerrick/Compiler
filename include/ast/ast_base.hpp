@@ -9,8 +9,8 @@
 #include <memory>
 
 int count = 0;
-std::vector <int> regFlag {8, 9, 10, 11, 12, 13, 14, 15, 16,
-                          17, 18, 19 20, 21, 22, 23, 24, 25}; // 0 is free
+std::vector <int> regFlag {1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; // can't use $0-$7, $8-$25 free
 
 class Base;
 
@@ -35,7 +35,7 @@ class Base {
 };
 
 int findreg(){
-  int i = 0;
+  int i = 8;
   while(regFlag[i] != 0){
     i++;
   }
