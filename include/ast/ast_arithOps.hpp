@@ -179,7 +179,6 @@ public:
       out << "MFHI " << reg << std::endl;
       regFlag[std::stoi(r1.substr(1))] = 0;
       regFlag[std::stoi(r2.substr(1))] = 0;
-
     }
     virtual void printC (std::ostream &out) const override{
         out << "( ";
