@@ -38,11 +38,13 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out) const override{
-      std::string r1 = "$1";
+      std::string r1 = "$" + std::to_string(findreg());
       left -> printMIPS(r1, out);
-      std::string r2 = "$2";
+      std::string r2 = "$" + std::to_string(findreg());
       right -> printMIPS(r2, out);
       out << "AND " << reg << ", " << r1 << ", " << r2;
+      regFlag[std::stoi(r1.substr(1))] = 0;
+      regFlag[std::stoi(r2.substr(1))] = 0;
     }
     virtual void printC (std::ostream &out) const override{
         left -> printC(out);
@@ -66,11 +68,13 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out) const override{
-      std::string r1 = "$1";
+      std::string r1 = "$" + std::to_string(findreg());
       left -> printMIPS(r1, out);
-      std::string r2 = "$2";
+      std::string r2 = "$" + std::to_string(findreg());
       right -> printMIPS(r2, out);
       out << "OR " << reg << ", " << r1 << ", " << r2;
+      regFlag[std::stoi(r1.substr(1))] = 0;
+      regFlag[std::stoi(r2.substr(1))] = 0;
     }
     virtual void printC (std::ostream &out) const override{
         left -> printC(out);
@@ -94,11 +98,13 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out) const override{
-      std::string r1 = "$1";
+      std::string r1 = "$" + std::to_string(findreg());
       left -> printMIPS(r1, out);
-      std::string r2 = "$2";
+      std::string r2 = "$" + std::to_string(findreg());
       right -> printMIPS(r2, out);
       out << "XOR " << reg << ", " << r1 << ", " << r2;
+      regFlag[std::stoi(r1.substr(1))] = 0;
+      regFlag[std::stoi(r2.substr(1))] = 0;
     }
     virtual void printC (std::ostream &out) const override{
         left -> printC(out);
@@ -122,11 +128,13 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out) const override{
-      std::string r1 = "1";
+      std::string r1 = "$" + std::to_string(findreg());
       left -> printMIPS(r1, out);
-      std::string r2 = "$2";
+      std::string r2 = "$" + std::to_string(findreg());
       right -> printMIPS(r2, out);
       out << "SLLV " << reg << ", " << r1 << ", " << r2;
+      regFlag[std::stoi(r1.substr(1))] = 0;
+      regFlag[std::stoi(r2.substr(1))] = 0;
     }
     virtual void printC (std::ostream &out) const override{
         left -> printC(out);
@@ -150,11 +158,13 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out) const override{
-      std::string r1 = "$1";
+      std::string r1 = "$" + std::to_string(findreg());
       left -> printMIPS(r1, out);
-      std::string r2 = "$2";
+      std::string r2 = "$" + std::to_string(findreg());
       right -> printMIPS(r2, out);
-      out << "SRLV " << reg << ", " << r1 << ", " << r2;
+      out << "SLRV " << reg << ", " << r1 << ", " << r2;
+      regFlag[std::stoi(r1.substr(1))] = 0;
+      regFlag[std::stoi(r2.substr(1))] = 0;
     }
     virtual void printC (std::ostream &out) const override{
         left -> printC(out);
