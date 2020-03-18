@@ -42,11 +42,9 @@ public:
 
     virtual void printMIPS (std::string reg, std::ostream &out) const override{
           std::string r1 = "$" + std::to_string(findreg());
-
           left -> printMIPS(r1, out);
           //ADDI RX 0, 5
           std::string r2 = "$" + std::to_string(findreg());
-
           right -> printMIPS(r2, out);
           //ADDI RY 0, 5
           out << "ADDU " << reg << ", " << r1 << ", " << r2;
