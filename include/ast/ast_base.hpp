@@ -9,7 +9,8 @@
 #include <memory>
 
 int count = 0;
-std::vector <int> regFlag {8, 9, 10, 11, 12, 13, 14, 15}; // 0 is free
+std::vector <int> regFlag {8, 9, 10, 11, 12, 13, 14, 15, 16,
+                          17, 18, 19 20, 21, 22, 23, 24, 25}; // 0 is free
 
 class Base;
 
