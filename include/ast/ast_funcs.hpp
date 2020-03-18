@@ -77,7 +77,7 @@ public:
     }
     virtual void printPy (std::ostream &out) const override{
       out << "def " << funcName << "(";
-      varList->printPy(reg, out);
+      varList->printPy(out);
 
     }
 };
