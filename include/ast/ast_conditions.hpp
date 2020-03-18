@@ -40,11 +40,13 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out) const override{
-      std::string r1 = "$1";
+      std::string r1 = "$" + std::to_string(findreg());
       condition->printMIPS(r1, out);
-      out << "BEQ " << r1 << ", $0, " << "L" << std::endl;
+      std::string label = makelabel();
+      out << "BEQ " << r1 << ", $0, " << label << std::endl;
       branch->printMIPS(reg, out);
-      out << "L:" << std::endl;
+      out << label << ":" << std::endl;
+      regFlag[std::stoi(r1.substr(1))] = 0;
     }
     virtual void printC (std::ostream &out) const override{
       out << "if (";
@@ -56,12 +58,16 @@ public:
     }
     virtual void printPy (std::ostream &out) const override{
       for(int i = indent; i > 0; i--){
-        out << "  ";
+        out << "\t";
       }
       out << "if (";
       condition->printPy(out);
       out << ") :\n";
-      out << "  ";
+      indent++;
+      for(int i = indent; i > 0; i--){
+        out << "\t";
+      }
+      indent--;
       branch->printPy(out);
     }
 };
@@ -98,13 +104,25 @@ public:
       out << "}";
     }
     virtual void printPy (std::ostream &out) const override{
+      for(int i = indent; i > 0; i--){
+        out << "\t";
+      }
       out << "if (";
-      condition -> printPy(out);
+      condition->printPy(out);
       out << ") :\n";
-      out << "  ";
-      branch -> printPy(out);
+      indent++;
+      for(int i = indent; i > 0; i--){
+        out << "\t";
+      }
+      indent--;
+      branch->printPy(out);
       out << std::endl;
       out << "else :\n";
+      indent++;
+      for(int i = indent; i > 0; i--){
+        out << "\t";
+      }
+      indent--;
       elseBranch->printPy(out);
       out << std::endl;
     }
