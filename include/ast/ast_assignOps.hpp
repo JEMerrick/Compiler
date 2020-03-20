@@ -35,16 +35,22 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out) const override{
+      std::string r1 = "$" + std::to_string(findreg());
+      left -> printMIPS(r1, out);
+      if(){
+        throw "Variable has not been declared. ";
+      }
+      out << "ADDU " << reg << ", " << "$0, " << r1 << std::endl; 
     }
     virtual void printC (std::ostream &out) const override{
         out << variable;
         out << " = ";
-        myExpr -> printC(out);
+        myExpr->printC(out);
     }
     virtual void printPy (std::ostream &out) const override{
         out << variable;
         out << " = ";
-        myExpr -> printPy(out);
+        myExpr->printPy(out);
     }
 };
 
