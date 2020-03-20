@@ -40,7 +40,7 @@ public:
       if(){
         throw "Variable has not been declared. ";
       }
-      out << "ADDU " << reg << ", " << "$0, " << r1 << std::endl; 
+      out << "ADDU " << reg << ", " << "$0, " << r1 << std::endl;
     }
     virtual void printC (std::ostream &out) const override{
         out << variable;
@@ -54,6 +54,55 @@ public:
     }
 };
 
+class AddEqualOperator
+    : public AssignOp
+{
+protected:
+    BasePtr myExpr;
+public:
+    AddEqualOperator(std::string _variable, BasePtr _expr)
+        : AssignOp(_variable), myExpr(_expr)
+    {}
+
+    virtual void printMIPS (std::string reg, std::ostream &out) const override{
+
+    }
+    virtual void printC (std::ostream &out) const override{
+        out << variable;
+        out << " += ";
+        myExpr->printC(out);
+    }
+    virtual void printPy (std::ostream &out) const override{
+        out << variable;
+        out << " += ";
+        myExpr->printPy(out);
+    }
+};
+
+class SubEqualOperator
+    : public AssignOp
+{
+protected:
+    BasePtr myExpr;
+public:
+    SubEqualOperator(std::string _variable, BasePtr _expr)
+        : AssignOp(_variable), myExpr(_expr)
+    {}
+
+    virtual void printMIPS (std::string reg, std::ostream &out) const override{
+
+    }
+    virtual void printC (std::ostream &out) const override{
+        out << variable;
+        out << " -= ";
+        myExpr->printC(out);
+    }
+    virtual void printPy (std::ostream &out) const override{
+        out << variable;
+        out << " -= ";
+        myExpr->printPy(out);
+    }
+};
 
 //classes for +=, -=, ++ post/pre, -- post/pre here
 
