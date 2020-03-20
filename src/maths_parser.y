@@ -26,7 +26,7 @@
 %token T_SEMIC
 %token T_LSHIFT T_RSHIFT
 %token T_EQUAL T_NEQUAL T_GT T_LT T_LEQUAL T_GEQUAL
-%token T_BNOT T_NOT T_AND T_OR T_BAND T_BOR T_BXOR
+%token T_BNOT T_NOT T_AND T_OR T_BAND T_BOR T_BXOR T_MOD
 %token T_ADDEQUAL T_SUBEQUAL T_INCREM T_DECREM
 %token T_WHILE T_DO T_IF T_ELSE
 %token T_INT T_VOID T_CHAR T_SHORT T_LONG T_FLOAT T_DOUBLE T_SIGNED T_RETURN
@@ -72,8 +72,8 @@ TYPE : T_INT { $$ = $1; }
 PARAM_LIST : PARAM_LIST T_COMMA TYPE T_VARIABLE { /* new arg*/ }
              TYPE T_VARIABLE { /* new arg*/ }
 
-SCOPE : SCOPE STMT { /* new program call*/ }
-        | STMT { $$ = $1;}
+SCOPE : SCOPE STMT { /* new branch?*/ }
+        | STMT { /* new branch empty? */}
 
 EXPR_ST : T_SEMIC { /* new empty expression statement*/ }
         | EXPR T_SEMIC { /* new expression statement*/ }
@@ -125,7 +125,9 @@ MUL : UNARY { $$ = $1; }
     | MUL T_DIVIDE UNARY {$$ = new DivOperator($1, $3);}
     | MUL T_MOD UNARY {$$ = new ModOperator($1, $3);}
 
-UNARY : 
+UNARY : POSTFIX { $$ = $1; }
+        | T_DECREM UNARY { /* new unary decrement */}
+        | T_INCREM UNARY { /* new unary increment */}
 
 STMT : JMP_ST { $$ = $1; }
         | EXPR_ST { $$ = $1; }
@@ -134,27 +136,27 @@ STMT : JMP_ST { $$ = $1; }
         | NEW_SCOPE { $$ = $1; }
         | DEC_ST { $$ = $1; }
         
-JMP_ST : T_RETURN T_SEMIC {}
-        | T_RETURN EXPR T_SEMIC {}
+JMP_ST : T_RETURN T_SEMIC { /* new return 0 */}
+        | T_RETURN EXPR T_SEMIC { /* new return expr */}
         //BREAK, GOTO, CONTINUE N THAT HERE
         
-IF_ST : T_IF T_LBRAC EXPR T_RBRAC STMT {}
-        | T_IF T_LBRAC EXPR T_RBRAC STMT T_ELSE STMT {}
+IF_ST : T_IF T_LBRAC EXPR T_RBRAC STMT { /* new if */}
+        | T_IF T_LBRAC EXPR T_RBRAC STMT T_ELSE STMT {/* new if else */}
 
-ITER_ST : T_WHILE T_LBRAC EXPR T_RBRAC STMT {}
-        | T_DO STMT T_WHILE T_LBRAC EXPR T_RBRAC T_SEMIC {}
-        | T_FOR T_LBRAC EXPR_ST EXPR_ST T_RBRAC STMT {}
-        | T_FOR T_LBRAC EXPR_ST EXPR_ST EXPR T_RBRAC STMT {}
+ITER_ST : T_WHILE T_LBRAC EXPR T_RBRAC STMT { /* new while*/}
+        | T_DO STMT T_WHILE T_LBRAC EXPR T_RBRAC T_SEMIC {/* new do while*/}
+        | T_FOR T_LBRAC EXPR_ST EXPR_ST T_RBRAC STMT {/* new for (no increment)*/}
+        | T_FOR T_LBRAC EXPR_ST EXPR_ST EXPR T_RBRAC STMT {/* new for */}
 
-NEW_SCOPE : T_LCURL SCOPE T_RCURL {}
+NEW_SCOPE : T_LCURL SCOPE T_RCURL {/* new scope */}
 
-DEC_ST : TYPE DEC_LIST T_SEMIC {}
+DEC_ST : TYPE DEC_LIST T_SEMIC { /* new declare statement */}
 
-DEC_LIST : VAR_DEC {}
-        | VAR_LIST T_COMMA VAR_DEC {}
+DEC_LIST : VAR_DEC { /* new declare variable list length 0 */}
+        | VAR_LIST T_COMMA VAR_DEC { /* new declare variable list */}
         
-VAR_DEC : T_VARIABLE T_EQUAL EXPR {}
-        | T_VARIABLE {}
+VAR_DEC : T_VARIABLE T_EQUAL EXPR { /* new declare variableS */}
+        | T_VARIABLE { /* new declare variable */}
 
         
 %%
