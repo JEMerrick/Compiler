@@ -23,19 +23,18 @@
 %token T_TIMES T_DIVIDE T_PLUS T_MINUS T_EXPONENT
 %token T_LBRAC T_RBRAC T_LCURL T_RCURL
 %token T_NUMBER T_VARIABLE
-%token T_SEMIC
+%token T_SEMIC T_COMMA
 %token T_LSHIFT T_RSHIFT
 %token T_EQUAL T_NEQUAL T_GT T_LT T_LEQUAL T_GEQUAL
 %token T_BNOT T_NOT T_AND T_OR T_BAND T_BOR T_BXOR T_MOD
 %token T_ADDEQUAL T_SUBEQUAL T_INCREM T_DECREM
-%token T_WHILE T_DO T_IF T_ELSE
+%token T_WHILE T_DO T_IF T_ELSE T_FOR
 %token T_INT T_VOID T_CHAR T_SHORT T_LONG T_FLOAT T_DOUBLE T_SIGNED T_RETURN
 
-%type <expr> PROG 
-%type <expr> 
-%type <number> T_INT
+%type <expr> PROG DECLR_ALL FUNDEC PARAM_LIST SCOPE EXPR_ST EXPR EXPR_ASSIGN EXPR_COND OR AND BOR BXOR BAND EQUAL LESS SHIFT ADD MUL UNARY POSTFIX PRIMATIVE STMT JMP_ST IF_ST ITER_ST NEW_SCOPE DEC_ST DEC_LIST VAR_DEC
 %type <number> T_NUMBER
-%type <string> T_VARIABLE FUNCTION_NAME
+%type <string> T_INT T_VOID T_CHAR T_SHORT T_LONG T_FLOAT T_DOUBLE T_SIGNED 
+%type <string> T_VARIABLE TYPE
 
 %start ROOT
 %%
@@ -54,7 +53,7 @@ DECLR_ALL : FUNDEC { $$ = $1;}
             | DEC_ST { /* new global var*/ }
         
 FUNDEC : TYPE T_VARIABLE T_LBRAC PARAM_LIST T_RBRAC T_LCURL SCOPE T_RCURL { /* new funcdef*/ }
-        | TYPE T_VARIABLE T_LBRAC T_RBRAC TLCURL SCOPE T_RCURL { /* new funcdef */ }
+        | TYPE T_VARIABLE T_LBRAC T_RBRAC T_LCURL SCOPE T_RCURL { /* new funcdef */ }
         | TYPE T_VARIABLE T_LBRAC PARAM_LIST T_RBRAC T_SEMIC { /* new funccall */ }
         | TYPE T_VARIABLE T_LBRAC T_RBRAC T_SEMIC { /* new funccall*/ }
 
@@ -66,7 +65,6 @@ TYPE : T_INT { $$ = $1; }
         | T_FLOAT { $$ = $1; }
         | T_DOUBLE { $$ = $1; }
         | T_SIGNED  { $$ = $1; }
-        | T_RETURN { $$ = $1; }
         
 
 PARAM_LIST : PARAM_LIST T_COMMA TYPE T_VARIABLE { /* new arg*/ }
@@ -161,7 +159,7 @@ NEW_SCOPE : T_LCURL SCOPE T_RCURL {/* new scope */}
 DEC_ST : TYPE DEC_LIST T_SEMIC { /* new declare statement */}
 
 DEC_LIST : VAR_DEC { /* new declare variable list length 0 */}
-        | VAR_LIST T_COMMA VAR_DEC { /* new declare variable list */}
+        | DEC_LIST T_COMMA VAR_DEC { /* new declare variable list */}
         
 VAR_DEC : T_VARIABLE T_EQUAL EXPR { /* new declare variableS */}
         | T_VARIABLE { /* new declare variable */}

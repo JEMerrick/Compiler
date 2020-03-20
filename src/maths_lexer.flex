@@ -33,6 +33,7 @@ extern "C" int fileno(FILE *stream);
 [<][<]          { return T_LSHIFT; }
 [>][>]          { return T_RSHIFT; }
 [=]             { return T_ASSIGN; }
+[,]             { return T_COMMA; }
 "auto"          { return T_AUTO; }
 "break"         { return T_BREAK; }
 "case"          { return T_CASE; }
@@ -71,7 +72,6 @@ extern "C" int fileno(FILE *stream);
 
 
 
-[a-zA-Z]\w* { yylval.string=new std::string(yytext); return T_IDENTIFIER; }
 [a-zA-Z]\w* { yylval.string=new std::string(yytext); return T_VARIABLE; }
 [0-9]+ { yylval.number=strtod(yytext, 0); return T_NUMBER; }
 
