@@ -15,7 +15,7 @@ protected:
     BasePtr varList;
     BasePtr branch;
 public:
-    Functions(std::string _type, std::string _funcName, BasePtr _varList, BasePtr branch)
+    Functions(std::string _type, std::string _funcName, BasePtr _varList, BasePtr _branch)
         : type(_type), funcName(_funcName), varList(_varList), branch(_branch)
     {}
 

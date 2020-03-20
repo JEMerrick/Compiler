@@ -35,7 +35,7 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out) const override{
-      x
+      
     }
     virtual void printC (std::ostream &out) const override{
         out << variable;
