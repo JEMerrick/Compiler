@@ -85,12 +85,16 @@ public:
     virtual void printMIPS (std::string reg, std::ostream &out) const override{
       std::string r1 = "$1";
       condition->printMIPS(r1, out);
-      out << "BEQ " << r1 << ", $0, " << "L" << std::endl;
+      std::string label1 = makelabel();
+      std::string label2 = makelabel();
+
+      out << "BEQ " << r1 << ", $0, " << label1 << std::endl;
       branch->printMIPS(reg, out);
-      out << "J:" << std::endl;
-      out << "L:" << std::endl;
+      out << "J " << label2 << std::endl;
+      out << label1 << std::endl;
       elseBranch->printMIPS(reg, out);
-      out << "A:" << std::endl;
+      out << label2 << ":" << std::endl;
+      regFlag[std::stoi(r1.substr(1))] = 0;
     }
     virtual void printC (std::ostream &out) const override{
       out << "if (";
@@ -138,7 +142,7 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out) const override{
-      
+
     }
     virtual void printC (std::ostream &out) const override{
       out << "switch (";
