@@ -139,15 +139,15 @@ public:
     }
 };
 
-class Break
+class BBreak
     : public Base
 {
 
 public:
-    Break()
+    BBreak()
     {}
 
-    ~Break(){}
+    ~BBreak(){}
 
     virtual void printMIPS (std::string reg, std::ostream &out) const override{
     }
@@ -162,15 +162,15 @@ public:
     }
 };
 
-class Continue
+class CContinue
     : public Base
 {
 
 public:
-    Continue()
+    CContinue()
     {}
 
-    ~Continue(){}
+    ~CContinue(){}
 
     virtual void printMIPS (std::string reg, std::ostream &out) const override{
     }
