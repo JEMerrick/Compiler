@@ -127,4 +127,40 @@ public:
       out << std::endl;
     }
 };
+
+class Switch
+    : public Conditions
+{
+
+public:
+    Switch(BasePtr _condition, BasePtr _branch)
+        : Conditions(_condition, _branch)
+    {}
+
+    virtual void printMIPS (std::string reg, std::ostream &out) const override{
+      
+    }
+    virtual void printC (std::ostream &out) const override{
+      out << "switch (";
+      condition->printC(out);
+      out << ") \n";
+      out << "{";
+      branch->printC(out);
+      out << " }";
+    }
+    virtual void printPy (std::ostream &out) const override{
+      for(int i = indent; i > 0; i--){
+        out << "\t";
+      }
+      out << "switch (";
+      condition->printPy(out);
+      out << ") :\n";
+      indent++;
+      for(int i = indent; i > 0; i--){
+        out << "\t";
+      }
+      indent--;
+      branch->printPy(out);
+    }
+};
 #endif
