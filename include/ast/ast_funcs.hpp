@@ -21,7 +21,7 @@ public:
 
     virtual ~Functions(){
         delete varList;
-        delete branch
+        delete branch;
     }
 
     virtual void printMIPS (std::string reg, std::ostream &out) const = 0;
@@ -35,7 +35,7 @@ class DecFunc
 
 public:
     DecFunc(std::string _type, std::string _funcName, BasePtr _varList, BasePtr _branch)
-        : Functions(_type, _funcName, _varList, branch)
+        : Functions(_type, _funcName, _varList, _branch)
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out) const override{

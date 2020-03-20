@@ -40,7 +40,7 @@ public:
 
     virtual void printMIPS (std::string reg, std::ostream &out) const override{
       std::string r1 = "$" + std::to_string(findreg());
-      left -> printMIPS(r1, out);
+      condition->printMIPS(r1, out);
       std::string label = makelabel();
 
       out << "ADDI " << reg << ", $0, 1" << std::endl;
@@ -58,10 +58,6 @@ public:
       condition->printPy(out);
     }
 };
-
-class OrOperator
-    : public LogicOp
-{
 
 class AndOperator
     : public LogicOp
