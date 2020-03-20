@@ -82,32 +82,36 @@ extern int yydebug;
     T_LT = 276,
     T_LEQUAL = 277,
     T_GEQUAL = 278,
-    T_BNOT = 279,
-    T_NOT = 280,
-    T_AND = 281,
-    T_OR = 282,
-    T_BAND = 283,
-    T_BOR = 284,
-    T_BXOR = 285,
-    T_MOD = 286,
-    T_ADDEQUAL = 287,
-    T_SUBEQUAL = 288,
-    T_INCREM = 289,
-    T_DECREM = 290,
-    T_WHILE = 291,
-    T_DO = 292,
-    T_IF = 293,
-    T_ELSE = 294,
-    T_FOR = 295,
-    T_INT = 296,
-    T_VOID = 297,
-    T_CHAR = 298,
-    T_SHORT = 299,
-    T_LONG = 300,
-    T_FLOAT = 301,
-    T_DOUBLE = 302,
-    T_SIGNED = 303,
-    T_RETURN = 304
+    T_ASSIGN = 279,
+    T_BNOT = 280,
+    T_NOT = 281,
+    T_AND = 282,
+    T_OR = 283,
+    T_BAND = 284,
+    T_BOR = 285,
+    T_BXOR = 286,
+    T_MOD = 287,
+    T_ADDEQUAL = 288,
+    T_SUBEQUAL = 289,
+    T_INCREM = 290,
+    T_DECREM = 291,
+    T_WHILE = 292,
+    T_DO = 293,
+    T_IF = 294,
+    T_ELSE = 295,
+    T_FOR = 296,
+    T_BREAK = 297,
+    T_CONTINUE = 298,
+    T_SWITCH = 299,
+    T_INT = 300,
+    T_VOID = 301,
+    T_CHAR = 302,
+    T_SHORT = 303,
+    T_LONG = 304,
+    T_FLOAT = 305,
+    T_DOUBLE = 306,
+    T_SIGNED = 307,
+    T_RETURN = 308
   };
 #endif
 
@@ -122,7 +126,7 @@ union YYSTYPE
   double number;
   std::string *string;
 
-#line 126 "src/maths_parser.tab.hpp" /* yacc.c:1909  */
+#line 130 "src/maths_parser.tab.hpp" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

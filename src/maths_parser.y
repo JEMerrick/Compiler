@@ -25,10 +25,10 @@
 %token T_NUMBER T_VARIABLE
 %token T_SEMIC T_COMMA
 %token T_LSHIFT T_RSHIFT
-%token T_EQUAL T_NEQUAL T_GT T_LT T_LEQUAL T_GEQUAL
+%token T_EQUAL T_NEQUAL T_GT T_LT T_LEQUAL T_GEQUAL T_ASSIGN
 %token T_BNOT T_NOT T_AND T_OR T_BAND T_BOR T_BXOR T_MOD
 %token T_ADDEQUAL T_SUBEQUAL T_INCREM T_DECREM
-%token T_WHILE T_DO T_IF T_ELSE T_FOR
+%token T_WHILE T_DO T_IF T_ELSE T_FOR T_BREAK T_CONTINUE T_SWITCH
 %token T_INT T_VOID T_CHAR T_SHORT T_LONG T_FLOAT T_DOUBLE T_SIGNED T_RETURN
 
 %type <expr> PROG DECLR_ALL FUNDEC PARAM_LIST SCOPE EXPR_ST EXPR EXPR_ASSIGN EXPR_COND OR AND BOR BXOR BAND EQUAL LESS SHIFT ADD MUL UNARY POSTFIX PRIMATIVE STMT JMP_ST IF_ST ITER_ST NEW_SCOPE DEC_ST DEC_LIST VAR_DEC
@@ -79,7 +79,7 @@ EXPR_ST : T_SEMIC { /* new empty expression statement*/ }
 EXPR : EXPR_ASSIGN { $$ = $1; }
 
 EXPR_ASSIGN : EXPR_COND { $$ = $1; }
-            | T_VARIABLE T_EQUAL EXPR_ASSIGN {/*new assign expr*/}
+            | T_VARIABLE T_ASSIGN EXPR_ASSIGN {/*new assign expr*/}
             | T_VARIABLE T_ADDEQUAL EXPR_ASSIGN {/* new addequal */}
             | T_VARIABLE T_SUBEQUAL EXPR_ASSIGN {/* new subequal */}
 
@@ -116,7 +116,7 @@ SHIFT : ADD { $$ = $1; }
 
 ADD : MUL { $$ = $1; }
     | ADD T_PLUS MUL {$$ = new AddOperator($1, $3);}
-    | ADD T_MINUS MUL {$$ = new MinusOperator($1, $3);}
+    | ADD T_MINUS MUL {$$ = new SubOperator($1, $3);}
     
 MUL : UNARY { $$ = $1; }
     | MUL T_TIMES UNARY {$$ = new MulOperator($1, $3);}
@@ -131,7 +131,7 @@ POSTFIX : PRIMATIVE { $$ = $1; }
         | POSTFIX T_INCREM { /* new postfix increment */ }
         | POSTFIX T_DECREM { /* new postfix decrement */ }
 
-PRIMATIVE : T_VARIABLE { $$ = new Variable($1); }
+PRIMATIVE : T_VARIABLE { $$ = new Variable(*$1); }
             | T_NUMBER { $$ = new Number($1); }
             | T_LBRAC EXPR T_RBRAC { $$ = $2; }
 
@@ -144,10 +144,12 @@ STMT : JMP_ST { $$ = $1; }
         
 JMP_ST : T_RETURN T_SEMIC { /* new return 0 */}
         | T_RETURN EXPR T_SEMIC { /* new return expr */}
-        //BREAK, GOTO, CONTINUE N THAT HERE
+        | T_BREAK {/* new break statement */}
+        | T_CONTINUE { /* new continue statement */}
         
 IF_ST : T_IF T_LBRAC EXPR T_RBRAC STMT { /* new if */}
         | T_IF T_LBRAC EXPR T_RBRAC STMT T_ELSE STMT {/* new if else */}
+        | T_SWITCH EXPR STMT {/*new switch */}
 
 ITER_ST : T_WHILE T_LBRAC EXPR T_RBRAC STMT { /* new while*/}
         | T_DO STMT T_WHILE T_LBRAC EXPR T_RBRAC T_SEMIC {/* new do while*/}
@@ -161,7 +163,7 @@ DEC_ST : TYPE DEC_LIST T_SEMIC { /* new declare statement */}
 DEC_LIST : VAR_DEC { /* new declare variable list length 0 */}
         | DEC_LIST T_COMMA VAR_DEC { /* new declare variable list */}
         
-VAR_DEC : T_VARIABLE T_EQUAL EXPR { /* new declare variableS */}
+VAR_DEC : T_VARIABLE T_ASSIGN EXPR { /* new declare variableS */}
         | T_VARIABLE { /* new declare variable */}
 
         
