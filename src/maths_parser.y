@@ -27,7 +27,7 @@
 %token T_LSHIFT T_RSHIFT
 %token T_EQUAL T_NEQUAL T_GT T_LT T_LEQUAL T_GEQUAL
 %token T_BNOT T_NOT T_AND T_OR T_BAND T_BOR T_BXOR
-
+%token T_ADDEQUAL T_SUBEQUAL T_INCREM T_DECREM
 %token T_WHILE T_DO T_IF T_ELSE
 %token T_INT T_VOID T_CHAR T_SHORT T_LONG T_FLOAT T_DOUBLE T_SIGNED T_RETURN
 
@@ -47,15 +47,16 @@
 */
 ROOT : PROG { g_root = $1; }
 
-PROG :  DECLR {$$ = $1;}
+PROG :  DECLR_ALL {$$ = $1;}
+        | PROG DECLR_ALL { /* new program call*/ }
 
-DECLR : FUNDEC { $$ = $1;}
-        //Global var also here
+DECLR_ALL : FUNDEC { $$ = $1;}
+            | DEC_ST { /* new global var*/ }
         
-FUNDEC : TYPE T_VARIABLE T_LBRAC PARAM_LIST T_RBRAC T_LCURL SCOPE T_RCURL {}
-        | TYPE T_VARIABLE T_LBRAC T_RBRAC TLCURL SCOPE T_RCURL {}
-        | TYPE T_VARIABLE T_LBRAC PARAM_LIST T_RBRAC T_SEMIC {}
-        | TYPE T_VARIABLE T_LBRAC T_RBRAC T_SEMIC {}
+FUNDEC : TYPE T_VARIABLE T_LBRAC PARAM_LIST T_RBRAC T_LCURL SCOPE T_RCURL { /* new funcdef*/ }
+        | TYPE T_VARIABLE T_LBRAC T_RBRAC TLCURL SCOPE T_RCURL { /* new funcdef */ }
+        | TYPE T_VARIABLE T_LBRAC PARAM_LIST T_RBRAC T_SEMIC { /* new funccall */ }
+        | TYPE T_VARIABLE T_LBRAC T_RBRAC T_SEMIC { /* new funccall*/ }
 
 TYPE : T_INT { $$ = $1; }
         | T_VOID { $$ = $1; }
@@ -68,18 +69,21 @@ TYPE : T_INT { $$ = $1; }
         | T_RETURN { $$ = $1; }
         
 
-PARAM_LIST : PARAM_LIST T_COMMA TYPE T_VARIABLE {}
-             TYPE T_VARIABLE {}
+PARAM_LIST : PARAM_LIST T_COMMA TYPE T_VARIABLE { /* new arg*/ }
+             TYPE T_VARIABLE { /* new arg*/ }
 
-SCOPE : SCOPE STMT {}
-        | STMT {}
+SCOPE : SCOPE STMT { /* new program call*/ }
+        | STMT { $$ = $1;}
 
-EXPR_ST : T_SEMIC {}
-        | EXPR T_SEMIC {}
+EXPR_ST : T_SEMIC { /* new empty expression statement*/ }
+        | EXPR T_SEMIC { /* new expression statement*/ }
 
 EXPR : EXPR_ASSIGN { $$ = $1; }
 
 EXPR_ASSIGN : EXPR_COND { $$ = $1; }
+            | T_VARIABLE T_EQUAL EXPR_ASSIGN {/*new assign expr*/}
+            | T_VARIABLE T_ADDEQUAL EXPR_ASSIGN {/* new addequal */}
+            | T_VARIABLE T_SUBEQUAL EXPR_ASSIGN {/* new subequal */}
 
 EXPR_COND : OR { $$ = $1; }
 
@@ -109,21 +113,19 @@ LESS : SHIFT { $$ = $1; }
     | LESS T_GEQUAL SHIFT {$$ = new GeqOperator($1, $3);}
 
 SHIFT : ADD { $$ = $1; }
-        | SHIFT T_LSHIFT ADD {$$ = new OrOperator($1, $3);}
-        | SHIFT T_RSHIFT ADD {$$ = new OrOperator($1, $3);}
+        | SHIFT T_LSHIFT ADD {$$ = new LshiftOperator($1, $3);}
+        | SHIFT T_RSHIFT ADD {$$ = new RshiftOperator($1, $3);}
 
 ADD : MUL { $$ = $1; }
-    | ADD T_PLUS MUL {$$ = new OrOperator($1, $3);}
-    | ADD T_MINUS MUL {$$ = new OrOperator($1, $3);}
+    | ADD T_PLUS MUL {$$ = new AddOperator($1, $3);}
+    | ADD T_MINUS MUL {$$ = new MinusOperator($1, $3);}
     
 MUL : UNARY { $$ = $1; }
-    | MUL T_TIMES UNARY {$$ = new OrOperator($1, $3);}
-    | MUL T_DIVIDE UNARY {$$ = new OrOperator($1, $3);}
-    | MUL T_MOD UNARY {$$ = new OrOperator($1, $3);}
+    | MUL T_TIMES UNARY {$$ = new MulOperator($1, $3);}
+    | MUL T_DIVIDE UNARY {$$ = new DivOperator($1, $3);}
+    | MUL T_MOD UNARY {$$ = new ModOperator($1, $3);}
 
-UNARY :
-    //PRE / POST FIX
-    //should we also do -x here?
+UNARY : 
 
 STMT : JMP_ST { $$ = $1; }
         | EXPR_ST { $$ = $1; }
@@ -154,7 +156,7 @@ DEC_LIST : VAR_DEC {}
 VAR_DEC : T_VARIABLE T_EQUAL EXPR {}
         | T_VARIABLE {}
 
-
+        
 %%
 const Base *g_root; // Definition of variable (to match declaration earlier)
 const Base *parseAST()

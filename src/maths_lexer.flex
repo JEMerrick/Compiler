@@ -63,6 +63,10 @@ extern "C" int fileno(FILE *stream);
 "union"         { return T_UNION; }
 "void"          { return T_VOID; }
 "while"         { return T_WHILE; }
+"+="            { return T_ADDEQUAL; }
+"-="            { return T_SUBEQUAL; }
+"++"            { return T_INCREM; }
+"--"            { return T_DECREM; }
 
 
 
