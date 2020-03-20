@@ -126,8 +126,16 @@ MUL : UNARY { $$ = $1; }
     | MUL T_MOD UNARY {$$ = new ModOperator($1, $3);}
 
 UNARY : POSTFIX { $$ = $1; }
-        | T_DECREM UNARY { /* new unary decrement */}
-        | T_INCREM UNARY { /* new unary increment */}
+        | T_DECREM UNARY { /* new prefix decrement */}
+        | T_INCREM UNARY { /* new prefix increment */}
+        
+POSTFIX : PRIMATIVE { $$ = $1; }
+        | POSTFIX T_INCREM { /* new postfix increment */ }
+        | POSTFIX T_DECREM { /* new postfix decrement */ }
+
+PRIMATIVE : T_VARIABLE { $$ = new Variable($1); }
+            | T_NUMBER { $$ = new Number($1); }
+            | T_LBRAC EXPR T_RBRAC { $$ = $2; }
 
 STMT : JMP_ST { $$ = $1; }
         | EXPR_ST { $$ = $1; }
