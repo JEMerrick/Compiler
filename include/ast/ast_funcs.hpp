@@ -154,4 +154,41 @@ class Arg: public Base
     }
 };
 
+class ArgList: public Base
+{
+    protected:
+        BasePtr arg;
+        BasePtr nextArg;
+    public:
+        Arg(Baseptr _arg BasePtr _nextArg):
+            arg(_arg), nextArg(_nextArg){}
+
+    ~Arg(){
+        if(nextArg!=NULL){
+          delete nextArg;
+        }
+    }
+
+	virtual void printC(std::ostream &out) const override{
+      if(arg != NULL){
+          if(nextArg != NULL){
+              nextArg->printC(out);
+              out << ", ";
+          }
+      arg->printC(out);
+      }
+	}
+
+    virtual void printPy(std::ostream &out) const override{
+        if(nextArg!=NULL){
+            nextArg->printPy(out);
+            out << ", ";
+        }
+        out << id;
+    }
+    virtual void printMIPS(std::string reg, std::ostream &out) const override{
+
+    }
+};
+
 #endif

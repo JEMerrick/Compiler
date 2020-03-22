@@ -38,23 +38,23 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out) const override{
-      std::string r1 = "$" + std::to_string(findreg());
-      left -> printMIPS(r1, out);
-      std::string r2 = "$" + std::to_string(findreg());
-      right -> printMIPS(r2, out);
-      out << "AND " << reg << ", " << r1 << ", " << r2;
-      regFlag[std::stoi(r1.substr(1))] = 0;
-      regFlag[std::stoi(r2.substr(1))] = 0;
+        std::string r1 = "$" + std::to_string(findreg());
+        left->printMIPS(r1, out);
+        std::string r2 = "$" + std::to_string(findreg());
+        right->printMIPS(r2, out);
+        out << "AND " << reg << ", " << r1 << ", " << r2;
+        regFlag[std::stoi(r1.substr(1))] = 0;
+        regFlag[std::stoi(r2.substr(1))] = 0;
     }
     virtual void printC (std::ostream &out) const override{
-        left -> printC(out);
+        left->printC(out);
         out << " & ";
-        right -> printC(out);
+        right->printC(out);
     }
     virtual void printPy (std::ostream &out) const override{
-        left -> printPy(out);
+        left->printPy(out);
         out << " & ";
-        right -> printPy(out);
+        right->printPy(out);
     }
 };
 
@@ -68,23 +68,23 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out) const override{
-      std::string r1 = "$" + std::to_string(findreg());
-      left -> printMIPS(r1, out);
-      std::string r2 = "$" + std::to_string(findreg());
-      right -> printMIPS(r2, out);
-      out << "OR " << reg << ", " << r1 << ", " << r2;
-      regFlag[std::stoi(r1.substr(1))] = 0;
-      regFlag[std::stoi(r2.substr(1))] = 0;
+        std::string r1 = "$" + std::to_string(findreg());
+        left->printMIPS(r1, out);
+        std::string r2 = "$" + std::to_string(findreg());
+        right->printMIPS(r2, out);
+        out << "OR " << reg << ", " << r1 << ", " << r2;
+        regFlag[std::stoi(r1.substr(1))] = 0;
+        regFlag[std::stoi(r2.substr(1))] = 0;
     }
     virtual void printC (std::ostream &out) const override{
-        left -> printC(out);
+        left->printC(out);
         out << " | ";
-        right -> printC(out);
+        right->printC(out);
     }
     virtual void printPy (std::ostream &out) const override{
-        left -> printPy(out);
+        left->printPy(out);
         out << " | ";
-        right -> printPy(out);
+        right->printPy(out);
     }
 };
 
@@ -98,23 +98,23 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out) const override{
-      std::string r1 = "$" + std::to_string(findreg());
-      left -> printMIPS(r1, out);
-      std::string r2 = "$" + std::to_string(findreg());
-      right -> printMIPS(r2, out);
-      out << "XOR " << reg << ", " << r1 << ", " << r2;
-      regFlag[std::stoi(r1.substr(1))] = 0;
-      regFlag[std::stoi(r2.substr(1))] = 0;
+        std::string r1 = "$" + std::to_string(findreg());
+        left->printMIPS(r1, out);
+        std::string r2 = "$" + std::to_string(findreg());
+        right->printMIPS(r2, out);
+        out << "XOR " << reg << ", " << r1 << ", " << r2;
+        regFlag[std::stoi(r1.substr(1))] = 0;
+        regFlag[std::stoi(r2.substr(1))] = 0;
     }
     virtual void printC (std::ostream &out) const override{
-        left -> printC(out);
+        left->printC(out);
         out << " ^ ";
-        right -> printC(out);
+        right->printC(out);
     }
     virtual void printPy (std::ostream &out) const override{
-        left -> printPy(out);
+        left->printPy(out);
         out << " ^ ";
-        right -> printPy(out);
+        right->printPy(out);
     }
 };
 
@@ -128,23 +128,23 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out) const override{
-      std::string r1 = "$" + std::to_string(findreg());
-      left -> printMIPS(r1, out);
-      std::string r2 = "$" + std::to_string(findreg());
-      right -> printMIPS(r2, out);
-      out << "SLLV " << reg << ", " << r1 << ", " << r2;
-      regFlag[std::stoi(r1.substr(1))] = 0;
-      regFlag[std::stoi(r2.substr(1))] = 0;
+        std::string r1 = "$" + std::to_string(findreg());
+        left->printMIPS(r1, out);
+        std::string r2 = "$" + std::to_string(findreg());
+        right->printMIPS(r2, out);
+        out << "SLLV " << reg << ", " << r1 << ", " << r2;
+        regFlag[std::stoi(r1.substr(1))] = 0;
+        regFlag[std::stoi(r2.substr(1))] = 0;
     }
     virtual void printC (std::ostream &out) const override{
-        left -> printC(out);
+        left->printC(out);
         out << " << ";
-        right -> printC(out);
+        right->printC(out);
     }
     virtual void printPy (std::ostream &out) const override{
-        left -> printPy(out);
+        left->printPy(out);
         out << " << ";
-        right -> printPy(out);
+        right->printPy(out);
     }
 };
 
@@ -158,23 +158,23 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out) const override{
-      std::string r1 = "$" + std::to_string(findreg());
-      left -> printMIPS(r1, out);
-      std::string r2 = "$" + std::to_string(findreg());
-      right -> printMIPS(r2, out);
-      out << "SLRV " << reg << ", " << r1 << ", " << r2;
-      regFlag[std::stoi(r1.substr(1))] = 0;
-      regFlag[std::stoi(r2.substr(1))] = 0;
+        std::string r1 = "$" + std::to_string(findreg());
+        left->printMIPS(r1, out);
+        std::string r2 = "$" + std::to_string(findreg());
+        right->printMIPS(r2, out);
+        out << "SLRV " << reg << ", " << r1 << ", " << r2;
+        regFlag[std::stoi(r1.substr(1))] = 0;
+        regFlag[std::stoi(r2.substr(1))] = 0;
     }
     virtual void printC (std::ostream &out) const override{
-        left -> printC(out);
+        left->printC(out);
         out << " >> ";
-        right -> printC(out);
+        right->printC(out);
     }
     virtual void printPy (std::ostream &out) const override{
-        left -> printPy(out);
+        left->printPy(out);
         out << " >> ";
-        right -> printPy(out);
+        right->printPy(out);
     }
 };
 

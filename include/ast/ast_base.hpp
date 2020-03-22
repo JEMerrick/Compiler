@@ -13,18 +13,18 @@ std::vector <int> regFlag {1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0,
 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; // can't use $0-$7, $8-$25 free
 
 int findreg(){
-  int i = 8;
-  while(regFlag[i] != 0){
-    i++;
-  }
-  regFlag[i] = 1;
-  return i;
+    int i = 8;
+    while(regFlag[i] != 0){
+      i++;
+    }
+    regFlag[i] = 1;
+    return i;
 }
 
 int indent = 0;
 
 std::string makelabel(){
-  return "L_" + std::to_string(count++);
+    return "L_" + std::to_string(count++);
 }
 
 class Base;

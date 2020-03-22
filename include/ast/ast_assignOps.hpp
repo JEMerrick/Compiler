@@ -28,24 +28,24 @@ class AssignEqualOperator
     : public AssignOp
 {
 protected:
-    BasePtr myExpr;
+    BasePtr val;
 public:
-    AssignEqualOperator(std::string _variable, BasePtr _expr)
-        : AssignOp(_variable), myExpr(_expr)
+    AssignEqualOperator(std::string _variable, BasePtr _val)
+        : AssignOp(_variable), val(_val)
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out) const override{
-      
+
     }
     virtual void printC (std::ostream &out) const override{
         out << variable;
         out << " = ";
-        myExpr->printC(out);
+        val->printC(out);
     }
     virtual void printPy (std::ostream &out) const override{
         out << variable;
         out << " = ";
-        myExpr->printPy(out);
+        val->printPy(out);
     }
 };
 
@@ -53,10 +53,10 @@ class AddEqualOperator
     : public AssignOp
 {
 protected:
-    BasePtr myExpr;
+    BasePtr val;
 public:
-    AddEqualOperator(std::string _variable, BasePtr _expr)
-        : AssignOp(_variable), myExpr(_expr)
+    AddEqualOperator(std::string _variable, BasePtr _val)
+        : AssignOp(_variable), val(_val)
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out) const override{
@@ -65,12 +65,12 @@ public:
     virtual void printC (std::ostream &out) const override{
         out << variable;
         out << " += ";
-        myExpr->printC(out);
+        val->printC(out);
     }
     virtual void printPy (std::ostream &out) const override{
         out << variable;
         out << " += ";
-        myExpr->printPy(out);
+        val->printPy(out);
     }
 };
 
@@ -78,10 +78,10 @@ class SubEqualOperator
     : public AssignOp
 {
 protected:
-    BasePtr myExpr;
+    BasePtr val;
 public:
-    SubEqualOperator(std::string _variable, BasePtr _expr)
-        : AssignOp(_variable), myExpr(_expr)
+    SubEqualOperator(std::string _variable, BasePtr _val)
+        : AssignOp(_variable), val(_val)
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out) const override{
@@ -90,12 +90,12 @@ public:
     virtual void printC (std::ostream &out) const override{
         out << variable;
         out << " -= ";
-        myExpr->printC(out);
+        val->printC(out);
     }
     virtual void printPy (std::ostream &out) const override{
         out << variable;
         out << " -= ";
-        myExpr->printPy(out);
+        val->printPy(out);
     }
 };
 
