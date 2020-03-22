@@ -88,7 +88,7 @@ protected:
     std::string id;
     BasePtr expr;
 public:
-    Declare(id _id, BasePtr _expr)
+    Declare(std::string _id, BasePtr _expr)
         : id(_id), expr(_expr)
     {}
 
