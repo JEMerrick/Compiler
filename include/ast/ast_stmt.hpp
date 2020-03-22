@@ -4,33 +4,106 @@
 
 #include "ast_base.hpp"
 
-class Expression
+class Expr_stmt
     : public Base
 {
 protected:
-    std::string id;
+    BasePtr expr;
 public:
-    Expression(const std::string &_id)
-        : id(_id)
+    Expr_stmt(BasePtr _expr)
+        : expr(_expr)
     {}
 
-    virtual void printMIPS (std::string reg, std::ostream &out) const{
-      // if(localVars[id] != NULL){
-      //   std::string r1 = "$1";
-      //   out << "lw " << reg << r1 << value;
-      // }
-      // else{
-      //
-      // }
-      out << id;
-
+    virtual void printMIPS (std::string reg, std::ostream &out) const override{
+      expr->printMIPS(reg, out);
     }
-    virtual void printC (std::ostream &out) const{
-        out << id;
+    virtual void printC (std::ostream &out) const override{
+      expr->printC(out);
+      out << ";";
     }
-    virtual void printPy (std::ostream &out) const{
-      out << id;
+    virtual void printPy (std::ostream &out) const override{
+      for(int i = indent; i > 0; i--){
+        out << "\t";
+      }
+      expr->printPy(out);
     }
+};
 
+class Return_stmt
+    : public Base
+{
+protected:
+    BasePtr expr;
+public:
+    Return_stmt(BasePtr _expr)
+        : expr(_expr)
+    {}
 
+    virtual void printMIPS (std::string reg, std::ostream &out) const override{
+    }
+    virtual void printC (std::ostream &out) const override{
+      out << "return ";
+      expr->printC(out);
+      out << ";";
+    }
+    virtual void printPy (std::ostream &out) const override{
+      for(int i = indent; i > 0; i--){
+        out << "\t";
+      }
+      out << "return ";
+      expr->printPy(out);
+    }
+};
+
+class Decl_stmt
+    : public Base
+{
+protected:
+    std::string type;
+    BasePtr expr;
+public:
+    Decl_stmt(type _type, BasePtr _expr)
+        : type(_type), expr(_expr)
+    {}
+
+    virtual void printMIPS (std::string reg, std::ostream &out) const override{
+    }
+    virtual void printC (std::ostream &out) const override{
+      out << type << " ";
+      expr->printC(out);
+      out << ";";
+    }
+    virtual void printPy (std::ostream &out) const override{
+      for(int i = indent; i > 0; i--){
+        out << "\t";
+      }
+      expr->printPy(out);
+    }
+};
+
+class Declare
+    : public Base
+{
+protected:
+    std::string type;
+    BasePtr expr;
+public:
+    Declare(type _type, BasePtr _expr)
+        : type(_type), expr(_expr)
+    {}
+
+    virtual void printMIPS (std::string reg, std::ostream &out) const override{
+    }
+    virtual void printC (std::ostream &out) const override{
+      out << type << "=";
+      expr->printC(out);
+      out << ";";
+    }
+    virtual void printPy (std::ostream &out) const override{
+      for(int i = indent; i > 0; i--){
+        out << "\t";
+      }
+      out << type << "=";
+      expr->printPy(out);    
+    }
 };
