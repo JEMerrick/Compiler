@@ -117,8 +117,8 @@ protected:
     BasePtr nextArg;
 
 public:
-    ArgList(BasePtr _arg, BasePtr _nextArg):
-        arg(_arg), nextArg(_nextArg)
+    ArgList(BasePtr _arg, BasePtr _nextArg)
+        : arg(_arg), nextArg(_nextArg)
     {}
 
     ~ArgList(){
