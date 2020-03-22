@@ -60,24 +60,24 @@ class Decl_stmt
 {
 protected:
     std::string type;
-    BasePtr expr;
+    BasePtr list;
 public:
-    Decl_stmt(type _type, BasePtr _expr)
-        : type(_type), expr(_expr)
+    Decl_stmt(type _type, BasePtr _list)
+        : type(_type), list(_list)
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out) const override{
     }
     virtual void printC (std::ostream &out) const override{
         out << type << " ";
-        expr->printC(out);
+        list->printC(out);
         out << ";";
     }
     virtual void printPy (std::ostream &out) const override{
         for(int i = indent; i > 0; i--){
             out << "\t";
         }
-        expr->printPy(out);
+        list->printPy(out);
     }
 };
 
