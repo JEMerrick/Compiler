@@ -37,7 +37,7 @@ protected:
     std::string funcName;
     BasePtr varList;
     BasePtr branch;
-    
+
 public:
     DecFunc(std::string _type, std::string _funcName, BasePtr _varList, BasePtr _branch)
         : Functions(_type, _funcName, _varList, _branch)
@@ -66,7 +66,7 @@ protected:
 
 public:
     DefFunc(std::string _type, std::string _funcName, BasePtr _varList, BasePtr _branch)
-        : type(_type), funcName(_funcName), varList(_varList)
+        : type(_type), funcName(_funcName), varList(_varList), branch(_branch)
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out) const override{
