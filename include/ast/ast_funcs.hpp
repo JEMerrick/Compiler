@@ -63,6 +63,7 @@ protected:
     std::string type;
     std::string funcName;
     BasePtr varList;
+    BasePtr branch;
 
 public:
     DefFunc(std::string _type, std::string _funcName, BasePtr _varList, BasePtr _branch)
