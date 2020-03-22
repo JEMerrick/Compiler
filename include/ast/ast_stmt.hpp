@@ -85,17 +85,17 @@ class Declare
     : public Base
 {
 protected:
-    std::string type;
+    std::string id;
     BasePtr expr;
 public:
-    Declare(type _type, BasePtr _expr)
-        : type(_type), expr(_expr)
+    Declare(id _id, BasePtr _expr)
+        : id(_id), expr(_expr)
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out) const override{
     }
     virtual void printC (std::ostream &out) const override{
-        out << type << "=";
+        out << id << "=";
         expr->printC(out);
         out << ";";
     }
@@ -103,7 +103,7 @@ public:
         for(int i = indent; i > 0; i--){
             out << "\t";
         }
-        out << type << "=";
+        out << id << "=";
         expr->printPy(out);
     }
 };
