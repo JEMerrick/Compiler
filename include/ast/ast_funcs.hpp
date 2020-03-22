@@ -117,11 +117,11 @@ protected:
     BasePtr nextArg;
 
 public:
-    Arg(BasePtr arg, BasePtr _nextArg):
+    ArgList(BasePtr arg, BasePtr _nextArg):
         arg(_arg), nextArg(_nextArg){}
     {}
 
-    ~Arg(){
+    ~ArgList(){
         if(nextArg!=NULL){
             delete nextArg;
         }
