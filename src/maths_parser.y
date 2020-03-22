@@ -47,16 +47,16 @@
 ROOT : PROG { g_root = $1; }
 
 PROG :  DECLR_ALL {$$ = $1;}
-        | PROG DECLR_ALL { /* new program call*/ }
+        | PROG DECLR_ALL { $$ = $1; }
 
-DECLR_ALL : FUNDEC { $$ = $1;}
-            | DEC_ST { /* new global var*/ }
+DECLR_ALL : FUNDEC { /* new global list */}
+            | DEC_ST { /* new global list*/ }
         
-FUNDEC : TYPE T_VARIABLE T_LBRAC PARAM_LIST T_RBRAC T_LCURL SCOPE T_RCURL { /* new funcdef*/ }
-        | TYPE T_VARIABLE T_LBRAC T_RBRAC T_LCURL SCOPE T_RCURL { /* new funcdef */ }
-        | TYPE T_VARIABLE T_LBRAC PARAM_LIST T_RBRAC T_SEMIC { /* new funccall */ }
-        | TYPE T_VARIABLE T_LBRAC T_RBRAC T_SEMIC { /* new funccall*/ }
-
+FUNDEC : TYPE T_VARIABLE T_LBRAC PARAM_LIST T_RBRAC T_LCURL SCOPE T_RCURL { $$ = new DefFunc(*$1, *$2, $4, $7)}
+        | TYPE T_VARIABLE T_LBRAC T_RBRAC T_LCURL SCOPE T_RCURL { $$ = new DefFunc(*$1, *$2, NULL, $6); }
+        | TYPE T_VARIABLE T_LBRAC PARAM_LIST T_RBRAC T_SEMIC { $$ = new FuncCall(*$1, *$2, $4);}
+        | TYPE T_VARIABLE T_LBRAC T_RBRAC T_SEMIC { $$ = new FuncCall(*$1, *$2, NULL); }
+        
 TYPE : T_INT { $$ = $1; }
         | T_VOID { $$ = $1; }
         | T_CHAR { $$ = $1; }

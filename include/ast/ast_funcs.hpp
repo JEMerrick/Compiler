@@ -32,7 +32,12 @@ public:
 class DecFunc
     : public Functions
 {
-
+protected:
+    std::string type;
+    std::string funcName;
+    BasePtr varList;
+    BasePtr branch;
+    
 public:
     DecFunc(std::string _type, std::string _funcName, BasePtr _varList, BasePtr _branch)
         : Functions(_type, _funcName, _varList, _branch)
@@ -51,12 +56,17 @@ public:
 };
 
 class DefFunc
-    : public Functions
+    : public Base
 {
+
+protected:
+    std::string type;
+    std::string funcName;
+    BasePtr varList;
 
 public:
     DefFunc(std::string _type, std::string _funcName, BasePtr _varList, BasePtr _branch)
-        : Functions(_type, _funcName, _varList, _branch)
+        : type(_type), funcName(_funcName), varList(_varList)
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out) const override{
