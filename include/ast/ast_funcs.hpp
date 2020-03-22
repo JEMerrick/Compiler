@@ -81,8 +81,8 @@ protected:
     BasePtr nextArg;
 
 public:
-    Arg(std::string _type, std::string _id, BasePtr _nextArg):
-        type(_type), id(_id), nextArg(_nextArg)
+    Arg(std::string _type, std::string _id, BasePtr _nextArg)
+        : type(_type), id(_id), nextArg(_nextArg)
     {}
 
     ~Arg(){
@@ -117,7 +117,7 @@ protected:
     BasePtr nextArg;
 
 public:
-    ArgList(BasePtr arg, BasePtr _nextArg):
+    ArgList(BasePtr _arg, BasePtr _nextArg):
         arg(_arg), nextArg(_nextArg)
     {}
 
