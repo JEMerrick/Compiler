@@ -6,6 +6,8 @@
 
 #include "ast_base.hpp"
 
+//TODO: FuncList - list of functions: vars: currentFunc, nextFunc.
+
 class Functions
     : public Base
 {
