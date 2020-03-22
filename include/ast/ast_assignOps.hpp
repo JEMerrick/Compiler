@@ -99,6 +99,86 @@ public:
     }
 };
 
-//classes for +=, -=, ++ post/pre, -- post/pre here
+class PreIncrement
+    : public AssignOp
+{
+
+public:
+    PreIncrement(std::string _variable)
+        : AssignOp(_variable)
+    {}
+
+    virtual void printMIPS (std::string reg, std::ostream &out) const override{
+
+    }
+    virtual void printC (std::ostream &out) const override{
+        out << "++" << variable;
+    }
+    virtual void printPy (std::ostream &out) const override{
+        out << "++" << variable;
+    }
+};
+
+class PreDecrement
+    : public AssignOp
+{
+
+public:
+    PreDecrement(std::string _variable)
+        : AssignOp(_variable)
+    {}
+
+    virtual void printMIPS (std::string reg, std::ostream &out) const override{
+
+    }
+    virtual void printC (std::ostream &out) const override{
+        out << "--" << variable;
+    }
+    virtual void printPy (std::ostream &out) const override{
+        out << "--" << variable;
+    }
+};
+
+class PostIncrement
+    : public AssignOp
+{
+
+public:
+    PostIncrement(std::string _variable)
+        : AssignOp(_variable)
+    {}
+
+    virtual void printMIPS (std::string reg, std::ostream &out) const override{
+
+    }
+    virtual void printC (std::ostream &out) const override{
+        out << variable << "++";
+    }
+    virtual void printPy (std::ostream &out) const override{
+        out << variable << "++";
+    }
+};
+
+class PostDecrement
+    : public AssignOp
+{
+
+public:
+    PostDecrement(std::string _variable)
+        : AssignOp(_variable)
+    {}
+
+    virtual void printMIPS (std::string reg, std::ostream &out) const override{
+
+    }
+    virtual void printC (std::ostream &out) const override{
+        out << variable << "--";
+    }
+    virtual void printPy (std::ostream &out) const override{
+        out << variable << "--";
+    }
+};
+
+//classes for  ++ post/pre, -- post/pre here
 
 #endif
