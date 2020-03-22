@@ -11,6 +11,7 @@
 #include "ast/ast_logicOps.hpp"
 #include "ast/ast_loops.hpp"
 #include "ast/ast_primitives.hpp"
+#include "ast/ast_stmt.hpp"
 #include "ast/ast_unary.hpp"
 
 
