@@ -113,7 +113,7 @@ class ArgList
     : public Base
 {
 protected:
-    Baseptr arg;
+    BasePtr arg;
     BasePtr nextArg;
 
 public:
