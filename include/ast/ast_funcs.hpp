@@ -116,4 +116,40 @@ public:
     }
 };
 
+class Arg: public Base
+{
+    protected:
+        std::string type;
+        std::string id;
+        nodePtr nextArg;
+    public:
+        Arg(std::string _type, std::string _id, nodePtr _nextArg):
+            type(_type), id(_id), nextArg(_nextArg){}
+
+    ~Arg(){
+        if(nextArg!=NULL){
+          delete nextArg;
+        }
+    }
+
+	virtual void printC(std::ostream &out) const override{
+		if(nextArg != NULL){
+            nextArg->printC(out);
+            out << ", ";
+        }
+        out << type << " " << id;
+	}
+
+    virtual void printPy(std::ostream &out) const override{
+        if(nextArg!=NULL){
+            nextArg->printPy(out);
+            out << ", ";
+        }
+        out << id;
+    }
+    virtual void printMips(std::string reg, std::ostream &out) const override{
+
+    }
+};
+
 #endif
