@@ -54,8 +54,8 @@ DECLR_ALL : FUNDEC { /* new global list */}
         
 FUNDEC : TYPE T_VARIABLE T_LBRAC PARAM_LIST T_RBRAC T_LCURL SCOPE T_RCURL { $$ = new DefFunc(*$1, *$2, $4, $7)}
         | TYPE T_VARIABLE T_LBRAC T_RBRAC T_LCURL SCOPE T_RCURL { $$ = new DefFunc(*$1, *$2, NULL, $6); }
-        | TYPE T_VARIABLE T_LBRAC PARAM_LIST T_RBRAC T_SEMIC { $$ = new FuncCall(*$1, *$2, $4);}
-        | TYPE T_VARIABLE T_LBRAC T_RBRAC T_SEMIC { $$ = new FuncCall(*$1, *$2, NULL); }
+        | TYPE T_VARIABLE T_LBRAC PARAM_LIST T_RBRAC T_SEMIC { $$ = new CallFunc(*$1, *$2, $4);}
+        | TYPE T_VARIABLE T_LBRAC T_RBRAC T_SEMIC { $$ = new CallFunc(*$1, *$2, NULL); }
         
 TYPE : T_INT { $$ = $1; }
         | T_VOID { $$ = $1; }
