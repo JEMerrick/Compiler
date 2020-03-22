@@ -62,7 +62,7 @@ protected:
     std::string type;
     BasePtr list;
 public:
-    Decl_stmt(type _type, BasePtr _list)
+    Decl_stmt(std::string _type, BasePtr _list)
         : type(_type), list(_list)
     {}
 
