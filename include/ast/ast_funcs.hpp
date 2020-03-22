@@ -123,9 +123,9 @@ class Arg: public Base
     protected:
         std::string type;
         std::string id;
-        nodePtr nextArg;
+        BasePtr nextArg;
     public:
-        Arg(std::string _type, std::string _id, nodePtr _nextArg):
+        Arg(std::string _type, std::string _id, BasePtr _nextArg):
             type(_type), id(_id), nextArg(_nextArg){}
 
     ~Arg(){
@@ -149,7 +149,7 @@ class Arg: public Base
         }
         out << id;
     }
-    virtual void printMips(std::string reg, std::ostream &out) const override{
+    virtual void printMIPS(std::string reg, std::ostream &out) const override{
 
     }
 };
