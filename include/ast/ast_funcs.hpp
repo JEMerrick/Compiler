@@ -25,23 +25,22 @@ public:
     virtual void printMIPS (std::string reg, std::ostream &out) const override{
     }
     virtual void printC (std::ostream &out) const override{
-      out << type << " " << funcName << "(";
-      varList->printC(out);
-      out << ") {" << std::endl;
-      branch->printC(out);//return 1
-      out << "}" << std::endl;
+        out << type << " " << funcName << "(";
+        varList->printC(out);
+        out << ") {" << std::endl;
+        branch->printC(out);//return 1
+        out << "}" << std::endl;
 
     }
     virtual void printPy (std::ostream &out) const override{
-      out << "def " << funcName << "(";
-      varList->printPy(out);
-      out << "):" << std::endl;
-      indent++;
-      for(int i = indent; i > 0; i--){
-        out << "\t";
-      }
-      branch->printPy(out);//return 1
-      indent--;
+        varList->printPy(out);
+        out << "):" << std::endl;
+        indent++;
+        for(int i = indent; i > 0; i--){
+          out << "\t";
+        }
+        branch->printPy(out);//return 1
+        indent--;
     }
 };
 
@@ -52,7 +51,7 @@ protected:
     std::string type;
     std::string funcName;
     BasePtr varList;
-    
+
 public:
     CallFunc(std::string _type, std::string _funcName, BasePtr _varList)
         : type(_type), funcName(_funcName), varList(_varList)
@@ -61,21 +60,20 @@ public:
     virtual void printMIPS (std::string reg, std::ostream &out) const override{
     }
     virtual void printC (std::ostream &out) const override{
-      out << type << " " << funcName << "(";
-      varList->printC(out);
-      out << ");" << std::endl;
+        out << type << " " << funcName << "(";
+        varList->printC(out);
+        out << ");" << std::endl;
     }
     virtual void printPy (std::ostream &out) const override{
-      out << "def " << funcName << "(";
-      varList->printPy(out);
-      out << ")" << std::endl;
+        out << "def " << funcName << "(";
+        varList->printPy(out);
+        out << ")" << std::endl;
     }
 };
 
-class Arg 
+class Arg
     : public Base
 {
-
 protected:
     std::string type;
     std::string id;
@@ -84,67 +82,29 @@ protected:
 public:
     Arg(std::string _type, std::string _id, BasePtr _nextArg):
         type(_type), id(_id), nextArg(_nextArg){}
-
-~Arg(){
-    if(nextArg!=NULL){
-        delete nextArg;
-    }
-}
-
-virtual void printC(std::ostream &out) const override{
-    if(nextArg != NULL){
-        nextArg->printC(out);
-        out << ", ";
-    }
-    out << type << " " << id;
-}
-
-virtual void printPy(std::ostream &out) const override{
-    if(nextArg!=NULL){
-        nextArg->printPy(out);
-        out << ", ";
-    }
-    out << id;
-}
-virtual void printMIPS(std::string reg, std::ostream &out) const override{
-
-}
-};
-
-class ArgList: public Base
-{
-    protected:
-        BasePtr arg;
-        BasePtr nextArg;
-    public:
-        Arg(Baseptr _arg BasePtr _nextArg):
-            arg(_arg), nextArg(_nextArg){}
+    {}
 
     ~Arg(){
         if(nextArg!=NULL){
-          delete nextArg;
+            delete nextArg;
         }
     }
 
-	virtual void printC(std::ostream &out) const override{
-      if(arg != NULL){
-          if(nextArg != NULL){
-              nextArg->printC(out);
-              out << ", ";
-          }
-      arg->printC(out);
-      }
-	}
-
-    virtual void printPy(std::ostream &out) const override{
+    virtual void printMIPS (std::string reg, std::ostream &out) const override{
+    }
+    virtual void printC (std::ostream &out) const override{
+        if(nextArg != NULL){
+            nextArg->printC(out);
+            out << ", ";
+        }
+        out << type << " " << id;
+    }
+    virtual void printPy (std::ostream &out) const override{
         if(nextArg!=NULL){
             nextArg->printPy(out);
             out << ", ";
         }
         out << id;
-    }
-    virtual void printMIPS(std::string reg, std::ostream &out) const override{
-
     }
 };
 

@@ -15,17 +15,17 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out) const override{
-      expr->printMIPS(reg, out);
+        expr->printMIPS(reg, out);
     }
     virtual void printC (std::ostream &out) const override{
-      expr->printC(out);
-      out << ";";
+        expr->printC(out);
+        out << ";";
     }
     virtual void printPy (std::ostream &out) const override{
-      for(int i = indent; i > 0; i--){
-        out << "\t";
-      }
-      expr->printPy(out);
+        for(int i = indent; i > 0; i--){
+            out << "\t";
+        }
+        expr->printPy(out);
     }
 };
 
@@ -42,16 +42,16 @@ public:
     virtual void printMIPS (std::string reg, std::ostream &out) const override{
     }
     virtual void printC (std::ostream &out) const override{
-      out << "return ";
-      expr->printC(out);
-      out << ";";
+        out << "return ";
+        expr->printC(out);
+        out << ";";
     }
     virtual void printPy (std::ostream &out) const override{
-      for(int i = indent; i > 0; i--){
-        out << "\t";
-      }
-      out << "return ";
-      expr->printPy(out);
+        for(int i = indent; i > 0; i--){
+            out << "\t";
+        }
+        out << "return ";
+        expr->printPy(out);
     }
 };
 
@@ -69,15 +69,15 @@ public:
     virtual void printMIPS (std::string reg, std::ostream &out) const override{
     }
     virtual void printC (std::ostream &out) const override{
-      out << type << " ";
-      expr->printC(out);
-      out << ";";
+        out << type << " ";
+        expr->printC(out);
+        out << ";";
     }
     virtual void printPy (std::ostream &out) const override{
-      for(int i = indent; i > 0; i--){
-        out << "\t";
-      }
-      expr->printPy(out);
+        for(int i = indent; i > 0; i--){
+            out << "\t";
+        }
+        expr->printPy(out);
     }
 };
 
@@ -95,15 +95,15 @@ public:
     virtual void printMIPS (std::string reg, std::ostream &out) const override{
     }
     virtual void printC (std::ostream &out) const override{
-      out << type << "=";
-      expr->printC(out);
-      out << ";";
+        out << type << "=";
+        expr->printC(out);
+        out << ";";
     }
     virtual void printPy (std::ostream &out) const override{
-      for(int i = indent; i > 0; i--){
-        out << "\t";
-      }
-      out << type << "=";
-      expr->printPy(out);    
+        for(int i = indent; i > 0; i--){
+            out << "\t";
+        }
+        out << type << "=";
+        expr->printPy(out);
     }
 };
