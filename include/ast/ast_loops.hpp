@@ -41,23 +41,23 @@ public:
       out << "}";
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
-      for(int i = indent; i > 0; i--){
+      for(int i = myPy.indent; i > 0; i--){
         out << "\t";
       }
-      initial->printPy(out);
+      initial->printPy(out, myPy);
       out << std::endl;
-      for(int i = indent; i > 0; i--){
+      for(int i = myPy.indent; i > 0; i--){
         out << "\t";
       }
       out << "while ";
-      condition->printPy(out);
+      condition->printPy(out, myPy);
       out << ":" << std::endl;
-      indent++;
-      for(int i = indent; i > 0; i--){
+      myPy.indent++;
+      for(int i = myPy.indent; i > 0; i--){
         out << "\t";
       }
-      branch->printPy(out);
-      indent--;
+      branch->printPy(out, myPy);
+      myPy.indent--;
       out << std::endl;
     }
 };
@@ -90,18 +90,18 @@ public:
         out << "}";
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
-        for(int i = indent; i > 0; i--){
+        for(int i = myPy.indent; i > 0; i--){
             out << "\t";
         }
         out << "while ";
-        condition->printPy(out);
+        condition->printPy(out, myPy);
         out << ":" << std::endl;
-        indent++;
-        for(int i = indent; i > 0; i--){
+        myPy.indent++;
+        for(int i = myPy.indent; i > 0; i--){
             out << "\t";
         }
-        branch->printPy(out);
-        indent--;
+        branch->printPy(out, myPy);
+        myPy.indent--;
         out << std::endl;
     }
 };
@@ -155,7 +155,7 @@ public:
         out << "break\n";
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
-        for(int i = indent; i > 0; i--){
+        for(int i = myPy.indent; i > 0; i--){
             out << "\t";
         }
         out << "break\n";
@@ -178,7 +178,7 @@ public:
         out << "continue\n";
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
-        for(int i = indent; i > 0; i--){
+        for(int i = myPy.indent; i > 0; i--){
             out << "\t";
         }
         out << "continue\n";

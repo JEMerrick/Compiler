@@ -52,9 +52,9 @@ public:
         right->printC(out);
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
-        left->printPy(out);
+        left->printPy(out, myPy);
         out << " & ";
-        right->printPy(out);
+        right->printPy(out, myPy);
     }
 };
 
@@ -82,9 +82,9 @@ public:
         right->printC(out);
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
-        left->printPy(out);
+        left->printPy(out, myPy);
         out << " | ";
-        right->printPy(out);
+        right->printPy(out, myPy);
     }
 };
 
@@ -112,9 +112,9 @@ public:
         right->printC(out);
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
-        left->printPy(out);
+        left->printPy(out, myPy);
         out << " ^ ";
-        right->printPy(out);
+        right->printPy(out, myPy);
     }
 };
 
@@ -142,9 +142,9 @@ public:
         right->printC(out);
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
-        left->printPy(out);
+        left->printPy(out, myPy);
         out << " << ";
-        right->printPy(out);
+        right->printPy(out, myPy);
     }
 };
 
@@ -172,9 +172,9 @@ public:
         right->printC(out);
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
-        left->printPy(out);
+        left->printPy(out, myPy);
         out << " >> ";
-        right->printPy(out);
+        right->printPy(out, myPy);
     }
 };
 

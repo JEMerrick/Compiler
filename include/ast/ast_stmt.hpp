@@ -22,10 +22,10 @@ public:
         out << ";";
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
-        for(int i = indent; i > 0; i--){
+        for(int i = myPy.indent; i > 0; i--){
             out << "\t";
         }
-        expr->printPy(out);
+        expr->printPy(out, myPy);
     }
 };
 
@@ -47,11 +47,11 @@ public:
         out << ";";
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
-        for(int i = indent; i > 0; i--){
+        for(int i = myPy.indent; i > 0; i--){
             out << "\t";
         }
         out << "return ";
-        expr->printPy(out);
+        expr->printPy(out, myPy);
     }
 };
 
@@ -74,10 +74,10 @@ public:
         out << ";";
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
-        for(int i = indent; i > 0; i--){
+        for(int i = myPy.indent; i > 0; i--){
             out << "\t";
         }
-        list->printPy(out);
+        list->printPy(out, myPy);
     }
 };
 
@@ -100,10 +100,10 @@ public:
         out << ";";
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
-        for(int i = indent; i > 0; i--){
+        for(int i = myPy.indent; i > 0; i--){
             out << "\t";
         }
         out << id << "=";
-        expr->printPy(out);
+        expr->printPy(out, myPy);
     }
 };

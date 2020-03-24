@@ -34,14 +34,14 @@ public:
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
         out << "def " << funcName << "(";
-        varList->printPy(out);
+        varList->printPy(out, myPy);
         out << "):" << std::endl;
-        indent++;
-        for(int i = indent; i > 0; i--){
+        myPy.indent++;
+        for(int i = myPy.indent; i > 0; i--){
           out << "\t";
         }
-        branch->printPy(out);//return 1
-        indent--;
+        branch->printPy(out, myPy);//return 1
+        myPy.indent--;
     }
 };
 
@@ -67,7 +67,7 @@ public:
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
         out << "def " << funcName << "(";
-        varList->printPy(out);
+        varList->printPy(out, myPy);
         out << ")" << std::endl;
     }
 };
@@ -102,7 +102,7 @@ public:
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
         if(nextArg!=NULL){
-            nextArg->printPy(out);
+            nextArg->printPy(out, myPy);
             out << ", ";
         }
         out << id;
@@ -141,10 +141,10 @@ public:
     virtual void printPy (std::ostream &out, Py &myPy) const override{
       if(arg != NULL){
         if(nextArg != NULL){
-            nextArg->printPy(out);
+            nextArg->printPy(out, myPy);
             out << ", ";
         }
-        arg->printPy(out);
+        arg->printPy(out, myPy);
       }
     }
 };

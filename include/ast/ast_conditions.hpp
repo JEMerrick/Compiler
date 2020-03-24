@@ -57,18 +57,18 @@ public:
         out << " }";
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
-        for(int i = indent; i > 0; i--){
+        for(int i = myPy.indent; i > 0; i--){
           out << "\t";
         }
         out << "if (";
-        condition->printPy(out);
+        condition->printPy(out, myPy);
         out << ") :\n";
-        indent++;
-        for(int i = indent; i > 0; i--){
+        myPy.indent++;
+        for(int i = myPy.indent; i > 0; i--){
           out << "\t";
         }
-        indent--;
-        branch->printPy(out);
+        myPy.indent--;
+        branch->printPy(out, myPy);
     }
 };
 
@@ -108,26 +108,26 @@ public:
         out << "}";
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
-        for(int i = indent; i > 0; i--){
+        for(int i = myPy.indent; i > 0; i--){
           out << "\t";
         }
         out << "if (";
-        condition->printPy(out);
+        condition->printPy(out, myPy);
         out << ") :\n";
-        indent++;
-        for(int i = indent; i > 0; i--){
+        myPy.indent++;
+        for(int i = myPy.indent; i > 0; i--){
           out << "\t";
         }
-        indent--;
-        branch->printPy(out);
+        myPy.indent--;
+        branch->printPy(out, myPy);
         out << std::endl;
         out << "else :\n";
-        indent++;
-        for(int i = indent; i > 0; i--){
+        myPy.indent++;
+        for(int i = myPy.indent; i > 0; i--){
           out << "\t";
         }
-        indent--;
-        elseBranch->printPy(out);
+        myPy.indent--;
+        elseBranch->printPy(out, myPy);
         out << std::endl;
     }
 };
@@ -153,18 +153,18 @@ public:
         out << " }";
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
-        for(int i = indent; i > 0; i--){
+        for(int i = myPy.indent; i > 0; i--){
           out << "\t";
         }
         out << "switch (";
-        condition->printPy(out);
+        condition->printPy(out, myPy);
         out << ") :\n";
-        indent++;
-        for(int i = indent; i > 0; i--){
+        myPy.indent++;
+        for(int i = myPy.indent; i > 0; i--){
           out << "\t";
         }
-        indent--;
-        branch->printPy(out);
+        myPy.indent--;
+        branch->printPy(out, myPy);
     }
 };
 #endif
