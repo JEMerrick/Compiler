@@ -8,10 +8,12 @@
 class Scope
     : public Base
 {
+
 protected:
 BasePtr scop;
+
 public:
-    Scope(BasePtr scop)
+    Scope(BasePtr _scop)
         : scop(_scop)
     {}
 
