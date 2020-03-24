@@ -9,6 +9,8 @@
 #include <memory>
 
 class Base;
+class MIPZ;
+class Py;
 
 typedef const Base *BasePtr;
 
@@ -22,7 +24,7 @@ class Base {
 
         virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const = 0;
         virtual void printC (std::ostream &out) const = 0;
-        virtual void printPy (std::ostream &out) const = 0;
+        virtual void printPy (std::ostream &out, Py &myPy) const = 0;
         
         
 
@@ -66,13 +68,14 @@ class MIPZ {
 
 
 class Py {
+    public:
     Py(){
         //TODO:constructor
     }
     Py(Py prevPy){
         //TODO:copy constructor
     }
-    public:
+    
     int indent = 0;
     //TODO: any functions needed for indent?
 };

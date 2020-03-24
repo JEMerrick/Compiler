@@ -21,7 +21,7 @@ public:
         expr->printC(out);
         out << ";";
     }
-    virtual void printPy (std::ostream &out) const override{
+    virtual void printPy (std::ostream &out, Py &myPy) const override{
         for(int i = indent; i > 0; i--){
             out << "\t";
         }
@@ -46,7 +46,7 @@ public:
         expr->printC(out);
         out << ";";
     }
-    virtual void printPy (std::ostream &out) const override{
+    virtual void printPy (std::ostream &out, Py &myPy) const override{
         for(int i = indent; i > 0; i--){
             out << "\t";
         }
@@ -73,7 +73,7 @@ public:
         list->printC(out);
         out << ";";
     }
-    virtual void printPy (std::ostream &out) const override{
+    virtual void printPy (std::ostream &out, Py &myPy) const override{
         for(int i = indent; i > 0; i--){
             out << "\t";
         }
@@ -99,7 +99,7 @@ public:
         expr->printC(out);
         out << ";";
     }
-    virtual void printPy (std::ostream &out) const override{
+    virtual void printPy (std::ostream &out, Py &myPy) const override{
         for(int i = indent; i > 0; i--){
             out << "\t";
         }

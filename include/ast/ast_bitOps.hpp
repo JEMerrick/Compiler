@@ -25,7 +25,7 @@ public:
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const = 0;
     virtual void printC (std::ostream &out) const = 0;
-    virtual void printPy (std::ostream &out) const = 0;
+    virtual void printPy (std::ostream &out, Py &myPy) const = 0;
 };
 
 class BitAnd
@@ -51,7 +51,7 @@ public:
         out << " & ";
         right->printC(out);
     }
-    virtual void printPy (std::ostream &out) const override{
+    virtual void printPy (std::ostream &out, Py &myPy) const override{
         left->printPy(out);
         out << " & ";
         right->printPy(out);
@@ -81,7 +81,7 @@ public:
         out << " | ";
         right->printC(out);
     }
-    virtual void printPy (std::ostream &out) const override{
+    virtual void printPy (std::ostream &out, Py &myPy) const override{
         left->printPy(out);
         out << " | ";
         right->printPy(out);
@@ -111,7 +111,7 @@ public:
         out << " ^ ";
         right->printC(out);
     }
-    virtual void printPy (std::ostream &out) const override{
+    virtual void printPy (std::ostream &out, Py &myPy) const override{
         left->printPy(out);
         out << " ^ ";
         right->printPy(out);
@@ -141,7 +141,7 @@ public:
         out << " << ";
         right->printC(out);
     }
-    virtual void printPy (std::ostream &out) const override{
+    virtual void printPy (std::ostream &out, Py &myPy) const override{
         left->printPy(out);
         out << " << ";
         right->printPy(out);
@@ -171,7 +171,7 @@ public:
         out << " >> ";
         right->printC(out);
     }
-    virtual void printPy (std::ostream &out) const override{
+    virtual void printPy (std::ostream &out, Py &myPy) const override{
         left->printPy(out);
         out << " >> ";
         right->printPy(out);

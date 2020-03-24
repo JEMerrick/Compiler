@@ -66,7 +66,7 @@ public:
       branch->printC(out);
       out << "}";
     }
-    virtual void printPy (std::ostream &out) const override{
+    virtual void printPy (std::ostream &out, Py &myPy) const override{
       for(int i = indent; i > 0; i--){
         out << "\t";
       }
@@ -115,7 +115,7 @@ public:
         branch->printC(out);
         out << "}";
     }
-    virtual void printPy (std::ostream &out) const override{
+    virtual void printPy (std::ostream &out, Py &myPy) const override{
         for(int i = indent; i > 0; i--){
             out << "\t";
         }
@@ -160,7 +160,7 @@ public:
         condition->printC(out);
         out << ")";
     }
-    virtual void printPy (std::ostream &out) const override{
+    virtual void printPy (std::ostream &out, Py &myPy) const override{
 
     }
 };
@@ -180,7 +180,7 @@ public:
     virtual void printC (std::ostream &out) const override{
         out << "break\n";
     }
-    virtual void printPy (std::ostream &out) const override{
+    virtual void printPy (std::ostream &out, Py &myPy) const override{
         for(int i = indent; i > 0; i--){
             out << "\t";
         }
@@ -203,7 +203,7 @@ public:
     virtual void printC (std::ostream &out) const override{
         out << "continue\n";
     }
-    virtual void printPy (std::ostream &out) const override{
+    virtual void printPy (std::ostream &out, Py &myPy) const override{
         for(int i = indent; i > 0; i--){
             out << "\t";
         }

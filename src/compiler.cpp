@@ -4,8 +4,8 @@
 int main()
 {
     const Base* ast = parseAST();
-    
-    ast->printMIPS(std::cout);
+    MIPZ myMIPS;
+    ast->printMIPS(std::cout, myMIPS);
     std::cout<<std::endl;
 
     return 0;
