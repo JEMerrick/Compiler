@@ -37,7 +37,7 @@ class MIPZ {
       int scopecount;
       std::map <std::string, int> localVars;
 
-      int abcdef = 0;
+      int lcount = 0;
       std::vector <int> regFlag {1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; // can't use $0-$7, $8-$25 free
 
@@ -61,7 +61,7 @@ class MIPZ {
         }
 
         std::string makelabl(){
-            return "L_" + std::to_string(abcdef++);
+            return "L_" + std::to_string(lcount++);
         }
 
 
