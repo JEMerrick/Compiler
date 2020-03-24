@@ -163,7 +163,7 @@ public:
 
     ~VarList(){
         if(nextVar!=NULL){
-            delete nextArg;
+            delete nextVar;
         }
     }
 
