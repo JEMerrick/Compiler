@@ -82,13 +82,13 @@ class MIPZ {
             scopecount++;
         }
 
-        int createlocal(str::string str){
+        int createlocal(std::string str){
           localVars[str] = frameptr;
           frameptr -= 4;
           return (frameptr + 4);
         }
 
-        int findlocal(str::string str){
+        int findlocal(std::string str){
             return localVars[str];
         }
 
