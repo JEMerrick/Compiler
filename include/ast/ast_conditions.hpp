@@ -44,7 +44,7 @@ public:
         condition->printMIPS(r1, out, help);
         std::string label = makelabl();
         out << "BEQ " << r1 << ", $0, " << label << std::endl;
-        branch->printMIPS(reg, out);
+        branch->printMIPS(reg, out, help);
         out << label << ":" << std::endl;
         regFlag[std::stoi(r1.substr(1))] = 0;
     }
@@ -89,10 +89,10 @@ public:
         std::string label2 = makelabl();
 
         out << "BEQ " << r1 << ", $0, " << label1 << std::endl;
-        branch->printMIPS(reg, out);
+        branch->printMIPS(reg, out, help);
         out << "J " << label2 << std::endl;
         out << label1 << std::endl;
-        elseBranch->printMIPS(reg, out);
+        elseBranch->printMIPS(reg, out, help);
         out << label2 << ":" << std::endl;
         regFlag[std::stoi(r1.substr(1))] = 0;
     }

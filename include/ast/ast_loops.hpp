@@ -20,7 +20,7 @@ public:
     }
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-        scop->printMIPS(reg, out);
+        scop->printMIPS(reg, out, help);
     }
     virtual void printC (std::ostream &out) const override{
         out << "{" << std::endl;

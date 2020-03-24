@@ -15,7 +15,7 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-        expr->printMIPS(reg, out);
+        expr->printMIPS(reg, out, help);
     }
     virtual void printC (std::ostream &out) const override{
         expr->printC(out);
