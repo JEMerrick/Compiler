@@ -4,6 +4,30 @@
 
 #include "ast_base.hpp"
 
+
+class Empty_stmt
+    : public Base
+{
+
+public:
+    Empty_stmt()
+    {}
+
+    ~Empty_stmt(){}
+
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+    }
+    virtual void printC (std::ostream &out) const override{
+        out << ";";
+    }
+    virtual void printPy (std::ostream &out, Py &myPy) const override{
+        for(int i = myPy.indent; i > 0; i--){
+            out << "\t";
+        }
+        out << ";";
+    }
+};
+
 class Expr_stmt
     : public Base
 {
