@@ -5,6 +5,32 @@
 
 #include "ast_base.hpp"
 
+class Scope
+    : public Base
+{
+protected:
+BasePtr scop;
+public:
+    Scope(BasePtr scop)
+        : scop(_scop)
+    {}
+
+    ~Scope(){
+      delete scop;
+    }
+
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+        scop->printMIPS(reg, out);
+    }
+    virtual void printC (std::ostream &out) const override{
+        out << "{" << std::endl;
+        scop->printC(out);
+        out << "}";
+    }
+    virtual void printPy (std::ostream &out) const override{
+        scop->printPy(out);
+    }
+};
 
 class For
     : public Base
