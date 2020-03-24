@@ -86,7 +86,7 @@ public:
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
         std::string r1 = "$" + std::to_string(help.findreg());
-        left->printMIPS(r1, out, help);
+        val->printMIPS(r1, out, help);
         if(!help.localexists(variable)){
           throw "Variable not found.";
         }
