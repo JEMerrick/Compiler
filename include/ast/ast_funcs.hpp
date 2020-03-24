@@ -22,7 +22,7 @@ public:
         : type(_type), funcName(_funcName), varList(_varList), branch(_branch)
     {}
 
-    virtual void printMIPS (std::string reg, std::ostream &out) const override{
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
     }
     virtual void printC (std::ostream &out) const override{
         out << type << " " << funcName << "(";
@@ -58,7 +58,7 @@ public:
         : type(_type), funcName(_funcName), varList(_varList)
     {}
 
-    virtual void printMIPS (std::string reg, std::ostream &out) const override{
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
     }
     virtual void printC (std::ostream &out) const override{
         out << type << " " << funcName << "(";
@@ -91,7 +91,7 @@ public:
         }
     }
 
-    virtual void printMIPS (std::string reg, std::ostream &out) const override{
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
     }
     virtual void printC (std::ostream &out) const override{
         if(nextArg != NULL){
@@ -127,7 +127,7 @@ public:
         }
     }
 
-    virtual void printMIPS (std::string reg, std::ostream &out) const override{
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
     }
     virtual void printC (std::ostream &out) const override{
         if(arg != NULL){

@@ -23,7 +23,7 @@ public:
         delete right;
     }
 
-    virtual void printMIPS (std::string reg, std::ostream &out) const = 0;
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const = 0;
     virtual void printC (std::ostream &out) const = 0;
     virtual void printPy (std::ostream &out) const = 0;
 };
@@ -38,10 +38,10 @@ public:
         : condition(_condition)
     {}
 
-    virtual void printMIPS (std::string reg, std::ostream &out) const override{
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
         std::string r1 = "$" + std::to_string(findreg());
-        condition->printMIPS(r1, out);
-        std::string label = makelabel();
+        condition->printMIPS(r1, out, help);
+        std::string label = makelabl();
 
         out << "ADDI " << reg << ", $0, 1" << std::endl;
         out << "BEQ " << r1 << ", $0," << label << std::endl;
@@ -68,13 +68,13 @@ public:
         : LogicOp(_left, _right)
     {}
 
-    virtual void printMIPS (std::string reg, std::ostream &out) const override{
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
         std::string r1 = "$" + std::to_string(findreg());
-        left->printMIPS(r1, out);
+        left->printMIPS(r1, out, help);
         std::string r2 = "$" + std::to_string(findreg());
-        right->printMIPS(r2, out);
-        std::string label1 = makelabel();
-        std::string label2 = makelabel();
+        right->printMIPS(r2, out, help);
+        std::string label1 = makelabl();
+        std::string label2 = makelabl();
 
         out << "ADDI " << reg << ", $0, 0" << std::endl;
         out << "BEQ " << r1 << ", $0," << label1 << std::endl;
@@ -108,13 +108,13 @@ public:
         : LogicOp(_left, _right)
     {}
 
-    virtual void printMIPS (std::string reg, std::ostream &out) const override{
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
         std::string r1 = "$" + std::to_string(findreg());
-        left->printMIPS(r1, out);
+        left->printMIPS(r1, out, help);
         std::string r2 = "$" + std::to_string(findreg());
-        right->printMIPS(r2, out);
-        std::string label1 = makelabel();
-        std::string label2 = makelabel();
+        right->printMIPS(r2, out, help);
+        std::string label1 = makelabl();
+        std::string label2 = makelabl();
 
         out << "ADDI " << reg << ", $0, 0" << std::endl;
         out << "BNE " << r1 << ", $0," << label1 << std::endl;

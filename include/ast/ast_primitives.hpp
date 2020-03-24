@@ -16,7 +16,7 @@ public:
         : id(_id)
     {}
 
-    virtual void printMIPS (std::string reg, std::ostream &out) const{
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const{
 
     }
     virtual void printC (std::ostream &out) const{
@@ -39,7 +39,7 @@ public:
         : value(_value)
     {}
 
-    virtual void printMIPS (std::string reg, std::ostream &out) const{
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const{
         out << "addi " << reg << "$0, " << value;
     }
     virtual void printC (std::ostream &out) const{

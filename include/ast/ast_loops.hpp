@@ -26,7 +26,7 @@ public:
         delete branch;
     }
 
-    virtual void printMIPS (std::string reg, std::ostream &out) const override{
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
 
     }
     virtual void printC (std::ostream &out) const override{
@@ -80,7 +80,7 @@ public:
         delete branch;
     }
 
-    virtual void printMIPS (std::string reg, std::ostream &out) const override{
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
     }
     virtual void printC (std::ostream &out) const override{
         out << "while(";
@@ -124,7 +124,7 @@ public:
         delete branch;
     }
 
-    virtual void printMIPS (std::string reg, std::ostream &out) const override{
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
     }
     virtual void printC (std::ostream &out) const override{
         out << "do {";
@@ -149,7 +149,7 @@ public:
 
     ~BBreak(){}
 
-    virtual void printMIPS (std::string reg, std::ostream &out) const override{
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
     }
     virtual void printC (std::ostream &out) const override{
         out << "break\n";
@@ -172,7 +172,7 @@ public:
 
     ~CContinue(){}
 
-    virtual void printMIPS (std::string reg, std::ostream &out) const override{
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
     }
     virtual void printC (std::ostream &out) const override{
         out << "continue\n";

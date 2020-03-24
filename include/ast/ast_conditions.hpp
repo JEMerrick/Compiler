@@ -25,7 +25,7 @@ public:
         delete branch;
     }
 
-    virtual void printMIPS (std::string reg, std::ostream &out) const = 0;
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const = 0;
     virtual void printC (std::ostream &out) const = 0;
     virtual void printPy (std::ostream &out) const = 0;
 };
@@ -39,10 +39,10 @@ public:
         : Conditions(_condition, _branch)
     {}
 
-    virtual void printMIPS (std::string reg, std::ostream &out) const override{
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
         std::string r1 = "$" + std::to_string(findreg());
-        condition->printMIPS(r1, out);
-        std::string label = makelabel();
+        condition->printMIPS(r1, out, help);
+        std::string label = makelabl();
         out << "BEQ " << r1 << ", $0, " << label << std::endl;
         branch->printMIPS(reg, out);
         out << label << ":" << std::endl;
@@ -82,11 +82,11 @@ public:
         : Conditions(_condition, _branch), elseBranch(_elseBranch)
     {}
 
-    virtual void printMIPS (std::string reg, std::ostream &out) const override{
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
         std::string r1 = "$1";
-        condition->printMIPS(r1, out);
-        std::string label1 = makelabel();
-        std::string label2 = makelabel();
+        condition->printMIPS(r1, out, help);
+        std::string label1 = makelabl();
+        std::string label2 = makelabl();
 
         out << "BEQ " << r1 << ", $0, " << label1 << std::endl;
         branch->printMIPS(reg, out);
@@ -141,7 +141,7 @@ public:
         : Conditions(_condition, _branch)
     {}
 
-    virtual void printMIPS (std::string reg, std::ostream &out) const override{
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
 
     }
     virtual void printC (std::ostream &out) const override{

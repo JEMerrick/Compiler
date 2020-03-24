@@ -14,7 +14,7 @@ public:
         : expr(_expr)
     {}
 
-    virtual void printMIPS (std::string reg, std::ostream &out) const override{
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
         expr->printMIPS(reg, out);
     }
     virtual void printC (std::ostream &out) const override{
@@ -39,7 +39,7 @@ public:
         : expr(_expr)
     {}
 
-    virtual void printMIPS (std::string reg, std::ostream &out) const override{
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
     }
     virtual void printC (std::ostream &out) const override{
         out << "return ";
@@ -66,7 +66,7 @@ public:
         : type(_type), list(_list)
     {}
 
-    virtual void printMIPS (std::string reg, std::ostream &out) const override{
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
     }
     virtual void printC (std::ostream &out) const override{
         out << type << " ";
@@ -92,7 +92,7 @@ public:
         : id(_id), expr(_expr)
     {}
 
-    virtual void printMIPS (std::string reg, std::ostream &out) const override{
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
     }
     virtual void printC (std::ostream &out) const override{
         out << id << "=";
