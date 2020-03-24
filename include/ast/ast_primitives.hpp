@@ -22,7 +22,7 @@ public:
     virtual void printC (std::ostream &out) const{
         out << id;
     }
-    virtual void printPy (std::ostream &out) const{
+    virtual void printPy (std::ostream &out, Py &myPy) const{
         out << id;
     }
 
@@ -45,7 +45,7 @@ public:
     virtual void printC (std::ostream &out) const{
         out << value;
     }
-    virtual void printPy (std::ostream &out) const{
+    virtual void printPy (std::ostream &out, Py &myPy) const{
         out << value;
     }
 

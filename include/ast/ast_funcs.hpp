@@ -32,7 +32,7 @@ public:
         out << "}" << std::endl;
 
     }
-    virtual void printPy (std::ostream &out) const override{
+    virtual void printPy (std::ostream &out, Py &myPy) const override{
         out << "def " << funcName << "(";
         varList->printPy(out);
         out << "):" << std::endl;
@@ -65,7 +65,7 @@ public:
         varList->printC(out);
         out << ");" << std::endl;
     }
-    virtual void printPy (std::ostream &out) const override{
+    virtual void printPy (std::ostream &out, Py &myPy) const override{
         out << "def " << funcName << "(";
         varList->printPy(out);
         out << ")" << std::endl;
@@ -100,7 +100,7 @@ public:
         }
         out << type << " " << id;
     }
-    virtual void printPy (std::ostream &out) const override{
+    virtual void printPy (std::ostream &out, Py &myPy) const override{
         if(nextArg!=NULL){
             nextArg->printPy(out);
             out << ", ";
@@ -138,7 +138,7 @@ public:
           arg->printC(out);
         }
     }
-    virtual void printPy (std::ostream &out) const override{
+    virtual void printPy (std::ostream &out, Py &myPy) const override{
       if(arg != NULL){
         if(nextArg != NULL){
             nextArg->printPy(out);

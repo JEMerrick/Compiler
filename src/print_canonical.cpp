@@ -1,5 +1,5 @@
 #include "ast.hpp"
-#include <iostrem>
+#include <iostream>
 
 int main()
 {
@@ -9,7 +9,7 @@ int main()
     ast -> printC(std::cout);
     std::cout << std::endl;
     
-    ast -> printPy(std::cout);
+    ast -> printPy(std::cout, myPython);
     std::cout << std::endl;
     return 0;
 }
