@@ -27,8 +27,8 @@ public:
         scop->printC(out);
         out << "}";
     }
-    virtual void printPy (std::ostream &out) const override{
-        scop->printPy(out);
+    virtual void printPy (std::ostream &out, Py &myPy) const override{
+        scop->printPy(out, myPy);
     }
 };
 
