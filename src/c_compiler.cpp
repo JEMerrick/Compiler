@@ -1,8 +1,7 @@
 #include <iostream>
 #include "ast.hpp"
 
-int main()
-{
+int main(int argc, char *argv[]){
     const Base* ast = parseAST();
     ast -> printC(std::cout);
     std::cout << std::endl;
