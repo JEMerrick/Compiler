@@ -34,21 +34,30 @@ class Base {
 
 class MIPZ {
     public:
-      int scopecount;
-      std::map <std::string, int> localVars;
-
-      int lcount = 0;
-      std::vector <int> regFlag {1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0,
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; // can't use $0-$7, $8-$25 free
-
+        std::map <std::string, int> localVars;
+        int lcount = 0;
+        std::vector <int> regFlag {1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; // can't use $0-$7, $8-$25 free
+        int scopecount;
+        int frameptr;
 
         MIPZ(){
             //TODO:initial constructor
             scopecount = 0;
+            frameptr = 0;
+            for(int i = 8; i < 26; i++){
+              regFlag[i] = 0;
+            }
         }
 
         MIPZ(MIPZ &help){
             //TODO:copy constructor
+            localVars = help.localVars;
+            scopecount = help.scopecount;
+            frameptr = help.frameptr;
+            for(int i = 8; i < 26; i++){
+              regFlag[i] = help.regFlag[i];
+            }
         }
 
         int findreg(){
@@ -60,8 +69,36 @@ class MIPZ {
             return i;
         }
 
+        void newfunc(){
+            localVars.clear();
+            frameptr = 0;
+        }
+
         std::string makelabl(){
             return "L_" + std::to_string(lcount++);
+        }
+
+        void newscope(){
+            scopecount++;
+        }
+
+        int createlocal(str::string str){
+          localVars[str] = frameptr;
+          frameptr -= 4;
+          return (frameptr + 4);
+        }
+
+        int findlocal(str::string str){
+            return localVars[str];
+        }
+
+        bool localexists(std::string str){
+            if(localVars[str] > 0){
+                return true;
+            }
+            else{
+                return false;
+            }
         }
 
 
