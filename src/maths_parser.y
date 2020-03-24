@@ -80,8 +80,8 @@ EXPR : EXPR_ASSIGN { $$ = $1; }
 
 EXPR_ASSIGN : EXPR_COND { $$ = $1; }
             | T_VARIABLE T_ASSIGN EXPR_ASSIGN {/*new assign expr*/}
-            | T_VARIABLE T_ADDEQUAL EXPR_ASSIGN {//addequal}
-            | T_VARIABLE T_SUBEQUAL EXPR_ASSIGN {//subequal}
+            | T_VARIABLE T_ADDEQUAL EXPR_ASSIGN {/*addequal*/}
+            | T_VARIABLE T_SUBEQUAL EXPR_ASSIGN {/*subequal*/}
 
 EXPR_COND : OR { $$ = $1; }
 
