@@ -12,10 +12,10 @@ src/maths_lexer.yy.cpp : src/maths_lexer.flex src/maths_parser.tab.hpp
 bin/print_canonical : src/print_canonical.o src/maths_parser.tab.o src/maths_lexer.yy.o src/maths_parser.tab.o
 	mkdir -p bin
 	g++ $(CPPFLAGS) -o bin/print_canonical $^
-	
-bin/eval_expr : src/eval_expr.o src/maths_parser.tab.o src/maths_lexer.yy.o src/maths_parser.tab.o
+
+bin/c_compiler : src/c_compiler.o src/maths_parser.tab.o src/maths_lexer.yy.o src/maths_parser.tab.o
 	mkdir -p bin
-	g++ $(CPPFLAGS) -o bin/eval_expr $^
+	g++ $(CPPFLAGS) -o bin/c_compiler $^
 
 
 clean :
