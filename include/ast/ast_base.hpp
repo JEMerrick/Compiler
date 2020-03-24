@@ -34,11 +34,11 @@ class Base {
 
 class MIPZ {
     public:
-        MIPS(){
+        MIPZ(){
             //TODO:initial constructor
         }
         
-        MIPS(MIPZ &help){
+        MIPZ(MIPZ &help){
             //TODO:copy constructor
         }
         
@@ -72,7 +72,7 @@ class Py {
     Py(){
         //TODO:constructor
     }
-    Py(Py prevPy){
+    Py(Py &prevPy){
         //TODO:copy constructor
     }
     
