@@ -60,7 +60,16 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-
+        std::string r1 = "$" + std::to_string(help.findreg());
+        val->printMIPS(r1, out, help);
+        if(!help.localexists(variable)){
+          throw "Variable not found.";
+        }
+        out << "ADDU " << reg << ", $0, " << r1 << std::endl;
+        if(help.localexists(variable)){
+          out << "SW " << reg << ", " << help.findlocal(variable) << "($fp)" << std::endl;
+        }
+        help.regFlag[std::stoi(r1.substr(1))] = 0;
     }
     virtual void printC (std::ostream &out) const override{
         out << variable;
