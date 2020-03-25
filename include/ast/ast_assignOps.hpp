@@ -37,7 +37,7 @@ public:
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
         std::string r1 = "$" + std::to_string(help.findreg());
         val->printMIPS(r1, out, help);
-        if(!(help.globalexists() && help.localexists())){
+        if(!(help.globalexists(variable) && help.localexists(variable))){
             throw "Variable not declared.";
         }
         out << "ADDU " << reg << ", %0, " << r1 << std::endl;
@@ -115,7 +115,7 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-      
+
     }
     virtual void printC (std::ostream &out) const override{
         out << variable;

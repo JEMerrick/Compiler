@@ -41,7 +41,7 @@ class MIPZ {
 
     public:
         std::map <std::string, int> localVars;
-        std::vector<int> globalVars;
+        std::vector<std::string> globalVars;
         std::vector <int> regFlag {1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; // can't use $0-$7, $8-$25 free
         int scopecount;
