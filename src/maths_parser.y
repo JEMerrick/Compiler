@@ -46,11 +46,10 @@
 */
 ROOT : PROG { g_root = $1; }
 
-PROG :  DECLR_ALL {$$ = $1;}
-        | PROG DECLR_ALL { $$ = $1; }
-
-DECLR_ALL : FUNDEC { /* new global list */}
-            | DEC_ST { /* new global list*/ }
+PROG : PROG FUNDEC { $$ = new GlobalList($2, $1); }
+        | FUNDEC { $$ = new GlobalList($1, NULL); }
+        | PROG DEC_ST { $$ = new GlobalList($2, $1); }
+        | DEC_ST { $$ = new GlobalList($1, NULL); }
         
 FUNDEC : TYPE T_VARIABLE T_LBRAC PARAM_LIST T_RBRAC T_LCURL SCOPE T_RCURL { $$ = new DefFunc(*$1, *$2, $4, $7); }
 
