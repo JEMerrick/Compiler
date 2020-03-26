@@ -31,7 +31,13 @@ class Py {
         }
         Py(Py &prevPy){
             //TODO:copy constructor
+            indent = prevPy.indent;
         }
+
+        ~Py(){
+
+        }
+
 
         int indent = 0;
         //TODO: any functions needed for indent?
@@ -67,6 +73,10 @@ class MIPZ {
             for(int i = 8; i < 26; i++){
               regFlag[i] = help.regFlag[i];
             }
+        }
+
+        ~MIPZ(){
+
         }
 
         int findreg(){
@@ -111,8 +121,8 @@ class MIPZ {
             }
         }
 
-        int createglobal(std::string str){
-          globalVars.push_back(str);
+        void createglobal(std::string str){
+            globalVars.push_back(str);
         }
 
         bool globalexists(std::string str){
