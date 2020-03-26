@@ -125,13 +125,13 @@ MUL : UNARY { $$ = $1; }
     | MUL T_MOD UNARY {$$ = new ModOperator($1, $3);}
 
 UNARY : POSTFIX { $$ = $1; }
-        | T_DECREM UNARY { $$ = new PreDecrement($2); }
-        | T_INCREM UNARY { $$ = new PreIncrement($2); }
+        | T_DECREM T_VARIABLE { $$ = new PreDecrement(*$2); }
+        | T_INCREM T_VARIABLE { $$ = new PreIncrement(*$2); }
         
 
 POSTFIX : PRIMATIVE { $$ = $1; }
-        | POSTFIX T_INCREM { $$ = new PostIncrement($1); }
-        | POSTFIX T_DECREM { $$ = new PostDecrement($1); }
+        | T_VARIABLE T_INCREM { $$ = new PostIncrement(*$1); }
+        | T_VARIABLE T_DECREM { $$ = new PostDecrement(*$1); }
 
 PRIMATIVE : T_VARIABLE { $$ = new Variable(*$1); }
             | T_NUMBER { $$ = new Number($1); }

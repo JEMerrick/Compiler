@@ -45,7 +45,7 @@ protected:
     BasePtr incrementordecrement;
 
 public:
-    For(BasePtr _condition, BasePtr _branch, BasePtr _initial, BasePtr incrementordecrement)
+    For(BasePtr _condition, BasePtr _branch, BasePtr _initial, BasePtr _incrementordecrement)
         : condition (_condition), branch (_branch), initial(_initial), incrementordecrement(_incrementordecrement)
     {}
 
