@@ -189,6 +189,46 @@ public:
     }
 };
 
+class GlobalList
+    : public Base
+{
+protected:
+    BasePtr func;
+    BasePtr nextFunc;
+
+public:
+    GlobalList(BasePtr _func, BasePtr _nextFunc)
+        : func(_func), nextFunc(_nextFunc)
+    {}
+
+    ~GlobalList(){
+        if(nextFunc!=NULL){
+            delete nextFunc;
+        }
+    }
+
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+    }
+    virtual void printC (std::ostream &out) const override{
+        if(func != NULL){
+          if(nextFunc != NULL){
+              nextFunc->printC(out);
+              out << std::endl;
+          }
+          func->printC(out);
+        }
+    }
+    virtual void printPy (std::ostream &out, Py &myPy) const override{
+      if(func != NULL){
+        if(nextFunc != NULL){
+            nextFunc->printPy(out, myPy);
+            out << std::endl;
+        }
+        func->printPy(out, myPy);
+      }
+    }
+};
+
 class Declare_Vars
     : public Base
 {
