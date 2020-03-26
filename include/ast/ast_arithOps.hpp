@@ -51,6 +51,7 @@ public:
         //ADDU RZ RY RX
         help.regFlag[std::stoi(r1.substr(1))] = 0;
         help.regFlag[std::stoi(r2.substr(1))] = 0;
+        std::cout << "printMIPSADDOP" << '\n';
     }
     virtual void printC (std::ostream &out) const override{
         out << "( ";
@@ -58,11 +59,13 @@ public:
         out << " + ";
         right->printC(out);
         out << " )";
+        std::cout << "printCADDOP" << '\n';
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
         left->printPy(out, myPy);
         out << " + ";
         right->printPy(out, myPy);
+        std::cout << "printPyADDOP" << '\n';
     }
 };
 
