@@ -111,8 +111,8 @@ class MIPZ {
             }
         }
 
-        int createglobal(std::string str){
-          globalVars.push_back(str);
+        void createglobal(std::string str){
+            globalVars.push_back(str);
         }
 
         bool globalexists(std::string str){
