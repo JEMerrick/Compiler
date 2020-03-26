@@ -17,13 +17,15 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const{
-
+        std::cout << "printMIPSVariablePrimitives" << '\n';
     }
     virtual void printC (std::ostream &out) const{
         out << id;
+        std::cout << "printCVariablePrimitives" << '\n';
     }
     virtual void printPy (std::ostream &out, Py &myPy) const{
         out << id;
+        std::cout << "printPyVariablePrimitives" << '\n';
     }
 
 
@@ -41,12 +43,15 @@ public:
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const{
         out << "addi " << reg << "$0, " << value;
+        std::cout << "printMIPSNumberPrimitives" << '\n';
     }
     virtual void printC (std::ostream &out) const{
         out << value;
+        std::cout << "printCNumberPrimitives" << '\n';
     }
     virtual void printPy (std::ostream &out, Py &myPy) const{
         out << value;
+        std::cout << "printPyNumberPrimitives" << '\n';
     }
 
 };
