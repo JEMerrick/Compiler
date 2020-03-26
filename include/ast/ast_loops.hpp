@@ -45,14 +45,15 @@ protected:
     BasePtr incrementordecrement;
 
 public:
-    For(BasePtr _condition, BasePtr _branch, BasePtr _initial)
-        : condition (_condition), branch (_branch), initial(_initial)
+    For(BasePtr _condition, BasePtr _branch, BasePtr _initial, BasePtr incrementordecrement)
+        : condition (_condition), branch (_branch), initial(_initial), incrementordecrement(_incrementordecrement)
     {}
 
     ~For(){
         delete condition;
         delete initial;
         delete branch;
+        delete incrementordecrement;
     }
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
