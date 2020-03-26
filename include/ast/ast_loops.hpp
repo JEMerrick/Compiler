@@ -65,7 +65,7 @@ public:
       out << "; ";
       condition->printC(out);
       out << "; ";
-      incrementordecrement->printC();
+      incrementordecrement->printC(out);
       out << ") {" << std::endl;
       branch->printC(out);
       out << "}";
