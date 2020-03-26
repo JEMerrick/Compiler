@@ -80,9 +80,9 @@ EXPR_ST : T_SEMIC { $$ = new Expr_stmt(NULL); }
 EXPR : EXPR_ASSIGN { $$ = $1; }
 
 EXPR_ASSIGN : EXPR_COND { $$ = $1; }
-            | T_VARIABLE T_ASSIGN EXPR_ASSIGN {/*new assign expr*/}
-            | T_VARIABLE T_ADDEQUAL EXPR_ASSIGN {/*addequal*/}
-            | T_VARIABLE T_SUBEQUAL EXPR_ASSIGN {/*subequal*/}
+            | T_VARIABLE T_ASSIGN EXPR_ASSIGN { $$ = new AssignEqualOperator(*$1, $3); }
+            | T_VARIABLE T_ADDEQUAL EXPR_ASSIGN { $$ = new AddEqualOperator(*$1, $3); }
+            | T_VARIABLE T_SUBEQUAL EXPR_ASSIGN { $$ = new SubEqualOperator(*$1, $3); }
 
 EXPR_COND : OR { $$ = $1; }
 
