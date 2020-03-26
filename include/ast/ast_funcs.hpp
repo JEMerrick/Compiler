@@ -237,11 +237,11 @@ protected:
     BasePtr branch;
 
 public:
-    GlobalList(BasePtr _statement, BasePtr _branch)
+    BranchList(BasePtr _statement, BasePtr _branch)
         : statement(_statement), branch(_branch)
     {}
 
-    ~GlobalList(){
+    ~BranchList(){
         if(branch!=NULL){
             delete branch;
         }
