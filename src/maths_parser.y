@@ -52,7 +52,7 @@ PROG :  DECLR_ALL {$$ = $1;}
 DECLR_ALL : FUNDEC { /* new global list */}
             | DEC_ST { /* new global list*/ }
         
-FUNDEC : TYPE T_VARIABLE T_LBRAC PARAM_LIST T_RBRAC T_LCURL SCOPE T_RCURL { $$ = new DefFunc(*$1, *$2, $4, $7)}
+FUNDEC : TYPE T_VARIABLE T_LBRAC PARAM_LIST T_RBRAC T_LCURL SCOPE T_RCURL { $$ = new DefFunc(*$1, *$2, $4, $7); }
         | TYPE T_VARIABLE T_LBRAC T_RBRAC T_LCURL SCOPE T_RCURL { $$ = new DefFunc(*$1, *$2, NULL, $6); }
         | TYPE T_VARIABLE T_LBRAC PARAM_LIST T_RBRAC T_SEMIC { $$ = new CallFunc(*$1, *$2, $4);}
         | TYPE T_VARIABLE T_LBRAC T_RBRAC T_SEMIC { $$ = new CallFunc(*$1, *$2, NULL); }
@@ -67,14 +67,14 @@ TYPE : T_INT { $$ = $1; }
         | T_SIGNED  { $$ = $1; }
         
 
-PARAM_LIST : PARAM_LIST T_COMMA TYPE T_VARIABLE { /* new arg*/ }
-             TYPE T_VARIABLE { /* new arg*/ }
+PARAM_LIST : PARAM_LIST T_COMMA TYPE T_VARIABLE { $$ = new Arg (*$3, *$4, $1); }
+             | TYPE T_VARIABLE { $$ = new Arg(*$1, *$2, NULL); }
 
 SCOPE : SCOPE STMT { /* new branch?*/ }
         | STMT { /* new branch empty? */}
 
-EXPR_ST : T_SEMIC { /* new empty expression statement*/ }
-        | EXPR T_SEMIC { /* new expression statement*/ }
+EXPR_ST : T_SEMIC { $$ = new Expr_stmt(NULL); }
+        | EXPR T_SEMIC { $$ = new Expr_stmt($1); }
 
 EXPR : EXPR_ASSIGN { $$ = $1; }
 
@@ -124,12 +124,12 @@ MUL : UNARY { $$ = $1; }
     | MUL T_MOD UNARY {$$ = new ModOperator($1, $3);}
 
 UNARY : POSTFIX { $$ = $1; }
-        | T_DECREM UNARY { /* new prefix decrement */}
-        | T_INCREM UNARY { /* new prefix increment */}
+        | T_DECREM UNARY { $$ = new PreDecrement($2); }
+        | T_INCREM UNARY { $$ = new PreIncrement($2); }
         
 POSTFIX : PRIMATIVE { $$ = $1; }
-        | POSTFIX T_INCREM { /* new postfix increment */ }
-        | POSTFIX T_DECREM { /* new postfix decrement */ }
+        | POSTFIX T_INCREM { $$ = new PostIncrement($1); }
+        | POSTFIX T_DECREM { $$ = new PostDecrement($1); }
 
 PRIMATIVE : T_VARIABLE { $$ = new Variable(*$1); }
             | T_NUMBER { $$ = new Number($1); }
@@ -142,29 +142,29 @@ STMT : JMP_ST { $$ = $1; }
         | NEW_SCOPE { $$ = $1; }
         | DEC_ST { $$ = $1; }
         
-JMP_ST : T_RETURN T_SEMIC { /* new return 0 */}
-        | T_RETURN EXPR T_SEMIC { /* new return expr */}
-        | T_BREAK {/* new break statement */}
-        | T_CONTINUE { /* new continue statement */}
+JMP_ST : T_RETURN T_SEMIC { $$ = new Return_stmt(NULL); }
+        | T_RETURN EXPR T_SEMIC { $$ = new Return_stmt($2); }
+        | T_BREAK { $$ = new BBreak(); }
+        | T_CONTINUE { $$ = new CContinue(); }
         
-IF_ST : T_IF T_LBRAC EXPR T_RBRAC STMT { /* new if */}
-        | T_IF T_LBRAC EXPR T_RBRAC STMT T_ELSE STMT {/* new if else */}
-        | T_SWITCH EXPR STMT {/*new switch */}
+IF_ST : T_IF T_LBRAC EXPR T_RBRAC STMT { $$ = new If($3, $5); }
+        | T_IF T_LBRAC EXPR T_RBRAC STMT T_ELSE STMT { $$ = new IfElse($3, $5, $7); }
+        | T_SWITCH EXPR STMT { $$ = new Switch($2, $3); }
 
-ITER_ST : T_WHILE T_LBRAC EXPR T_RBRAC STMT { /* new while*/}
-        | T_DO STMT T_WHILE T_LBRAC EXPR T_RBRAC T_SEMIC {/* new do while*/}
-        | T_FOR T_LBRAC EXPR_ST EXPR_ST T_RBRAC STMT {/* new for (no increment)*/}
-        | T_FOR T_LBRAC EXPR_ST EXPR_ST EXPR T_RBRAC STMT {/* new for */}
+ITER_ST : T_WHILE T_LBRAC EXPR T_RBRAC STMT { $$ = new While($3, $5); }
+        | T_DO STMT T_WHILE T_LBRAC EXPR T_RBRAC T_SEMIC { $$ = new Do($2, $5); }
+        | T_FOR T_LBRAC EXPR_ST EXPR_ST T_RBRAC STMT { $$ = new For($3, $4, $6, NULL); }
+        | T_FOR T_LBRAC EXPR_ST EXPR_ST EXPR T_RBRAC STMT { $$ = new For($3, $4, $5, $7); }
 
-NEW_SCOPE : T_LCURL SCOPE T_RCURL {/* new scope */}
+NEW_SCOPE : T_LCURL SCOPE T_RCURL { $$ = new Scope($2); }
 
-DEC_ST : TYPE DEC_LIST T_SEMIC { /* new declare statement */}
+DEC_ST : TYPE DEC_LIST T_SEMIC { $$ = new Decl_stmt(*$1, $2); }
 
-DEC_LIST : VAR_DEC { /* new declare variable list length 0 */}
-        | DEC_LIST T_COMMA VAR_DEC { /* new declare variable list */}
+DEC_LIST : VAR_DEC { $$ = new ArgList($1, NULL); }
+        | DEC_LIST T_COMMA VAR_DEC { $$ = new ArgList($3, $1); }
         
-VAR_DEC : T_VARIABLE T_ASSIGN EXPR { /* new declare variableS */}
-        | T_VARIABLE { /* new declare variable */}
+VAR_DEC : T_VARIABLE T_ASSIGN EXPR { $$ = new Declare (*$1, $3); }
+        | T_VARIABLE { $$ = new Declare(*$1, NULL);}
 
         
 %%
