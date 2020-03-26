@@ -33,7 +33,7 @@
 
 %type <expr> PROG DECLR_ALL FUNDEC PARAM_LIST SCOPE EXPR_ST EXPR EXPR_ASSIGN EXPR_COND OR AND BOR BXOR BAND EQUAL LESS SHIFT ADD MUL UNARY POSTFIX PRIMATIVE STMT JMP_ST IF_ST ITER_ST NEW_SCOPE DEC_ST DEC_LIST VAR_DEC
 %type <number> T_NUMBER
-%type <string> T_INT T_VOID T_CHAR T_SHORT T_LONG T_FLOAT T_DOUBLE T_SIGNED 
+%type <string> T_INT T_VOID T_CHAR T_SHORT T_LONG T_FLOAT T_DOUBLE T_SIGNED
 %type <string> T_VARIABLE TYPE
 
 %start ROOT
@@ -51,12 +51,17 @@ PROG :  DECLR_ALL {$$ = $1;}
 
 DECLR_ALL : FUNDEC { /* new global list */}
             | DEC_ST { /* new global list*/ }
+<<<<<<< HEAD
         
 FUNDEC : TYPE T_VARIABLE T_LBRAC PARAM_LIST T_RBRAC T_LCURL SCOPE T_RCURL { $$ = new DefFunc(*$1, *$2, $4, $7); }
+=======
+
+FUNDEC : TYPE T_VARIABLE T_LBRAC PARAM_LIST T_RBRAC T_LCURL SCOPE T_RCURL { $$ = new DefFunc(*$1, *$2, $4, $7)}
+>>>>>>> cc5f188211dc74c702549e0bd5e834473d971711
         | TYPE T_VARIABLE T_LBRAC T_RBRAC T_LCURL SCOPE T_RCURL { $$ = new DefFunc(*$1, *$2, NULL, $6); }
         | TYPE T_VARIABLE T_LBRAC PARAM_LIST T_RBRAC T_SEMIC { $$ = new CallFunc(*$1, *$2, $4);}
         | TYPE T_VARIABLE T_LBRAC T_RBRAC T_SEMIC { $$ = new CallFunc(*$1, *$2, NULL); }
-        
+
 TYPE : T_INT { $$ = $1; }
         | T_VOID { $$ = $1; }
         | T_CHAR { $$ = $1; }
@@ -65,7 +70,7 @@ TYPE : T_INT { $$ = $1; }
         | T_FLOAT { $$ = $1; }
         | T_DOUBLE { $$ = $1; }
         | T_SIGNED  { $$ = $1; }
-        
+
 
 PARAM_LIST : PARAM_LIST T_COMMA TYPE T_VARIABLE { $$ = new Arg (*$3, *$4, $1); }
              | TYPE T_VARIABLE { $$ = new Arg(*$1, *$2, NULL); }
@@ -80,8 +85,8 @@ EXPR : EXPR_ASSIGN { $$ = $1; }
 
 EXPR_ASSIGN : EXPR_COND { $$ = $1; }
             | T_VARIABLE T_ASSIGN EXPR_ASSIGN {/*new assign expr*/}
-            | T_VARIABLE T_ADDEQUAL EXPR_ASSIGN {/* new addequal */}
-            | T_VARIABLE T_SUBEQUAL EXPR_ASSIGN {/* new subequal */}
+            | T_VARIABLE T_ADDEQUAL EXPR_ASSIGN {/*addequal*/}
+            | T_VARIABLE T_SUBEQUAL EXPR_ASSIGN {/*subequal*/}
 
 EXPR_COND : OR { $$ = $1; }
 
@@ -117,7 +122,7 @@ SHIFT : ADD { $$ = $1; }
 ADD : MUL { $$ = $1; }
     | ADD T_PLUS MUL {$$ = new AddOperator($1, $3);}
     | ADD T_MINUS MUL {$$ = new SubOperator($1, $3);}
-    
+
 MUL : UNARY { $$ = $1; }
     | MUL T_TIMES UNARY {$$ = new MulOperator($1, $3);}
     | MUL T_DIVIDE UNARY {$$ = new DivOperator($1, $3);}
@@ -127,6 +132,7 @@ UNARY : POSTFIX { $$ = $1; }
         | T_DECREM UNARY { $$ = new PreDecrement($2); }
         | T_INCREM UNARY { $$ = new PreIncrement($2); }
         
+
 POSTFIX : PRIMATIVE { $$ = $1; }
         | POSTFIX T_INCREM { $$ = new PostIncrement($1); }
         | POSTFIX T_DECREM { $$ = new PostDecrement($1); }
@@ -141,6 +147,7 @@ STMT : JMP_ST { $$ = $1; }
         | ITER_ST { $$ = $1; }
         | NEW_SCOPE { $$ = $1; }
         | DEC_ST { $$ = $1; }
+
         
 JMP_ST : T_RETURN T_SEMIC { $$ = new Return_stmt(NULL); }
         | T_RETURN EXPR T_SEMIC { $$ = new Return_stmt($2); }
@@ -151,6 +158,7 @@ IF_ST : T_IF T_LBRAC EXPR T_RBRAC STMT { $$ = new If($3, $5); }
         | T_IF T_LBRAC EXPR T_RBRAC STMT T_ELSE STMT { $$ = new IfElse($3, $5, $7); }
         | T_SWITCH EXPR STMT { $$ = new Switch($2, $3); }
 
+
 ITER_ST : T_WHILE T_LBRAC EXPR T_RBRAC STMT { $$ = new While($3, $5); }
         | T_DO STMT T_WHILE T_LBRAC EXPR T_RBRAC T_SEMIC { $$ = new Do($2, $5); }
         | T_FOR T_LBRAC EXPR_ST EXPR_ST T_RBRAC STMT { $$ = new For($3, $4, $6, NULL); }
@@ -160,13 +168,15 @@ NEW_SCOPE : T_LCURL SCOPE T_RCURL { $$ = new Scope($2); }
 
 DEC_ST : TYPE DEC_LIST T_SEMIC { $$ = new Decl_stmt(*$1, $2); }
 
+
 DEC_LIST : VAR_DEC { $$ = new ArgList($1, NULL); }
         | DEC_LIST T_COMMA VAR_DEC { $$ = new ArgList($3, $1); }
         
 VAR_DEC : T_VARIABLE T_ASSIGN EXPR { $$ = new Declare (*$1, $3); }
         | T_VARIABLE { $$ = new Declare(*$1, NULL);}
 
-        
+
+
 %%
 const Base *g_root; // Definition of variable (to match declaration earlier)
 const Base *parseAST()

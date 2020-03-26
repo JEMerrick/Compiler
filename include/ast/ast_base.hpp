@@ -9,42 +9,50 @@
 #include <memory>
 
 class Base;
-class MIPZ;
 class Py;
+class MIPZ;
 
 typedef const Base *BasePtr;
 
 class Base {
 
     public:
-
-
-
         virtual ~Base(){}
-
         virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const = 0;
         virtual void printC (std::ostream &out) const = 0;
         virtual void printPy (std::ostream &out, Py &myPy) const = 0;
 
-
-
-
 };
 
+class Py {
+    public:
+        Py(){
+            //TODO:constructor
+        }
+        Py(Py &prevPy){
+            //TODO:copy constructor
+        }
+
+        int indent = 0;
+        //TODO: any functions needed for indent?
+};
 
 class MIPZ {
+
     public:
         std::map <std::string, int> localVars;
-        int lcount = 0;
+        std::vector<std::string> globalVars;
         std::vector <int> regFlag {1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; // can't use $0-$7, $8-$25 free
         int scopecount;
         int frameptr;
+        int globalptr;
 
         MIPZ(){
             //TODO:initial constructor
             scopecount = 0;
             frameptr = 0;
+            globalptr = 0;
             for(int i = 8; i < 26; i++){
               regFlag[i] = 0;
             }
@@ -53,6 +61,7 @@ class MIPZ {
         MIPZ(MIPZ &help){
             //TODO:copy constructor
             localVars = help.localVars;
+            globalVars = help.globalVars;
             scopecount = help.scopecount;
             frameptr = help.frameptr;
             for(int i = 8; i < 26; i++){
@@ -74,6 +83,7 @@ class MIPZ {
             frameptr = 0;
         }
 
+        int lcount = 0;
         std::string makelabl(){
             return "L_" + std::to_string(lcount++);
         }
@@ -101,22 +111,19 @@ class MIPZ {
             }
         }
 
+        int createglobal(std::string str){
+          globalVars.push_back(str);
+        }
 
-
+        bool globalexists(std::string str){
+            for (int i = 0; i < globalVars.size(); i++) {
+                if(globalVars[i] == str){
+                    return true;
+                }
+            }
+            return false;
+        }
 };
 
-
-class Py {
-    public:
-    Py(){
-        //TODO:constructor
-    }
-    Py(Py &prevPy){
-        //TODO:copy constructor
-    }
-
-    int indent = 0;
-    //TODO: any functions needed for indent?
-};
 
 #endif

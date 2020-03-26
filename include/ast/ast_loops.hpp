@@ -42,6 +42,7 @@ protected:
     BasePtr condition;
     BasePtr branch;
     BasePtr initial;
+    BasePtr incrementordecrement;
 
 public:
     For(BasePtr _condition, BasePtr _branch, BasePtr _initial)
@@ -63,7 +64,7 @@ public:
       out << "; ";
       condition->printC(out);
       out << "; ";
-      // i++
+      incrementordecrement->printC();
       out << ") {" << std::endl;
       branch->printC(out);
       out << "}";

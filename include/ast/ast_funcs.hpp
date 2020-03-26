@@ -149,4 +149,90 @@ public:
     }
 };
 
+class VarList
+    : public Base
+{
+protected:
+    BasePtr var;
+    BasePtr nextVar;
+
+public:
+    VarList(BasePtr _var, BasePtr _nextVar)
+        : var(_var), nextVar(_nextVar)
+    {}
+
+    ~VarList(){
+        if(nextVar!=NULL){
+            delete nextVar;
+        }
+    }
+
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+    }
+    virtual void printC (std::ostream &out) const override{
+        if(var != NULL){
+          if(nextVar != NULL){
+              nextVar->printC(out);
+              out << ", ";
+          }
+          var->printC(out);
+        }
+    }
+    virtual void printPy (std::ostream &out, Py &myPy) const override{
+      if(var != NULL){
+        if(nextVar != NULL){
+            nextVar->printPy(out, myPy);
+            out << ", ";
+        }
+        var->printPy(out, myPy);
+      }
+    }
+};
+
+class Declare_Vars
+    : public Base
+{
+
+public:
+    Declare_Vars()
+    {}
+
+    ~Declare_Vars(){}
+
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+    }
+    virtual void printC (std::ostream &out) const override{
+        out << "declare _varList";
+    }
+    virtual void printPy (std::ostream &out, Py &myPy) const override{
+        for(int i = myPy.indent; i > 0; i--){
+            out << "\t";
+        }
+        out << "Declare_Var";
+    }
+};
+
+class Declare_Var
+    : public Base
+{
+
+public:
+    Declare_Var()
+    {}
+
+    ~Declare_Var(){}
+
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+    }
+    virtual void printC (std::ostream &out) const override{
+        out << "declare _varList";
+    }
+    virtual void printPy (std::ostream &out, Py &myPy) const override{
+        for(int i = myPy.indent; i > 0; i--){
+            out << "\t";
+        }
+        out << "Declare_Var";
+    }
+};
+
 #endif
