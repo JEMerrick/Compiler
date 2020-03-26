@@ -30,7 +30,7 @@ class AssignEqualOperator
 protected:
     BasePtr val;
 public:
-    AssignEqualOperator(std::string _variable, BasePtr _val)
+    AssignEqualOperator(std::string &_variable, BasePtr _val)
         : AssignOp(_variable), val(_val)
     {}
 
@@ -72,7 +72,7 @@ class AddEqualOperator
 protected:
     BasePtr val;
 public:
-    AddEqualOperator(std::string _variable, BasePtr _val)
+    AddEqualOperator(std::string &_variable, BasePtr _val)
         : AssignOp(_variable), val(_val)
     {}
 
@@ -110,7 +110,7 @@ class SubEqualOperator
 protected:
     BasePtr val;
 public:
-    SubEqualOperator(std::string _variable, BasePtr _val)
+    SubEqualOperator(std::string &_variable, BasePtr _val)
         : AssignOp(_variable), val(_val)
     {}
 
@@ -134,7 +134,7 @@ class PreIncrement
 {
 
 public:
-    PreIncrement(std::string _variable)
+    PreIncrement(std::string &_variable)
         : AssignOp(_variable)
     {}
 
@@ -154,7 +154,7 @@ class PreDecrement
 {
 
 public:
-    PreDecrement(std::string _variable)
+    PreDecrement(std::string &_variable)
         : AssignOp(_variable)
     {}
 
@@ -174,7 +174,7 @@ class PostIncrement
 {
 
 public:
-    PostIncrement(std::string _variable)
+    PostIncrement(std::string &_variable)
         : AssignOp(_variable)
     {}
 
@@ -194,7 +194,7 @@ class PostDecrement
 {
 
 public:
-    PostDecrement(std::string _variable)
+    PostDecrement(std::string &_variable)
         : AssignOp(_variable)
     {}
 
