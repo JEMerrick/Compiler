@@ -51,13 +51,9 @@ PROG :  DECLR_ALL {$$ = $1;}
 
 DECLR_ALL : FUNDEC { /* new global list */}
             | DEC_ST { /* new global list*/ }
-<<<<<<< HEAD
         
 FUNDEC : TYPE T_VARIABLE T_LBRAC PARAM_LIST T_RBRAC T_LCURL SCOPE T_RCURL { $$ = new DefFunc(*$1, *$2, $4, $7); }
-=======
 
-FUNDEC : TYPE T_VARIABLE T_LBRAC PARAM_LIST T_RBRAC T_LCURL SCOPE T_RCURL { $$ = new DefFunc(*$1, *$2, $4, $7)}
->>>>>>> cc5f188211dc74c702549e0bd5e834473d971711
         | TYPE T_VARIABLE T_LBRAC T_RBRAC T_LCURL SCOPE T_RCURL { $$ = new DefFunc(*$1, *$2, NULL, $6); }
         | TYPE T_VARIABLE T_LBRAC PARAM_LIST T_RBRAC T_SEMIC { $$ = new CallFunc(*$1, *$2, $4);}
         | TYPE T_VARIABLE T_LBRAC T_RBRAC T_SEMIC { $$ = new CallFunc(*$1, *$2, NULL); }
