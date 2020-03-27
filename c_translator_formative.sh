@@ -12,7 +12,7 @@ if [[ ! -f bin/c_compiler ]] ; then
     have_compiler=1
 fi
 
-input_dir="translator_tests/examples"
+input_dir="c_translator/formative"
 
 working="tmp/formative"
 mkdir -p ${working}
