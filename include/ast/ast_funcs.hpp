@@ -26,7 +26,9 @@ public:
     }
     virtual void printC (std::ostream &out) const override{
         out << type << " " << funcName << "(";
-        varList->printC(out);
+        if(varList != NULL){
+            varList->printC(out);
+        }
         out << ") {" << std::endl;
         branch->printC(out);//return 1
         out << "}" << std::endl;
@@ -34,7 +36,9 @@ public:
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
         out << "def " << funcName << "(";
-        varList->printPy(out, myPy);
+        if(varList != NULL){
+            varList->printPy(out, myPy);
+        }
         out << "):" << std::endl;
         myPy.indent++;
         for(int i = myPy.indent; i > 0; i--){
@@ -62,12 +66,16 @@ public:
     }
     virtual void printC (std::ostream &out) const override{
         out << type << " " << funcName << "(";
-        varList->printC(out);
+        if(varList != NULL){
+            varList->printC(out);
+        }
         out << ");" << std::endl;
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
         out << "def " << funcName << "(";
-        varList->printPy(out, myPy);
+        if(varList != NULL){
+            varList->printPy(out, myPy);
+        }
         out << ")" << std::endl;
     }
 };

@@ -5,8 +5,8 @@ extern "C" int fileno(FILE *stream);
 #include "maths_parser.tab.hpp"
 %}
 %%
-"int"           { return T_INT; }
-"return"        { return T_RETURN; }
+"int"           { yylval.string = new std::string(yytext); return T_INT; }
+"return"        { yylval.string = new std::string(yytext); return T_RETURN; }
 [;]             { return T_SEMIC; }
 [{]             { return T_LCURL; }
 [}]             { return T_RCURL; }
@@ -35,40 +35,41 @@ extern "C" int fileno(FILE *stream);
 [=]             { return T_ASSIGN; }
 [,]             { return T_COMMA; }
 
-"break"         { return T_BREAK; }
+"break"         { yylval.string = new std::string(yytext); return T_BREAK; }
 
-"char"          { return T_CHAR; }
+"char"          { yylval.string = new std::string(yytext); return T_CHAR; }
 
-"continue"      { return T_CONTINUE; }
+"continue"      { yylval.string = new std::string(yytext); return T_CONTINUE; }
 
-"do"            { return T_DO; }
-"double"        { return T_DOUBLE; }
-"else"          { return T_ELSE; }
+"do"            { yylval.string = new std::string(yytext); return T_DO; }
+"double"        { yylval.string = new std::string(yytext); return T_DOUBLE; }
+"else"          { yylval.string = new std::string(yytext); return T_ELSE; }
 
-"float"         { return T_FLOAT; }
-"for"           { return T_FOR; }
+"float"         { yylval.string = new std::string(yytext); return T_FLOAT; }
+"for"           { yylval.string = new std::string(yytext); return T_FOR; }
 
-"if"            { return T_IF; }
-
-
-"signed"        { return T_SIGNED; }
+"if"            { yylval.string = new std::string(yytext); return T_IF; }
 
 
-
-"switch"        { return T_SWITCH; }
-
-"void"          { return T_VOID; }
-"while"         { return T_WHILE; }
-"+="            { return T_ADDEQUAL; }
-"-="            { return T_SUBEQUAL; }
-"++"            { return T_INCREM; }
-"--"            { return T_DECREM; }
+"signed"        { yylval.string = new std::string(yytext); return T_SIGNED; }
+"short"         { yylval.string = new std::string(yytext); return T_SHORT; }
+"long"          { yylval.string = new std::string(yytext); return T_LONG; }
 
 
+"switch"        { yylval.string = new std::string(yytext); return T_SWITCH; }
+
+"void"          { yylval.string = new std::string(yytext); return T_VOID; }
+"while"         { yylval.string = new std::string(yytext); return T_WHILE; }
+"+="            { yylval.string = new std::string(yytext); return T_ADDEQUAL; }
+"-="            { yylval.string = new std::string(yytext); return T_SUBEQUAL; }
+"++"            { yylval.string = new std::string(yytext); return T_INCREM; }
+"--"            { yylval.string = new std::string(yytext); return T_DECREM; }
 
 
-[a-zA-Z]\w* { yylval.string=new std::string(yytext); return T_VARIABLE; }
-[0-9]+ { yylval.number=strtod(yytext, 0); return T_NUMBER; }
+
+
+[A-Za-z_]([A-Za-z_]|[0-9])* { yylval.string=new std::string(yytext); return T_VARIABLE; }
+[0-9]+([.][0-9]*)? { yylval.number=strtod(yytext, 0); return T_NUMBER; }
 
 
 [ \t\r\n]+		{;}
