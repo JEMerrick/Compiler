@@ -22,6 +22,7 @@ int main(int argc, char *argv[]){
         Py myPython;
         ast->printPy(std::cout, myPython);
         std::cout << std::endl;
+        std::cout << std::endl;
         //outfile.close();
         std::cout << "# Boilerplat" << std::endl;
         std::cout << "if __name__ == \"__main__\":" << std::endl;
