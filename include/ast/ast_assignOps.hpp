@@ -133,6 +133,9 @@ class PreIncrement
     : public AssignOp
 {
 
+protected:
+    int index;
+
 public:
     PreIncrement(std::string &_variable)
         : AssignOp(_variable)
@@ -142,7 +145,13 @@ public:
 
     }
     virtual void printC (std::ostream &out) const override{
-        out << "++" << variable;
+        if(index == -1){
+            out << "++" << variable;
+        }
+        else{
+            out << "++" << variable << "[" << index << "]";
+        }
+
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
         out << "++" << variable;
