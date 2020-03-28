@@ -53,7 +53,7 @@ PROG : PROG FUNDEC { $$ = new GlobalList($2, $1);}
         | FUNDEC { $$ = new GlobalList($1, NULL); }
         | PROG DEC_ST { $$ = new GlobalList($2, $1); }
         | DEC_ST { $$ = new GlobalList($1, NULL); }
-        
+
 FUNDEC : TYPE T_VARIABLE T_LBRAC PARAM_LIST T_RBRAC T_LCURL SCOPE T_RCURL { $$ = new DefFunc(*$1, *$2, $4, $7); }
 
         | TYPE T_VARIABLE T_LBRAC T_RBRAC T_LCURL SCOPE T_RCURL { $$ = new DefFunc(*$1, *$2, NULL, $6); }
@@ -129,7 +129,7 @@ MUL : UNARY { $$ = $1; }
 UNARY : POSTFIX { $$ = $1; }
         | T_DECREM T_VARIABLE { $$ = new PreDecrement(*$2); }
         | T_INCREM T_VARIABLE { $$ = new PreIncrement(*$2); }
-        
+
 
 POSTFIX : PRIMATIVE { $$ = $1; }
         | T_VARIABLE T_INCREM { $$ = new PostIncrement(*$1); }
@@ -146,12 +146,12 @@ STMT : JMP_ST { $$ = $1; }
         | NEW_SCOPE { $$ = $1; }
         | DEC_ST { $$ = $1; }
 
-        
+
 JMP_ST : T_RETURN T_SEMIC { $$ = new Return_stmt(NULL); }
         | T_RETURN EXPR T_SEMIC { $$ = new Return_stmt($2); }
         | T_BREAK { $$ = new BBreak(); }
         | T_CONTINUE { $$ = new CContinue(); }
-        
+
 IF_ST : T_IF T_LBRAC EXPR T_RBRAC STMT { $$ = new If($3, $5); }
         | T_IF T_LBRAC EXPR T_RBRAC STMT T_ELSE STMT { $$ = new IfElse($3, $5, $7); }
         | T_SWITCH EXPR STMT { $$ = new Switch($2, $3); }
@@ -169,7 +169,7 @@ DEC_ST : TYPE DEC_LIST T_SEMIC { $$ = new Decl_stmt(*$1, $2); }
 
 DEC_LIST : VAR_DEC { $$ = new ArgList($1, NULL); }
         | DEC_LIST T_COMMA VAR_DEC { $$ = new ArgList($3, $1); }
-        
+
 VAR_DEC : T_VARIABLE T_ASSIGN EXPR { $$ = new Declare (*$1, $3); }
         | T_VARIABLE { $$ = new Declare(*$1, NULL);}
 
