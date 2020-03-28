@@ -8,6 +8,7 @@ int main(int argc, char *argv[]){
     freopen(argv[2], "r", stdin);
     const Base* ast = parseAST();
     std::cout << std::endl;
+    freopen(argv[4], "w", stdout);
 
     if(static_cast<std::string>(argv[1]) == "--translate"){
         //ofstream outfile;
