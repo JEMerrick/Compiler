@@ -72,8 +72,7 @@ public:
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
         for(int i = myPy.indent; i > 0; i--){
-            out << "\t";
-            out << "tab" << '\n';
+            out << "  ";
         }
         out << "return ";
         expr->printPy(out, myPy);

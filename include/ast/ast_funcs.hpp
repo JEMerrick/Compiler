@@ -42,8 +42,7 @@ public:
         out << "):" << std::endl;
         myPy.indent++;
         for(int i = myPy.indent; i > 0; i--){
-          out << "\t";
-          out << "tab" << '\n';
+          out << "  ";
         }
         myPy.indent--;
         branch->printPy(out, myPy);//return 1
