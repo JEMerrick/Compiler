@@ -148,7 +148,7 @@ class MIPZ {
         }
 
         int findarrayelement(std::string str, int n){
-            return (localVars[str] - 4*n)
+            return (localVars[str] - 4*n);
         }
 };
 
