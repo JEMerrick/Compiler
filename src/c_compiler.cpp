@@ -10,10 +10,10 @@ int main(int argc, char *argv[]){
     std::cout << std::endl;
 
     if(static_cast<std::string>(argv[1]) == "--translate"){
-        ofstream outfile;
-        outfile.open(argv[4]);
+        //ofstream outfile;
+        //outfile.open(argv[4]);
         Py myPython;
-        ast->printPy(outfile, myPython);
+        ast->printPy(std::cout, myPython);
         std::cout << std::endl;
         outfile.close();
     }
