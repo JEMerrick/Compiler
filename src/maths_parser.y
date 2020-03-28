@@ -127,7 +127,7 @@ MUL : UNARY { $$ = $1; }
     | MUL T_MOD UNARY {$$ = new ModOperator($1, $3);}
 
 UNARY : POSTFIX { $$ = $1; }
-        | T_DECREM T_VARIABLE { $$ = new PreDecrement(*$2); }
+        | T_DECREM T_VARIABLE { $$ = new PreDecrement(*$2, $3); }
         | T_INCREM T_VARIABLE { $$ = new PreIncrement(*$2); }
 
 
