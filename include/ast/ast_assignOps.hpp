@@ -137,8 +137,8 @@ protected:
     int index;
 
 public:
-    PreIncrement(std::string &_variable)
-        : AssignOp(_variable)
+    PreIncrement(std::string &_variable, int _index)
+        : AssignOp(_variable), index(_index)
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
