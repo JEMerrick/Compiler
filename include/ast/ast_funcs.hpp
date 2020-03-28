@@ -44,8 +44,8 @@ public:
         for(int i = myPy.indent; i > 0; i--){
           out << "\t";
         }
-        branch->printPy(out, myPy);//return 1
         myPy.indent--;
+        branch->printPy(out, myPy);//return 1
     }
 };
 
