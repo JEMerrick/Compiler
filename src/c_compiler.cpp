@@ -3,11 +3,11 @@
 #include "ast.hpp"
 
 int main(int argc, char *argv[]){
+    //std::fstream fs;
+    //fs.open(argv[2]);
+    freopen(argv[2], "r", stdin);
     const Base* ast = parseAST();
-    ast -> printC(std::cout);
     std::cout << std::endl;
-    std::fstream fs;
-    fs.open(argv[2]);
 
     if(static_cast<std::string>(argv[1]) == "--translate"){
         ofstream outfile;
