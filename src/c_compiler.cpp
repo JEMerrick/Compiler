@@ -3,8 +3,8 @@
 
 int main(int argc, char *argv[]){
     const Base* ast = parseAST();
-    ast -> printC(std::cout);
-    std::cout << std::endl;
+    //ast -> printC(std::cout);
+    //std::cout << std::endl;
 
     if(argv[1] == "--translate"){
         Py myPython;

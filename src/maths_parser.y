@@ -1,7 +1,10 @@
+
 %code requires{
   #include "ast.hpp"
-
+  #include <iostream>
   #include <cassert>
+  #include <stdio.h>
+  #define YYDEBUG 1
 
   extern const Base *g_root; // A way of getting the AST out
 
@@ -46,7 +49,7 @@
 */
 ROOT : PROG { g_root = $1; }
 
-PROG : PROG FUNDEC { $$ = new GlobalList($2, $1); }
+PROG : PROG FUNDEC { $$ = new GlobalList($2, $1);}
         | FUNDEC { $$ = new GlobalList($1, NULL); }
         | PROG DEC_ST { $$ = new GlobalList($2, $1); }
         | DEC_ST { $$ = new GlobalList($1, NULL); }

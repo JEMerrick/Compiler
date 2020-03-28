@@ -40,11 +40,13 @@
 extern int yydebug;
 #endif
 /* "%code requires" blocks.  */
-#line 1 "src/maths_parser.y" /* yacc.c:1909  */
+#line 2 "src/maths_parser.y" /* yacc.c:1909  */
 
   #include "ast.hpp"
-
+  #include <iostream>
   #include <cassert>
+  #include <stdio.h>
+  #define YYDEBUG 1
 
   extern const Base *g_root; // A way of getting the AST out
 
@@ -54,7 +56,7 @@ extern int yydebug;
   int yylex(void);
   void yyerror(const char *);
 
-#line 58 "src/maths_parser.tab.hpp" /* yacc.c:1909  */
+#line 60 "src/maths_parser.tab.hpp" /* yacc.c:1909  */
 
 /* Token type.  */
 #ifndef YYTOKENTYPE
@@ -120,13 +122,13 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 17 "src/maths_parser.y" /* yacc.c:1909  */
+#line 20 "src/maths_parser.y" /* yacc.c:1909  */
 
   const Base *expr;
   double number;
   std::string *string;
 
-#line 130 "src/maths_parser.tab.hpp" /* yacc.c:1909  */
+#line 132 "src/maths_parser.tab.hpp" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
