@@ -3,12 +3,17 @@
 #include "ast.hpp"
 extern "C" int yydebug;
 
+extern "C" FILE *yyin;
+
 int main(int argc, char *argv[]){
     yydebug = 1;
     //std::fstream fs;
     //fs.open(argv[2]);
-    freopen(argv[2], "r", stdin);
+    yyin = fopen(argv[2], "r");
     const Base* ast = parseAST();
+
+    std::cout << std::endl;
+    freopen(argv[4], "w", stdout);
 
 
     if(static_cast<std::string>(argv[1]) == "--translate"){

@@ -53,12 +53,16 @@ class MIPZ {
         int scopecount;
         int frameptr;
         int globalptr;
+        int parameters;
+        int arrayelement;
+        std::string arrayname;
 
         MIPZ(){
             //TODO:initial constructor
             scopecount = 0;
             frameptr = 0;
             globalptr = 0;
+            parameters = 0;
             for(int i = 8; i < 26; i++){
               regFlag[i] = 0;
             }
@@ -70,6 +74,9 @@ class MIPZ {
             globalVars = help.globalVars;
             scopecount = help.scopecount;
             frameptr = help.frameptr;
+            parameters = help.parameters;
+            arrayelement = help.arrayelement;
+            arrayname = help.arrayname;
             for(int i = 8; i < 26; i++){
               regFlag[i] = help.regFlag[i];
             }
@@ -132,6 +139,16 @@ class MIPZ {
                 }
             }
             return false;
+        }
+
+        int createarray(std::string str, int n){
+            localVars[str] = frameptr;
+            frameptr -= 4*n;
+            return (frameptr + 4*n);
+        }
+
+        int findarrayelement(std::string str, int n){
+            return (localVars[str] - 4*n)
         }
 };
 
