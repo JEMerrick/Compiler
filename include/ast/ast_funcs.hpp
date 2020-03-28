@@ -43,6 +43,7 @@ public:
         myPy.indent++;
         for(int i = myPy.indent; i > 0; i--){
           out << "\t";
+          std::cout << "tab" << '\n';
         }
         myPy.indent--;
         branch->printPy(out, myPy);//return 1
