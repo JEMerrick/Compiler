@@ -23,6 +23,11 @@ int main(int argc, char *argv[]){
         ast->printPy(std::cout, myPython);
         std::cout << std::endl;
         //outfile.close();
+        std::cout << "# Boilerplat" << std::endl;
+        std::cout << "if __name__ == \"__main__\":" << std::endl;
+        std::cout << "    import sys" << std::endl;
+        std::cout << "    ret=main()" << std::endl;
+        std::cout << "    sys.exit(ret)" << std::endl;
     }
 
     else if (static_cast<std::string>(argv[1]) == "-S"){
