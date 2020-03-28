@@ -126,7 +126,7 @@ class MIPZ {
         }
 
         bool globalexists(std::string str){
-            for (int i = 0; i < globalVars.size(); i++) {
+            for (size_t i = 0; i < globalVars.size(); i++) {
                 if(globalVars[i] == str){
                     return true;
                 }

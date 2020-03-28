@@ -1,8 +1,10 @@
 #include <iostream>
 #include <fstream>
 #include "ast.hpp"
+extern "C" int yydebug;
 
 int main(int argc, char *argv[]){
+    yydebug = 1;
     //std::fstream fs;
     //fs.open(argv[2]);
     freopen(argv[2], "r", stdin);
