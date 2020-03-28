@@ -15,7 +15,7 @@ int main(int argc, char *argv[]){
         Py myPython;
         ast->printPy(std::cout, myPython);
         std::cout << std::endl;
-        outfile.close();
+        //outfile.close();
     }
 
     else if (static_cast<std::string>(argv[1]) == "-S"){
