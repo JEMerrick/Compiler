@@ -12,7 +12,7 @@ if [[ ! -f bin/c_compiler ]] ; then
     have_compiler=1
 fi
 
-input_dir="translator_tests/examples"
+input_dir="c_translator/formative"
 
 working="tmp/formative"
 mkdir -p ${working}
@@ -37,7 +37,7 @@ for i in ${input_dir}/*.c ; do
         $compiler --translate $i -o ${working}/$base-got.py
 
         # Run the DUT python version
-        python3 ${working}/$base-got.py
+        python ${working}/$base-got.py
         GOT_P_OUT=$?
     fi
 
