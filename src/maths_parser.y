@@ -128,7 +128,7 @@ MUL : UNARY { $$ = $1; }
 
 UNARY : POSTFIX { $$ = $1; }
         | T_DECREM T_VARIABLE { $$ = new PreDecrement(*$2); }
-        | T_INCREM T_VARIABLE T_LBRAC T_INT T_RBRAC { $$ = new PreIncrement(*$2, $4); }
+        | T_INCREM T_VARIABLE { $$ = new PreIncrement(*$2); }
 
 
 POSTFIX : PRIMATIVE { $$ = $1; }
