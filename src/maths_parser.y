@@ -24,7 +24,7 @@
 }
 
 %token T_TIMES T_DIVIDE T_PLUS T_MINUS T_EXPONENT
-%token T_LBRAC T_RBRAC T_LCURL T_RCURL
+%token T_LBRAC T_RBRAC T_LCURL T_RCURL T_LSBRAC T_RSBRAC
 %token T_NUMBER T_VARIABLE
 %token T_SEMIC T_COMMA
 %token T_LSHIFT T_RSHIFT
@@ -133,6 +133,7 @@ UNARY : POSTFIX { $$ = $1; }
 
 POSTFIX : PRIMATIVE { $$ = $1; }
         | T_VARIABLE T_INCREM { $$ = new PostIncrement(*$1); }
+        | T_VARIABLE T_LSBRAC INDEX T_RSBRAC T_INCREM { $$ = new PostIncrementArray(*1, $3); }
         | T_VARIABLE T_DECREM { $$ = new PostDecrement(*$1); }
         | T_VARIABLE T_LBRAC CALL_PARAM T_RBRAC { $$ = new FuncCall(*$1, $3); }
         | T_VARIABLE T_LBRAC T_RBRAC { $$ = new FuncCall(*$1, NULL); }
