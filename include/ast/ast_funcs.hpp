@@ -34,16 +34,16 @@ public:
         out << "MOVE $fp, $sp" << std::endl;
         if(varList == NULL){
             help.parameters=0;
-            varList->printMips(reg, out, help);
+            varList->printMIPS(reg, out, help);
         }
         if(branch != NULL){
             std::string newdreg = "$" + std::to_string(help.findreg());
-            branch->printMips(newdreg, out, help);
-            help.regFlag[std::stoi(r1.substr(1))] = 0;
+            branch->printMIPS(newdreg, out, help);
+            help.regFlag[std::stoi(newdreg.substr(1))] = 0;
         }
         out << "LW $31, -4($fp)" << std::endl;
         out << "LW $fp, 0($fp)" << std::endl;
-        out << "MOVE $sp, $fp" << std::endl; 
+        out << "MOVE $sp, $fp" << std::endl;
 
         if(funcName != "main"){
             out << "JR $31" << std::endl;
@@ -143,7 +143,7 @@ public:
             nextArg->printPy(out, myPy);
             out << ", ";
         }
-        
+
     }
 };
 
