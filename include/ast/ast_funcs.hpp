@@ -233,21 +233,21 @@ public:
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
     }
     virtual void printC (std::ostream &out) const override{
-        if(arg != NULL){
-          if(nextArg != NULL){
-              nextArg->printC(out);
+        if(nextArg != NULL){
+          if(arg != NULL){
+              arg->printC(out);
               out << ", ";
           }
-          arg->printC(out);
+          nextArg->printC(out);
         }
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
-      if(arg != NULL){
-        if(nextArg != NULL){
-            nextArg->printPy(out, myPy);
+      if(nextArg != NULL){
+        if(arg != NULL){
+            arg->printPy(out, myPy);
             out << ", ";
         }
-        arg->printPy(out, myPy);
+        nextArg->printPy(out, myPy);
       }
     }
 };
