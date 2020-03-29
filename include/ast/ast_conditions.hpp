@@ -83,7 +83,7 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-        std::string r1 = "$1";
+        std::string r1 = "$" + std::to_string(help.findreg());
         condition->printMIPS(r1, out, help);
         std::string label1 = help.makelabl();
         std::string label2 = help.makelabl();

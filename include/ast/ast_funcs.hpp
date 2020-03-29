@@ -23,6 +23,32 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+        help.newfunc();
+        out << ".text" << std::endl;
+        out << ".align 2" << std::endl;
+        out << ".globl" << std::endl;
+        out << ".ent" << std::endl;
+        out << funcName << ":" << std::endl;
+        out << "SW $fp, 0($sp)" << std::endl;
+        out << "SW $31, -4($sp)" << std::endl;
+        out << "MOVE $fp, $sp" << std::endl;
+        if(varList == NULL){
+            help.parameters=0;
+            varList->printMIPS(reg, out, help);
+        }
+        if(branch != NULL){
+            std::string newdreg = "$" + std::to_string(help.findreg());
+            branch->printMIPS(newdreg, out, help);
+            help.regFlag[std::stoi(newdreg.substr(1))] = 0;
+        }
+        out << "LW $31, -4($fp)" << std::endl;
+        out << "LW $fp, 0($fp)" << std::endl;
+        out << "MOVE $sp, $fp" << std::endl;
+
+        if(funcName != "main"){
+            out << "JR $31" << std::endl;
+        }
+        out << ".end " << funcName << std::endl;
     }
     virtual void printC (std::ostream &out) const override{
         out << type << " " << funcName << "(";
@@ -117,7 +143,7 @@ public:
             nextArg->printPy(out, myPy);
             out << ", ";
         }
-        
+
     }
 };
 
