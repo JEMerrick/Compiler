@@ -106,6 +106,35 @@ public:
     }
 };
 
+class FuncCall
+    : public Base
+{
+protected:
+    std::string funcName;
+    BasePtr varList;
+
+public:
+    FuncCall(std::string _funcName, BasePtr _varList)
+        : funcName(_funcName), varList(_varList)
+    {}
+
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+    }
+    virtual void printC (std::ostream &out) const override{
+        if(varList != NULL){
+            varList->printC(out);
+        }
+        out << ");" << std::endl;
+    }
+    virtual void printPy (std::ostream &out, Py &myPy) const override{
+        out << "def " << funcName << "(";
+        if(varList != NULL){
+            varList->printPy(out, myPy);
+        }
+        out << ")" << std::endl;
+    }
+};
+
 class Arg
     : public Base
 {
@@ -163,6 +192,7 @@ public:
         if(nextArg!=NULL){
             delete nextArg;
         }
+        delete id;
     }
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
@@ -174,7 +204,9 @@ public:
         }
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
-        id->printPy(out, myPy);
+        if(id != NULL){
+            id->printPy(out, myPy);
+        }
         if(nextArg!=NULL){
             nextArg->printPy(out, myPy);
             out << ", ";

@@ -134,8 +134,8 @@ UNARY : POSTFIX { $$ = $1; }
 POSTFIX : PRIMATIVE { $$ = $1; }
         | T_VARIABLE T_INCREM { $$ = new PostIncrement(*$1); }
         | T_VARIABLE T_DECREM { $$ = new PostDecrement(*$1); }
-        | T_VARIABLE T_LBRAC CALL_PARAM T_RBRAC {}
-        | T_VARIABLE T_LBRAC T_RBRAC {}
+        | T_VARIABLE T_LBRAC CALL_PARAM T_RBRAC { $$ = new FuncCall(*$1, $3); }
+        | T_VARIABLE T_LBRAC T_RBRAC { $$ = new FuncCall(*$1, NULL); }
 
 CALL_PARAM : CALL_PARAM T_COMMA EXPR { $$ = new ArgCall ($3, $1); }
              | EXPR { $$ = new ArgCall($1, NULL); }
