@@ -67,6 +67,7 @@ public:
         }
         out << "):" << std::endl;
         myPy.indent++;
+        
         branch->printPy(out, myPy);//return 1
         myPy.indent--;
     }
