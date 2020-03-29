@@ -83,11 +83,11 @@ EXPR : EXPR_ASSIGN { $$ = $1; }
 
 EXPR_ASSIGN : EXPR_COND { $$ = $1; }
             | T_VARIABLE T_ASSIGN EXPR_ASSIGN { $$ = new AssignEqualOperator(*$1, $3); }
-            | T_VARIABLE T_LSBRAC T_FLOAT T_RSBRAC T_ASSIGN EXPR_ASSIGN { $$ = new AssignEqualArray(*$1, *$6, *$3); }
+            | T_VARIABLE T_LSBRAC T_FLOAT T_RSBRAC T_ASSIGN EXPR_ASSIGN { $$ = new AssignEqualArray(*$1, $6, *$3); }
             | T_VARIABLE T_ADDEQUAL EXPR_ASSIGN { $$ = new AddEqualOperator(*$1, $3); }
-            | T_VARIABLE T_LSBRAC T_FLOAT T_RSBRAC T_ADDEQUAL EXPR_ASSIGN { $$ = new AddEqualArray(*$1, *$6, *$3); }
+            | T_VARIABLE T_LSBRAC T_FLOAT T_RSBRAC T_ADDEQUAL EXPR_ASSIGN { $$ = new AddEqualArray(*$1, $6, *$3); }
             | T_VARIABLE T_SUBEQUAL EXPR_ASSIGN { $$ = new SubEqualOperator(*$1, $3); }
-            | T_VARIABLE T_LSBRAC T_FLOAT T_RSBRAC T_SUBEQUAL EXPR_ASSIGN { $$ = new SubEqualArray(*$1, *$6, *$3); }
+            | T_VARIABLE T_LSBRAC T_FLOAT T_RSBRAC T_SUBEQUAL EXPR_ASSIGN { $$ = new SubEqualArray(*$1, $6, *$3); }
 
 EXPR_COND : OR { $$ = $1; }
 
