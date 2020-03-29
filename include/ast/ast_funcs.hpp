@@ -98,11 +98,11 @@ public:
         out << ");" << std::endl;
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
-        out << funcName << "(";
+        out << "def " << funcName << "(";
         if(varList != NULL){
             varList->printPy(out, myPy);
         }
-        out << ")";
+        out << ")" << std::endl;
     }
 };
 
@@ -127,11 +127,11 @@ public:
         out << ");" << std::endl;
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
-        out << "def " << funcName << "(";
+        out << funcName << "(";
         if(varList != NULL){
             varList->printPy(out, myPy);
         }
-        out << ")" << std::endl;
+        out << ")";
     }
 };
 
