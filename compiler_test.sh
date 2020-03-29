@@ -11,7 +11,7 @@ mkdir -p working
 
 for DRIVER in compiler_tests/array/*_driver.c ; do
     NAME=$(basename $DRIVER _driver.c)
-    TESTCODE=test_deliverable/array/$NAME.c
+    TESTCODE=compiler_tests/array/$NAME.c
 
     >&2 echo "Test case $NAME"
 
