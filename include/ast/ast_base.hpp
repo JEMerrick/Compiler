@@ -26,7 +26,9 @@ class Base {
 
 class Py {
     public:
-        Py(){
+        int indent;
+        Py(): indent(0)
+        {
             //TODO:constructor
         }
         Py(Py &prevPy){
@@ -38,8 +40,6 @@ class Py {
 
         }
 
-
-        int indent = 0;
         //TODO: any functions needed for indent?
 };
 
