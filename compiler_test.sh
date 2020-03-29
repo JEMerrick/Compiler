@@ -11,7 +11,7 @@ mkdir -p working
 
 for DRIVER in compiler_tests/array/*_driver.c ; do
     NAME=$(basename $DRIVER _driver.c)
-    TESTCODE=compiler_tests/array/$NAME.c
+    TCODE=compiler_tests/array/$NAME.c
 
     >&2 echo "Test case $NAME"
 
@@ -23,7 +23,7 @@ for DRIVER in compiler_tests/array/*_driver.c ; do
     fi
 
     # Compile test function with compiler under test to assembly
-    cat $TESTCODE | $COMPILER > working/$NAME.s  2> working/${NAME}.compile.stderr
+    cat $TCODE | $COMPILER > working/$NAME.s  2> working/${NAME}.compile.stderr
     if [[ $? -ne 0 ]]; then
         >&2 echo "ERROR : Compiler returned error message."
         continue
@@ -47,7 +47,7 @@ done
 
 for DRIVER in compiler_tests/control_flow/*_driver.c ; do
     NAME=$(basename $DRIVER _driver.c)
-    TESTCODE=test_deliverable/control_flow/$NAME.c
+    TCODE=compiler_tests/control_flow/$NAME.c
 
     >&2 echo "Test case $NAME"
 
@@ -59,7 +59,7 @@ for DRIVER in compiler_tests/control_flow/*_driver.c ; do
     fi
 
     # Compile test function with compiler under test to assembly
-    cat $TESTCODE | $COMPILER > working/$NAME.s  2> working/${NAME}.compile.stderr
+    cat $TCODE | $COMPILER > working/$NAME.s  2> working/${NAME}.compile.stderr
     if [[ $? -ne 0 ]]; then
         >&2 echo "ERROR : Compiler returned error message."
         continue
@@ -83,7 +83,7 @@ done
 
 for DRIVER in compiler_tests/default/*_driver.c ; do
     NAME=$(basename $DRIVER _driver.c)
-    TESTCODE=test_deliverable/default/$NAME.c
+    TCODE=compiler_tests/default/$NAME.c
 
     >&2 echo "Test case $NAME"
 
@@ -95,7 +95,7 @@ for DRIVER in compiler_tests/default/*_driver.c ; do
     fi
 
     # Compile test function with compiler under test to assembly
-    cat $TESTCODE | $COMPILER > working/$NAME.s  2> working/${NAME}.compile.stderr
+    cat $TCODE | $COMPILER > working/$NAME.s  2> working/${NAME}.compile.stderr
     if [[ $? -ne 0 ]]; then
         >&2 echo "ERROR : Compiler returned error message."
         continue
@@ -119,7 +119,7 @@ done
 
 for DRIVER in compiler_tests/float/*_driver.c ; do
     NAME=$(basename $DRIVER _driver.c)
-    TESTCODE=test_deliverable/float/$NAME.c
+    TCODE=compiler_tests/float/$NAME.c
 
     >&2 echo "Test case $NAME"
 
@@ -131,7 +131,7 @@ for DRIVER in compiler_tests/float/*_driver.c ; do
     fi
 
     # Compile test function with compiler under test to assembly
-    cat $TESTCODE | $COMPILER > working/$NAME.s  2> working/${NAME}.compile.stderr
+    cat $TCODE | $COMPILER > working/$NAME.s  2> working/${NAME}.compile.stderr
     if [[ $? -ne 0 ]]; then
         >&2 echo "ERROR : Compiler returned error message."
         continue
@@ -155,7 +155,7 @@ done
 
 for DRIVER in compiler_tests/functions/*_driver.c ; do
     NAME=$(basename $DRIVER _driver.c)
-    TESTCODE=test_deliverable/functions/$NAME.c
+    TCODE=compiler_tests/functions/$NAME.c
 
     >&2 echo "Test case $NAME"
 
@@ -167,7 +167,7 @@ for DRIVER in compiler_tests/functions/*_driver.c ; do
     fi
 
     # Compile test function with compiler under test to assembly
-    cat $TESTCODE | $COMPILER > working/$NAME.s  2> working/${NAME}.compile.stderr
+    cat $TCODE | $COMPILER > working/$NAME.s  2> working/${NAME}.compile.stderr
     if [[ $? -ne 0 ]]; then
         >&2 echo "ERROR : Compiler returned error message."
         continue
@@ -191,7 +191,7 @@ done
 
 for DRIVER in compiler_tests/integer/*_driver.c ; do
     NAME=$(basename $DRIVER _driver.c)
-    TESTCODE=test_deliverable/integer/$NAME.c
+    TCODE=compiler_tests/integer/$NAME.c
 
     >&2 echo "Test case $NAME"
 
@@ -203,7 +203,7 @@ for DRIVER in compiler_tests/integer/*_driver.c ; do
     fi
 
     # Compile test function with compiler under test to assembly
-    cat $TESTCODE | $COMPILER > working/$NAME.s  2> working/${NAME}.compile.stderr
+    cat $TCODE | $COMPILER > working/$NAME.s  2> working/${NAME}.compile.stderr
     if [[ $? -ne 0 ]]; then
         >&2 echo "ERROR : Compiler returned error message."
         continue
@@ -227,7 +227,7 @@ done
 
 for DRIVER in compiler_tests/local_var/*_driver.c ; do
     NAME=$(basename $DRIVER _driver.c)
-    TESTCODE=test_deliverable/local_var/$NAME.c
+    TCODE=compiler_tests/local_var/$NAME.c
 
     >&2 echo "Test case $NAME"
 
@@ -239,7 +239,7 @@ for DRIVER in compiler_tests/local_var/*_driver.c ; do
     fi
 
     # Compile test function with compiler under test to assembly
-    cat $TESTCODE | $COMPILER > working/$NAME.s  2> working/${NAME}.compile.stderr
+    cat $TCODE | $COMPILER > working/$NAME.s  2> working/${NAME}.compile.stderr
     if [[ $? -ne 0 ]]; then
         >&2 echo "ERROR : Compiler returned error message."
         continue
@@ -263,7 +263,7 @@ done
 
 for DRIVER in compiler_tests/misc/*_driver.c ; do
     NAME=$(basename $DRIVER _driver.c)
-    TESTCODE=test_deliverable/misc/$NAME.c
+    TCODE=compiler_tests/misc/$NAME.c
 
     >&2 echo "Test case $NAME"
 
@@ -275,7 +275,7 @@ for DRIVER in compiler_tests/misc/*_driver.c ; do
     fi
 
     # Compile test function with compiler under test to assembly
-    cat $TESTCODE | $COMPILER > working/$NAME.s  2> working/${NAME}.compile.stderr
+    cat $TCODE | $COMPILER > working/$NAME.s  2> working/${NAME}.compile.stderr
     if [[ $? -ne 0 ]]; then
         >&2 echo "ERROR : Compiler returned error message."
         continue
@@ -299,7 +299,7 @@ done
 
 for DRIVER in compiler_tests/pointer/*_driver.c ; do
     NAME=$(basename $DRIVER _driver.c)
-    TESTCODE=test_deliverable/pointer/$NAME.c
+    TCODE=compiler_tests/pointer/$NAME.c
 
     >&2 echo "Test case $NAME"
 
@@ -311,7 +311,7 @@ for DRIVER in compiler_tests/pointer/*_driver.c ; do
     fi
 
     # Compile test function with compiler under test to assembly
-    cat $TESTCODE | $COMPILER > working/$NAME.s  2> working/${NAME}.compile.stderr
+    cat $TCODE | $COMPILER > working/$NAME.s  2> working/${NAME}.compile.stderr
     if [[ $? -ne 0 ]]; then
         >&2 echo "ERROR : Compiler returned error message."
         continue
@@ -335,7 +335,7 @@ done
 
 for DRIVER in compiler_tests/programs/*_driver.c ; do
     NAME=$(basename $DRIVER _driver.c)
-    TESTCODE=test_deliverable/programs/$NAME.c
+    TCODE=compiler_tests/programs/$NAME.c
 
     >&2 echo "Test case $NAME"
 
@@ -347,7 +347,7 @@ for DRIVER in compiler_tests/programs/*_driver.c ; do
     fi
 
     # Compile test function with compiler under test to assembly
-    cat $TESTCODE | $COMPILER > working/$NAME.s  2> working/${NAME}.compile.stderr
+    cat $TCODE | $COMPILER > working/$NAME.s  2> working/${NAME}.compile.stderr
     if [[ $? -ne 0 ]]; then
         >&2 echo "ERROR : Compiler returned error message."
         continue
@@ -371,7 +371,7 @@ done
 
 for DRIVER in compiler_tests/strings/*_driver.c ; do
     NAME=$(basename $DRIVER _driver.c)
-    TESTCODE=test_deliverable/strings/$NAME.c
+    TCODE=compiler_tests/strings/$NAME.c
 
     >&2 echo "Test case $NAME"
 
@@ -383,7 +383,7 @@ for DRIVER in compiler_tests/strings/*_driver.c ; do
     fi
 
     # Compile test function with compiler under test to assembly
-    cat $TESTCODE | $COMPILER > working/$NAME.s  2> working/${NAME}.compile.stderr
+    cat $TCODE | $COMPILER > working/$NAME.s  2> working/${NAME}.compile.stderr
     if [[ $? -ne 0 ]]; then
         >&2 echo "ERROR : Compiler returned error message."
         continue
@@ -407,7 +407,7 @@ done
 
 for DRIVER in compiler_tests/struct/*_driver.c ; do
     NAME=$(basename $DRIVER _driver.c)
-    TESTCODE=test_deliverable/struct/$NAME.c
+    TCODE=compiler_tests/struct/$NAME.c
 
     >&2 echo "Test case $NAME"
 
@@ -419,7 +419,7 @@ for DRIVER in compiler_tests/struct/*_driver.c ; do
     fi
 
     # Compile test function with compiler under test to assembly
-    cat $TESTCODE | $COMPILER > working/$NAME.s  2> working/${NAME}.compile.stderr
+    cat $TCODE | $COMPILER > working/$NAME.s  2> working/${NAME}.compile.stderr
     if [[ $? -ne 0 ]]; then
         >&2 echo "ERROR : Compiler returned error message."
         continue
@@ -443,7 +443,7 @@ done
 
 for DRIVER in compiler_tests/type/*_driver.c ; do
     NAME=$(basename $DRIVER _driver.c)
-    TESTCODE=test_deliverable/type/$NAME.c
+    TCODE=compiler_tests/type/$NAME.c
 
     >&2 echo "Test case $NAME"
 
@@ -455,7 +455,7 @@ for DRIVER in compiler_tests/type/*_driver.c ; do
     fi
 
     # Compile test function with compiler under test to assembly
-    cat $TESTCODE | $COMPILER > working/$NAME.s  2> working/${NAME}.compile.stderr
+    cat $TCODE | $COMPILER > working/$NAME.s  2> working/${NAME}.compile.stderr
     if [[ $? -ne 0 ]]; then
         >&2 echo "ERROR : Compiler returned error message."
         continue
