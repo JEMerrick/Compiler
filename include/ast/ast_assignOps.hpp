@@ -35,24 +35,6 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-        std::string r1 = "$" + std::to_string(help.findreg());
-        val->printMIPS(r1, out, help);
-        if(!(help.globalexists(variable) && help.localexists(variable))){
-            throw "Variable not declared.";
-        }
-        out << "ADDU " << reg << ", %0, " << r1 << std::endl;
-        if(help.localexists(variable)){
-            out << "SW " << reg << ", " << help.findlocal(variable) << "($fp)" << std::endl;
-        }
-        else if(help.globalexists(variable)){
-            std::string r2 = "$" + std::to_string(help.findreg());
-            val->printMIPS(r2, out, help);
-            help.regFlag[std::stoi(r2.substr(1))] = 0;
-        }
-        else{
-            throw "Variable not declared.";
-        }
-        help.regFlag[std::stoi(r1.substr(1))] = 0;
     }
     virtual void printC (std::ostream &out) const override{
         out << variable;
@@ -78,24 +60,6 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-        std::string r1 = "$" + std::to_string(help.findreg());
-        val->printMIPS(r1, out, help);
-        if(!(help.globalexists(variable) && help.localexists(variable))){
-            throw "Variable not declared.";
-        }
-        out << "ADDU " << reg << ", %0, " << r1 << std::endl;
-        if(help.localexists(variable)){
-            out << "SW " << reg << ", " << help.findlocal(variable) << "($fp)" << std::endl;
-        }
-        else if(help.globalexists(variable)){
-            std::string r2 = "$" + std::to_string(help.findreg());
-            val->printMIPS(r2, out, help);
-            help.regFlag[std::stoi(r2.substr(1))] = 0;
-        }
-        else{
-            throw "Variable not declared.";
-        }
-        help.regFlag[std::stoi(r1.substr(1))] = 0;
     }
     virtual void printC (std::ostream &out) const override{
         out << variable;
@@ -120,20 +84,6 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-        std::string r1 = "$" + std::to_string(help.findreg());
-        val->printMIPS(r1, out, help);
-        if(help.localexists(variable)){
-            out << "SW " << reg << ", " << help.findlocal(variable) << "($fp)" << std::endl;
-        }
-        else if(help.globalexists(variable)){
-            std::string r2 = "$" + std::to_string(help.findreg());
-            val->printMIPS(r2, out, help);
-            help.regFlag[std::stoi(r2.substr(1))] = 0;
-        }
-        else{
-            throw "Variable not declared.";
-        }
-        help.regFlag[std::stoi(r1.substr(1))] = 0;
     }
     virtual void printC (std::ostream &out) const override{
         out << variable;
@@ -159,20 +109,6 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-        std::string r1 = "$" + std::to_string(help.findreg());
-        val->printMIPS(r1, out, help);
-        if(help.localexists(variable)){
-            out << "SW " << reg << ", " << help.findlocal(variable) << "($fp)" << std::endl;
-        }
-        else if(help.globalexists(variable)){
-            std::string r2 = "$" + std::to_string(help.findreg());
-            val->printMIPS(r2, out, help);
-            help.regFlag[std::stoi(r2.substr(1))] = 0;
-        }
-        else{
-            throw "Variable not declared.";
-        }
-        help.regFlag[std::stoi(r1.substr(1))] = 0;
     }
     virtual void printC (std::ostream &out) const override{
         out << variable;
@@ -223,20 +159,6 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-        std::string r1 = "$" + std::to_string(help.findreg());
-        val->printMIPS(r1, out, help);
-        if(help.localexists(variable)){
-            out << "SW " << reg << ", " << help.findlocal(variable) << "($fp)" << std::endl;
-        }
-        else if(help.globalexists(variable)){
-            std::string r2 = "$" + std::to_string(help.findreg());
-            val->printMIPS(r2, out, help);
-            help.regFlag[std::stoi(r2.substr(1))] = 0;
-        }
-        else{
-            throw "Variable not declared.";
-        }
-        help.regFlag[std::stoi(r1.substr(1))] = 0;
     }
     virtual void printC (std::ostream &out) const override{
         out << variable;
@@ -281,7 +203,7 @@ public:
             out << "SW " << r1 << ", " << help.findlocal(variable) << "($fp)" << std::endl;
         }
         else if(help.globalexists(variable)){
-          
+
         }
         else{
             throw "variable not declared."
