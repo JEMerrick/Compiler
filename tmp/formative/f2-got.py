@@ -1,8 +1,7 @@
 def f():
 	return 10
 def main():
-	return def f()
-
+	return f()
 
 # Boilerplat
 if __name__ == "__main__":

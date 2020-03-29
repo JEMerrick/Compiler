@@ -1,5 +1,5 @@
 def main():
-	z;
+	z = 0
 z = 7
 return z
 

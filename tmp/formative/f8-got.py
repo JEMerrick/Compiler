@@ -1,11 +1,9 @@
-x;
+x = 0
 def f():
 	x = x + 1
 return x
 def main():
-	return def f()
- + def f()
-
+	return f() + f()
 
 # Boilerplat
 if __name__ == "__main__":
