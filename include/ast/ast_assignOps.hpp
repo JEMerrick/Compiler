@@ -187,13 +187,13 @@ public:
             out << "LW " << r1 << ", " << help.findlocal(variable) << "($fp)" << std::endl;
         }
         std::string address = "$" + std::to_string(help.findreg());
-        else if(help.globalexists(variable)){
+        if(help.globalexists(variable)){
             out << "LUI" << address << ", %hi(" << variable << ")" << std::endl;
             out << "ADDI" << address << ", " << address << ", %lo(" << variable << ")" << std::endl;
             out << "LW" << r1 << ", 0(" << address << ")" << std::endl;
         }
         else{
-            throw "variable not declared."
+            throw "variable not declared.";
         }
 
         out << "ADDI" << r1 << ", " << r1 << ", 1" << std::endl;
@@ -206,7 +206,7 @@ public:
 
         }
         else{
-            throw "variable not declared."
+            throw "variable not declared.";
         }
 
 
