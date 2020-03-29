@@ -243,11 +243,11 @@ public:
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
       if(arg != NULL){
-          arg->printPy(out, myPy);
         if(nextArg != NULL){
             nextArg->printPy(out, myPy);
             out << ", ";
         }
+        arg->printPy(out, myPy);
       }
     }
 };
