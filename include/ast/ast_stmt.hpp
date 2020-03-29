@@ -4,6 +4,53 @@
 
 #include "ast_base.hpp"
 
+class DecGlobalEmpty
+    : public Base
+{
+protected:
+    std::string id;
+public:
+    DecGlobalEmpty(std::string _id)
+        : id(_id)
+    {}
+
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+    }
+    virtual void printC (std::ostream &out) const override{
+        out << id << "=";
+        expr->printC(out);
+        out << ";";
+    }
+    virtual void printPy (std::ostream &out, Py &myPy) const override{
+        myPy.globalv.push_back(id);
+        out << id << " = 0";
+    }
+};
+
+class DecGlobal
+    : public Base
+{
+protected:
+    std::string id;
+    BasePtr expr;
+public:
+    DecGlobal(std::string _id, BasePtr _expr)
+        : id(_id), expr(_expr)
+    {}
+
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+    }
+    virtual void printC (std::ostream &out) const override{
+        out << id << "=";
+        expr->printC(out);
+        out << ";";
+    }
+    virtual void printPy (std::ostream &out, Py &myPy) const override{
+        myPy.globalv.push_back(id);
+        out << id << "=";
+        expr->printPy(out, myPy);
+    }
+};
 
 class Empty_stmt
     : public Base

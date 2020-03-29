@@ -67,7 +67,9 @@ public:
         }
         out << "):" << std::endl;
         myPy.indent++;
-        
+        for(int i = 0; i < myPy.globalv.size(); i++){
+            for(int i = )
+        }
         branch->printPy(out, myPy);//return 1
         myPy.indent--;
     }

@@ -27,6 +27,7 @@ class Base {
 class Py {
     public:
         int indent;
+        std::vector<std::string> globalv;
         Py(): indent(0)
         {
             //TODO:constructor
