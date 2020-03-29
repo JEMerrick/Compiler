@@ -57,17 +57,23 @@ class Return_stmt
     : public Base
 {
 protected:
-    BasePtr expr;
+    BasePtr retval;
 public:
-    Return_stmt(BasePtr _expr)
-        : expr(_expr)
+    Return_stmt(BasePtr _retval)
+        : retval(_retval)
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+        reg = "$2";
+        retval->printMIPS(reg, out, help);
+        out << "LW $31, -4($fp)" << std::endl;
+        out << "LW $fp, 0($fp)" << std::endl;
+        out << "MOVE $sp, $fp";
+        out << "JR $31";
     }
     virtual void printC (std::ostream &out) const override{
         out << "return ";
-        expr->printC(out);
+        retval->printC(out);
         out << ";";
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
@@ -75,7 +81,7 @@ public:
             out << " \t";
         }
         out << "return ";
-        expr->printPy(out, myPy);
+        retval->printPy(out, myPy);
     }
 };
 
