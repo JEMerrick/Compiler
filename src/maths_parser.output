@@ -103,8 +103,8 @@ Grammar
    64        | T_VARIABLE T_LBRAC CALL_PARAM T_RBRAC
    65        | T_VARIABLE T_LBRAC T_RBRAC
 
-   66 CALL_PARAM: CALL_PARAM T_COMMA T_VARIABLE
-   67           | T_VARIABLE
+   66 CALL_PARAM: CALL_PARAM T_COMMA EXPR
+   67           | EXPR
 
    68 PRIMATIVE: T_VARIABLE
    69          | T_NUMBER
@@ -156,8 +156,7 @@ T_RBRAC (264) 6 7 8 9 64 65 70 81 82 84 85 86 87
 T_LCURL (265) 6 7 88
 T_RCURL (266) 6 7 88
 T_NUMBER (267) 69
-T_VARIABLE (268) 6 7 8 9 18 19 26 27 28 59 60 62 63 64 65 66 67 68
-    92 93
+T_VARIABLE (268) 6 7 8 9 18 19 26 27 28 59 60 62 63 64 65 68 92 93
 T_SEMIC (269) 8 9 22 23 77 78 85 89
 T_COMMA (270) 18 66 91
 T_LSHIFT (271) 49
@@ -219,7 +218,7 @@ SCOPE (60)
 EXPR_ST (61)
     on left: 22 23, on right: 72 86 87
 EXPR (62)
-    on left: 24, on right: 23 70 78 81 82 83 84 85 87 92
+    on left: 24, on right: 23 66 67 70 78 81 82 83 84 85 87 92
 EXPR_ASSIGN (63)
     on left: 25 26 27 28, on right: 24 26 27 28
 EXPR_COND (64)
@@ -898,10 +897,30 @@ State 56
    64 POSTFIX: T_VARIABLE T_LBRAC . CALL_PARAM T_RBRAC
    65        | T_VARIABLE T_LBRAC . T_RBRAC
 
+    T_LBRAC     shift, and go to state 27
     T_RBRAC     shift, and go to state 106
-    T_VARIABLE  shift, and go to state 107
+    T_NUMBER    shift, and go to state 28
+    T_VARIABLE  shift, and go to state 29
+    T_INCREM    shift, and go to state 30
+    T_DECREM    shift, and go to state 31
 
-    CALL_PARAM  go to state 108
+    EXPR         go to state 107
+    EXPR_ASSIGN  go to state 33
+    EXPR_COND    go to state 34
+    OR           go to state 35
+    AND          go to state 36
+    BOR          go to state 37
+    BXOR         go to state 38
+    BAND         go to state 39
+    EQUAL        go to state 40
+    LESS         go to state 41
+    SHIFT        go to state 42
+    ADD          go to state 43
+    MUL          go to state 44
+    UNARY        go to state 45
+    POSTFIX      go to state 46
+    CALL_PARAM   go to state 108
+    PRIMATIVE    go to state 47
 
 
 State 57
@@ -1764,7 +1783,7 @@ State 106
 
 State 107
 
-   67 CALL_PARAM: T_VARIABLE .
+   67 CALL_PARAM: EXPR .
 
     $default  reduce using rule 67 (CALL_PARAM)
 
@@ -1772,7 +1791,7 @@ State 107
 State 108
 
    64 POSTFIX: T_VARIABLE T_LBRAC CALL_PARAM . T_RBRAC
-   66 CALL_PARAM: CALL_PARAM . T_COMMA T_VARIABLE
+   66 CALL_PARAM: CALL_PARAM . T_COMMA EXPR
 
     T_RBRAC  shift, and go to state 145
     T_COMMA  shift, and go to state 146
@@ -2351,9 +2370,30 @@ State 145
 
 State 146
 
-   66 CALL_PARAM: CALL_PARAM T_COMMA . T_VARIABLE
+   66 CALL_PARAM: CALL_PARAM T_COMMA . EXPR
 
-    T_VARIABLE  shift, and go to state 155
+    T_LBRAC     shift, and go to state 27
+    T_NUMBER    shift, and go to state 28
+    T_VARIABLE  shift, and go to state 29
+    T_INCREM    shift, and go to state 30
+    T_DECREM    shift, and go to state 31
+
+    EXPR         go to state 155
+    EXPR_ASSIGN  go to state 33
+    EXPR_COND    go to state 34
+    OR           go to state 35
+    AND          go to state 36
+    BOR          go to state 37
+    BXOR         go to state 38
+    BAND         go to state 39
+    EQUAL        go to state 40
+    LESS         go to state 41
+    SHIFT        go to state 42
+    ADD          go to state 43
+    MUL          go to state 44
+    UNARY        go to state 45
+    POSTFIX      go to state 46
+    PRIMATIVE    go to state 47
 
 
 State 147
@@ -2439,7 +2479,7 @@ State 154
 
 State 155
 
-   66 CALL_PARAM: CALL_PARAM T_COMMA T_VARIABLE .
+   66 CALL_PARAM: CALL_PARAM T_COMMA EXPR .
 
     $default  reduce using rule 66 (CALL_PARAM)
 

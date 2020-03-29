@@ -121,6 +121,42 @@ public:
     }
 };
 
+class ArgCall
+    : public Base
+{
+protected:
+    BasePtr id;
+    BasePtr nextArg;
+
+public:
+    ArgCall(BasePtr _id, BasePtr _nextArg)
+        : id(_id), nextArg(_nextArg)
+    {}
+
+    ~ArgCall(){
+        if(nextArg!=NULL){
+            delete nextArg;
+        }
+    }
+
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+    }
+    virtual void printC (std::ostream &out) const override{
+        if(nextArg != NULL){
+            nextArg->printC(out);
+            out << ", ";
+        }
+    }
+    virtual void printPy (std::ostream &out, Py &myPy) const override{
+        id->printPy(out, myPy);
+        if(nextArg!=NULL){
+            nextArg->printPy(out, myPy);
+            out << ", ";
+        }
+        
+    }
+};
+
 class ArgList
     : public Base
 {

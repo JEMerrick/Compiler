@@ -137,8 +137,8 @@ POSTFIX : PRIMATIVE { $$ = $1; }
         | T_VARIABLE T_LBRAC CALL_PARAM T_RBRAC {}
         | T_VARIABLE T_LBRAC T_RBRAC {}
 
-CALL_PARAM : CALL_PARAM T_COMMA T_VARIABLE { $$ = new Arg ("", *$3, $1); }
-             | T_VARIABLE { $$ = new Arg("", *$1, NULL); }
+CALL_PARAM : CALL_PARAM T_COMMA EXPR { $$ = new ArgCall ($3, $1); }
+             | EXPR { $$ = new ArgCall($1, NULL); }
 
 PRIMATIVE : T_VARIABLE { $$ = new Variable(*$1); }
             | T_NUMBER { $$ = new Number($1); }
