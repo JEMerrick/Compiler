@@ -67,8 +67,8 @@ public:
         for(int i = myPy.indent; i > 0; i--){
           out << "\t";
         }
-        myPy.indent--;
         branch->printPy(out, myPy);
+        myPy.indent--;
     }
 };
 
