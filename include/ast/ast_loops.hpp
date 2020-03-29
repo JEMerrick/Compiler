@@ -83,11 +83,8 @@ public:
       condition->printPy(out, myPy);
       out << ":" << std::endl;
       myPy.indent++;
-      for(int i = myPy.indent; i > 0; i--){
-        out << "\t";
-      }
-      myPy.indent--;
       branch->printPy(out, myPy);
+      myPy.indent--;
       out << std::endl;
     }
 };
