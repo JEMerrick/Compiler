@@ -1,0 +1,23 @@
+Steps to debug
+
+uncomment yydebug lines in c_compiler.cpp
+
+in terminal:
+//open gdb
+gdb bin/c_compiler
+
+//write file you want to test, remove 'f5.c' if u want to test all folder
+set args --translate c_translator/formative/f5.c
+
+//set breakpoint to the line where we print the ast e.g.
+break c_compiler.cpp:18
+
+//run the program in gdb
+run
+
+//gdb commands
+p <variable> e.g. p varList, prints current variable state
+s, step 
+quit, end program 
+c, continue (run until an error occurs)
+n, next
