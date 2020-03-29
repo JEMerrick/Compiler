@@ -138,7 +138,7 @@ public:
             expr->printPy(out, myPy);
         }
         else{
-            out << id << "= 0";
+            out << id << " = 0";
         }
     }
 };
