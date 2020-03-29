@@ -78,7 +78,7 @@ public:
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
         for(int i = myPy.indent; i > 0; i--){
-            out << " \t";
+            out << "\t";
         }
         out << "return ";
         retval->printPy(out, myPy);
@@ -104,9 +104,6 @@ public:
         out << ";";
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
-        for(int i = myPy.indent; i > 0; i--){
-            out << "\t";
-        }
         list->printPy(out, myPy);
     }
 };

@@ -67,11 +67,8 @@ public:
         }
         out << "):" << std::endl;
         myPy.indent++;
-        for(int i = myPy.indent; i > 0; i--){
-          out << "\t";
-        }
-        myPy.indent--;
         branch->printPy(out, myPy);//return 1
+        myPy.indent--;
     }
 };
 
@@ -372,50 +369,5 @@ public:
     }
 };
 
-class Declare_Vars
-    : public Base
-{
-
-public:
-    Declare_Vars()
-    {}
-
-    ~Declare_Vars(){}
-
-    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-    }
-    virtual void printC (std::ostream &out) const override{
-        out << "declare _varList";
-    }
-    virtual void printPy (std::ostream &out, Py &myPy) const override{
-        for(int i = myPy.indent; i > 0; i--){
-            out << "\t";
-        }
-        out << "Declare_Var";
-    }
-};
-
-class Declare_Var
-    : public Base
-{
-
-public:
-    Declare_Var()
-    {}
-
-    ~Declare_Var(){}
-
-    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-    }
-    virtual void printC (std::ostream &out) const override{
-        out << "declare _varList";
-    }
-    virtual void printPy (std::ostream &out, Py &myPy) const override{
-        for(int i = myPy.indent; i > 0; i--){
-            out << "\t";
-        }
-        out << "Declare_Var";
-    }
-};
 
 #endif
