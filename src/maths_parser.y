@@ -24,7 +24,7 @@
 }
 
 %token T_TIMES T_DIVIDE T_PLUS T_MINUS T_EXPONENT
-%token T_LBRAC T_RBRAC T_LCURL T_RCURL
+%token T_LBRAC T_RBRAC T_LCURL T_RCURL T_LSBRAC T_RSBRAC
 %token T_NUMBER T_VARIABLE
 %token T_SEMIC T_COMMA
 %token T_LSHIFT T_RSHIFT
@@ -83,8 +83,11 @@ EXPR : EXPR_ASSIGN { $$ = $1; }
 
 EXPR_ASSIGN : EXPR_COND { $$ = $1; }
             | T_VARIABLE T_ASSIGN EXPR_ASSIGN { $$ = new AssignEqualOperator(*$1, $3); }
+            | T_VARIABLE T_LSBRAC T_FLOAT T_RSBRAC T_ASSIGN EXPR_ASSIGN { $$ = new AssignEqualArray(*$1, $6, *$3); }
             | T_VARIABLE T_ADDEQUAL EXPR_ASSIGN { $$ = new AddEqualOperator(*$1, $3); }
+            | T_VARIABLE T_LSBRAC T_FLOAT T_RSBRAC T_ADDEQUAL EXPR_ASSIGN { $$ = new AddEqualArray(*$1, $6, *$3); }
             | T_VARIABLE T_SUBEQUAL EXPR_ASSIGN { $$ = new SubEqualOperator(*$1, $3); }
+            | T_VARIABLE T_LSBRAC T_FLOAT T_RSBRAC T_SUBEQUAL EXPR_ASSIGN { $$ = new SubEqualArray(*$1, $6, *$3); }
 
 EXPR_COND : OR { $$ = $1; }
 
@@ -128,12 +131,16 @@ MUL : UNARY { $$ = $1; }
 
 UNARY : POSTFIX { $$ = $1; }
         | T_DECREM T_VARIABLE { $$ = new PreDecrement(*$2); }
+        | T_DECREM T_VARIABLE T_LSBRAC T_FLOAT T_RSBRAC { $$ = new PreDecrementArray(*$2, *$4); }
         | T_INCREM T_VARIABLE { $$ = new PreIncrement(*$2); }
+        | T_INCREM T_VARIABLE T_LSBRAC T_FLOAT T_RSBRAC { $$ = new PreIncrementArray(*$2, *$4); }
 
 
 POSTFIX : PRIMATIVE { $$ = $1; }
         | T_VARIABLE T_INCREM { $$ = new PostIncrement(*$1); }
+        | T_VARIABLE T_LSBRAC T_FLOAT T_RSBRAC T_INCREM { $$ = new PostIncrementArray(*$1, *$3); }
         | T_VARIABLE T_DECREM { $$ = new PostDecrement(*$1); }
+        | T_VARIABLE T_LSBRAC T_FLOAT T_RSBRAC T_DECREM { $$ = new PostDecrementArray(*$1, *$3); }
         | T_VARIABLE T_LBRAC CALL_PARAM T_RBRAC { $$ = new FuncCall(*$1, $3); }
         | T_VARIABLE T_LBRAC T_RBRAC { $$ = new FuncCall(*$1, NULL); }
 

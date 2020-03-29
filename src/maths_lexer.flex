@@ -34,6 +34,8 @@ extern "C" int fileno(FILE *stream);
 [>][>]          { return T_RSHIFT; }
 [=]             { return T_ASSIGN; }
 [,]             { return T_COMMA; }
+[\[]             { return T_LSBRAC; }
+[\]]             { return T_RSBRAC; }
 
 "break"         { yylval.string = new std::string(yytext); return T_BREAK; }
 
