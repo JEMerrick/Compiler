@@ -66,7 +66,7 @@ public:
             varList->printPy(out, myPy);
         }
         out << "):" << std::endl;
-        myPy.indent++
+        myPy.indent++;
         
         branch->printPy(out, myPy);//return 1
         myPy.indent--;

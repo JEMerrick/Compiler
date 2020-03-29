@@ -6,10 +6,10 @@ Terminals unused in grammar
 
 
 State 29 conflicts: 3 shift/reduce
-State 112 conflicts: 3 shift/reduce
-State 116 conflicts: 2 reduce/reduce
-State 117 conflicts: 2 reduce/reduce
-State 162 conflicts: 1 shift/reduce
+State 116 conflicts: 3 shift/reduce
+State 120 conflicts: 2 reduce/reduce
+State 121 conflicts: 2 reduce/reduce
+State 182 conflicts: 1 shift/reduce
 
 
 Grammar
@@ -50,223 +50,233 @@ Grammar
 
    25 EXPR_ASSIGN: EXPR_COND
    26            | T_VARIABLE T_ASSIGN EXPR_ASSIGN
-   27            | T_VARIABLE T_ADDEQUAL EXPR_ASSIGN
-   28            | T_VARIABLE T_SUBEQUAL EXPR_ASSIGN
+   27            | T_VARIABLE T_LSBRAC T_FLOAT T_RSBRAC T_ASSIGN EXPR_ASSIGN
+   28            | T_VARIABLE T_ADDEQUAL EXPR_ASSIGN
+   29            | T_VARIABLE T_LSBRAC T_FLOAT T_RSBRAC T_ADDEQUAL EXPR_ASSIGN
+   30            | T_VARIABLE T_SUBEQUAL EXPR_ASSIGN
+   31            | T_VARIABLE T_LSBRAC T_FLOAT T_RSBRAC T_SUBEQUAL EXPR_ASSIGN
 
-   29 EXPR_COND: OR
+   32 EXPR_COND: OR
 
-   30 OR: AND
-   31   | AND T_OR BOR
+   33 OR: AND
+   34   | AND T_OR BOR
 
-   32 AND: BOR
-   33    | AND T_AND BOR
+   35 AND: BOR
+   36    | AND T_AND BOR
 
-   34 BOR: BXOR
-   35    | BOR T_BOR BXOR
+   37 BOR: BXOR
+   38    | BOR T_BOR BXOR
 
-   36 BXOR: BAND
-   37     | BOR T_BXOR BXOR
+   39 BXOR: BAND
+   40     | BOR T_BXOR BXOR
 
-   38 BAND: EQUAL
-   39     | BAND T_BAND EQUAL
+   41 BAND: EQUAL
+   42     | BAND T_BAND EQUAL
 
-   40 EQUAL: LESS
-   41      | EQUAL T_EQUAL LESS
-   42      | EQUAL T_NEQUAL LESS
+   43 EQUAL: LESS
+   44      | EQUAL T_EQUAL LESS
+   45      | EQUAL T_NEQUAL LESS
 
-   43 LESS: SHIFT
-   44     | LESS T_LT SHIFT
-   45     | LESS T_GT SHIFT
-   46     | LESS T_LEQUAL SHIFT
-   47     | LESS T_GEQUAL SHIFT
+   46 LESS: SHIFT
+   47     | LESS T_LT SHIFT
+   48     | LESS T_GT SHIFT
+   49     | LESS T_LEQUAL SHIFT
+   50     | LESS T_GEQUAL SHIFT
 
-   48 SHIFT: ADD
-   49      | SHIFT T_LSHIFT ADD
-   50      | SHIFT T_RSHIFT ADD
+   51 SHIFT: ADD
+   52      | SHIFT T_LSHIFT ADD
+   53      | SHIFT T_RSHIFT ADD
 
-   51 ADD: MUL
-   52    | ADD T_PLUS MUL
-   53    | ADD T_MINUS MUL
+   54 ADD: MUL
+   55    | ADD T_PLUS MUL
+   56    | ADD T_MINUS MUL
 
-   54 MUL: UNARY
-   55    | MUL T_TIMES UNARY
-   56    | MUL T_DIVIDE UNARY
-   57    | MUL T_MOD UNARY
+   57 MUL: UNARY
+   58    | MUL T_TIMES UNARY
+   59    | MUL T_DIVIDE UNARY
+   60    | MUL T_MOD UNARY
 
-   58 UNARY: POSTFIX
-   59      | T_DECREM T_VARIABLE
-   60      | T_INCREM T_VARIABLE
+   61 UNARY: POSTFIX
+   62      | T_DECREM T_VARIABLE
+   63      | T_DECREM T_VARIABLE T_LSBRAC T_FLOAT T_RSBRAC
+   64      | T_INCREM T_VARIABLE
+   65      | T_INCREM T_VARIABLE T_LSBRAC T_FLOAT T_RSBRAC
 
-   61 POSTFIX: PRIMATIVE
-   62        | T_VARIABLE T_INCREM
-   63        | T_VARIABLE T_DECREM
-   64        | T_VARIABLE T_LBRAC CALL_PARAM T_RBRAC
-   65        | T_VARIABLE T_LBRAC T_RBRAC
+   66 POSTFIX: PRIMATIVE
+   67        | T_VARIABLE T_INCREM
+   68        | T_VARIABLE T_LSBRAC T_FLOAT T_RSBRAC T_INCREM
+   69        | T_VARIABLE T_DECREM
+   70        | T_VARIABLE T_LSBRAC T_FLOAT T_RSBRAC T_DECREM
+   71        | T_VARIABLE T_LBRAC CALL_PARAM T_RBRAC
+   72        | T_VARIABLE T_LBRAC T_RBRAC
 
-   66 CALL_PARAM: CALL_PARAM T_COMMA EXPR
-   67           | EXPR
+   73 CALL_PARAM: CALL_PARAM T_COMMA EXPR
+   74           | EXPR
 
-   68 PRIMATIVE: T_VARIABLE
-   69          | T_NUMBER
-   70          | T_LBRAC EXPR T_RBRAC
+   75 PRIMATIVE: T_VARIABLE
+   76          | T_NUMBER
+   77          | T_LBRAC EXPR T_RBRAC
 
-   71 STMT: JMP_ST
-   72     | EXPR_ST
-   73     | IF_ST
-   74     | ITER_ST
-   75     | NEW_SCOPE
-   76     | DEC_ST
+   78 STMT: JMP_ST
+   79     | EXPR_ST
+   80     | IF_ST
+   81     | ITER_ST
+   82     | NEW_SCOPE
+   83     | DEC_ST
 
-   77 JMP_ST: T_RETURN T_SEMIC
-   78       | T_RETURN EXPR T_SEMIC
-   79       | T_BREAK
-   80       | T_CONTINUE
+   84 JMP_ST: T_RETURN T_SEMIC
+   85       | T_RETURN EXPR T_SEMIC
+   86       | T_BREAK
+   87       | T_CONTINUE
 
-   81 IF_ST: T_IF T_LBRAC EXPR T_RBRAC STMT
-   82      | T_IF T_LBRAC EXPR T_RBRAC STMT T_ELSE STMT
-   83      | T_SWITCH EXPR STMT
+   88 IF_ST: T_IF T_LBRAC EXPR T_RBRAC STMT
+   89      | T_IF T_LBRAC EXPR T_RBRAC STMT T_ELSE STMT
+   90      | T_SWITCH EXPR STMT
 
-   84 ITER_ST: T_WHILE T_LBRAC EXPR T_RBRAC STMT
-   85        | T_DO STMT T_WHILE T_LBRAC EXPR T_RBRAC T_SEMIC
-   86        | T_FOR T_LBRAC EXPR_ST EXPR_ST T_RBRAC STMT
-   87        | T_FOR T_LBRAC EXPR_ST EXPR_ST EXPR T_RBRAC STMT
+   91 ITER_ST: T_WHILE T_LBRAC EXPR T_RBRAC STMT
+   92        | T_DO STMT T_WHILE T_LBRAC EXPR T_RBRAC T_SEMIC
+   93        | T_FOR T_LBRAC EXPR_ST EXPR_ST T_RBRAC STMT
+   94        | T_FOR T_LBRAC EXPR_ST EXPR_ST EXPR T_RBRAC STMT
 
-   88 NEW_SCOPE: T_LCURL SCOPE T_RCURL
+   95 NEW_SCOPE: T_LCURL SCOPE T_RCURL
 
-   89 DEC_ST: TYPE DEC_LIST T_SEMIC
+   96 DEC_ST: TYPE DEC_LIST T_SEMIC
 
-   90 DEC_LIST: VAR_DEC
-   91         | DEC_LIST T_COMMA VAR_DEC
+   97 DEC_LIST: VAR_DEC
+   98         | DEC_LIST T_COMMA VAR_DEC
 
-   92 VAR_DEC: T_VARIABLE T_ASSIGN EXPR
-   93        | T_VARIABLE
+   99 VAR_DEC: T_VARIABLE T_ASSIGN EXPR
+  100        | T_VARIABLE
 
 
 Terminals, with rules where they appear
 
 $end (0) 0
 error (256)
-T_TIMES (258) 55
-T_DIVIDE (259) 56
-T_PLUS (260) 52
-T_MINUS (261) 53
+T_TIMES (258) 58
+T_DIVIDE (259) 59
+T_PLUS (260) 55
+T_MINUS (261) 56
 T_EXPONENT (262)
-T_LBRAC (263) 6 7 8 9 64 65 70 81 82 84 85 86 87
-T_RBRAC (264) 6 7 8 9 64 65 70 81 82 84 85 86 87
-T_LCURL (265) 6 7 88
-T_RCURL (266) 6 7 88
-T_NUMBER (267) 69
-T_VARIABLE (268) 6 7 8 9 18 19 26 27 28 59 60 62 63 64 65 68 92 93
-T_SEMIC (269) 8 9 22 23 77 78 85 89
-T_COMMA (270) 18 66 91
-T_LSHIFT (271) 49
-T_RSHIFT (272) 50
-T_EQUAL (273) 41
-T_NEQUAL (274) 42
-T_GT (275) 45
-T_LT (276) 44
-T_LEQUAL (277) 46
-T_GEQUAL (278) 47
-T_ASSIGN (279) 26 92
-T_BNOT (280)
-T_NOT (281)
-T_AND (282) 33
-T_OR (283) 31
-T_BAND (284) 39
-T_BOR (285) 35
-T_BXOR (286) 37
-T_MOD (287) 57
-T_ADDEQUAL (288) 27
-T_SUBEQUAL (289) 28
-T_INCREM (290) 60 62
-T_DECREM (291) 59 63
-T_WHILE (292) 84 85
-T_DO (293) 85
-T_IF (294) 81 82
-T_ELSE (295) 82
-T_FOR (296) 86 87
-T_BREAK (297) 79
-T_CONTINUE (298) 80
-T_SWITCH (299) 83
-T_INT (300) 10
-T_VOID (301) 11
-T_CHAR (302) 12
-T_SHORT (303) 13
-T_LONG (304) 14
-T_FLOAT (305) 15
-T_DOUBLE (306) 16
-T_SIGNED (307) 17
-T_RETURN (308) 77 78
+T_LBRAC (263) 6 7 8 9 71 72 77 88 89 91 92 93 94
+T_RBRAC (264) 6 7 8 9 71 72 77 88 89 91 92 93 94
+T_LCURL (265) 6 7 95
+T_RCURL (266) 6 7 95
+T_LSBRAC (267) 27 29 31 63 65 68 70
+T_RSBRAC (268) 27 29 31 63 65 68 70
+T_NUMBER (269) 76
+T_VARIABLE (270) 6 7 8 9 18 19 26 27 28 29 30 31 62 63 64 65 67 68
+    69 70 71 72 75 99 100
+T_SEMIC (271) 8 9 22 23 84 85 92 96
+T_COMMA (272) 18 73 98
+T_LSHIFT (273) 52
+T_RSHIFT (274) 53
+T_EQUAL (275) 44
+T_NEQUAL (276) 45
+T_GT (277) 48
+T_LT (278) 47
+T_LEQUAL (279) 49
+T_GEQUAL (280) 50
+T_ASSIGN (281) 26 27 99
+T_BNOT (282)
+T_NOT (283)
+T_AND (284) 36
+T_OR (285) 34
+T_BAND (286) 42
+T_BOR (287) 38
+T_BXOR (288) 40
+T_MOD (289) 60
+T_ADDEQUAL (290) 28 29
+T_SUBEQUAL (291) 30 31
+T_INCREM (292) 64 65 67 68
+T_DECREM (293) 62 63 69 70
+T_WHILE (294) 91 92
+T_DO (295) 92
+T_IF (296) 88 89
+T_ELSE (297) 89
+T_FOR (298) 93 94
+T_BREAK (299) 86
+T_CONTINUE (300) 87
+T_SWITCH (301) 90
+T_INT (302) 10
+T_VOID (303) 11
+T_CHAR (304) 12
+T_SHORT (305) 13
+T_LONG (306) 14
+T_FLOAT (307) 15 27 29 31 63 65 68 70
+T_DOUBLE (308) 16
+T_SIGNED (309) 17
+T_RETURN (310) 84 85
 
 
 Nonterminals, with rules where they appear
 
-$accept (54)
+$accept (56)
     on left: 0
-ROOT (55)
+ROOT (57)
     on left: 1, on right: 0
-PROG (56)
+PROG (58)
     on left: 2 3 4 5, on right: 1 2 4
-FUNDEC (57)
+FUNDEC (59)
     on left: 6 7 8 9, on right: 2 3
-TYPE (58)
-    on left: 10 11 12 13 14 15 16 17, on right: 6 7 8 9 18 19 89
-PARAM_LIST (59)
+TYPE (60)
+    on left: 10 11 12 13 14 15 16 17, on right: 6 7 8 9 18 19 96
+PARAM_LIST (61)
     on left: 18 19, on right: 6 8 18
-SCOPE (60)
-    on left: 20 21, on right: 6 7 20 88
-EXPR_ST (61)
-    on left: 22 23, on right: 72 86 87
-EXPR (62)
-    on left: 24, on right: 23 66 67 70 78 81 82 83 84 85 87 92
-EXPR_ASSIGN (63)
-    on left: 25 26 27 28, on right: 24 26 27 28
-EXPR_COND (64)
-    on left: 29, on right: 25
-OR (65)
-    on left: 30 31, on right: 29
-AND (66)
-    on left: 32 33, on right: 30 31 33
-BOR (67)
-    on left: 34 35, on right: 31 32 33 35 37
-BXOR (68)
-    on left: 36 37, on right: 34 35 37
-BAND (69)
-    on left: 38 39, on right: 36 39
-EQUAL (70)
-    on left: 40 41 42, on right: 38 39 41 42
-LESS (71)
-    on left: 43 44 45 46 47, on right: 40 41 42 44 45 46 47
-SHIFT (72)
-    on left: 48 49 50, on right: 43 44 45 46 47 49 50
-ADD (73)
-    on left: 51 52 53, on right: 48 49 50 52 53
-MUL (74)
-    on left: 54 55 56 57, on right: 51 52 53 55 56 57
-UNARY (75)
-    on left: 58 59 60, on right: 54 55 56 57
-POSTFIX (76)
-    on left: 61 62 63 64 65, on right: 58
-CALL_PARAM (77)
-    on left: 66 67, on right: 64 66
-PRIMATIVE (78)
-    on left: 68 69 70, on right: 61
-STMT (79)
-    on left: 71 72 73 74 75 76, on right: 20 21 81 82 83 84 85 86 87
-JMP_ST (80)
-    on left: 77 78 79 80, on right: 71
-IF_ST (81)
-    on left: 81 82 83, on right: 73
-ITER_ST (82)
-    on left: 84 85 86 87, on right: 74
-NEW_SCOPE (83)
-    on left: 88, on right: 75
-DEC_ST (84)
-    on left: 89, on right: 4 5 76
-DEC_LIST (85)
-    on left: 90 91, on right: 89 91
-VAR_DEC (86)
-    on left: 92 93, on right: 90 91
+SCOPE (62)
+    on left: 20 21, on right: 6 7 20 95
+EXPR_ST (63)
+    on left: 22 23, on right: 79 93 94
+EXPR (64)
+    on left: 24, on right: 23 73 74 77 85 88 89 90 91 92 94 99
+EXPR_ASSIGN (65)
+    on left: 25 26 27 28 29 30 31, on right: 24 26 27 28 29 30 31
+EXPR_COND (66)
+    on left: 32, on right: 25
+OR (67)
+    on left: 33 34, on right: 32
+AND (68)
+    on left: 35 36, on right: 33 34 36
+BOR (69)
+    on left: 37 38, on right: 34 35 36 38 40
+BXOR (70)
+    on left: 39 40, on right: 37 38 40
+BAND (71)
+    on left: 41 42, on right: 39 42
+EQUAL (72)
+    on left: 43 44 45, on right: 41 42 44 45
+LESS (73)
+    on left: 46 47 48 49 50, on right: 43 44 45 47 48 49 50
+SHIFT (74)
+    on left: 51 52 53, on right: 46 47 48 49 50 52 53
+ADD (75)
+    on left: 54 55 56, on right: 51 52 53 55 56
+MUL (76)
+    on left: 57 58 59 60, on right: 54 55 56 58 59 60
+UNARY (77)
+    on left: 61 62 63 64 65, on right: 57 58 59 60
+POSTFIX (78)
+    on left: 66 67 68 69 70 71 72, on right: 61
+CALL_PARAM (79)
+    on left: 73 74, on right: 71 73
+PRIMATIVE (80)
+    on left: 75 76 77, on right: 66
+STMT (81)
+    on left: 78 79 80 81 82 83, on right: 20 21 88 89 90 91 92 93 94
+JMP_ST (82)
+    on left: 84 85 86 87, on right: 78
+IF_ST (83)
+    on left: 88 89 90, on right: 80
+ITER_ST (84)
+    on left: 91 92 93 94, on right: 81
+NEW_SCOPE (85)
+    on left: 95, on right: 82
+DEC_ST (86)
+    on left: 96, on right: 4 5 83
+DEC_LIST (87)
+    on left: 97 98, on right: 96 98
+VAR_DEC (88)
+    on left: 99 100, on right: 97 98
 
 
 State 0
@@ -387,7 +397,7 @@ State 12
     7       | TYPE . T_VARIABLE T_LBRAC T_RBRAC T_LCURL SCOPE T_RCURL
     8       | TYPE . T_VARIABLE T_LBRAC PARAM_LIST T_RBRAC T_SEMIC
     9       | TYPE . T_VARIABLE T_LBRAC T_RBRAC T_SEMIC
-   89 DEC_ST: TYPE . DEC_LIST T_SEMIC
+   96 DEC_ST: TYPE . DEC_LIST T_SEMIC
 
     T_VARIABLE  shift, and go to state 17
 
@@ -429,19 +439,19 @@ State 17
     7       | TYPE T_VARIABLE . T_LBRAC T_RBRAC T_LCURL SCOPE T_RCURL
     8       | TYPE T_VARIABLE . T_LBRAC PARAM_LIST T_RBRAC T_SEMIC
     9       | TYPE T_VARIABLE . T_LBRAC T_RBRAC T_SEMIC
-   92 VAR_DEC: T_VARIABLE . T_ASSIGN EXPR
-   93        | T_VARIABLE .
+   99 VAR_DEC: T_VARIABLE . T_ASSIGN EXPR
+  100        | T_VARIABLE .
 
     T_LBRAC   shift, and go to state 20
     T_ASSIGN  shift, and go to state 21
 
-    $default  reduce using rule 93 (VAR_DEC)
+    $default  reduce using rule 100 (VAR_DEC)
 
 
 State 18
 
-   89 DEC_ST: TYPE DEC_LIST . T_SEMIC
-   91 DEC_LIST: DEC_LIST . T_COMMA VAR_DEC
+   96 DEC_ST: TYPE DEC_LIST . T_SEMIC
+   98 DEC_LIST: DEC_LIST . T_COMMA VAR_DEC
 
     T_SEMIC  shift, and go to state 22
     T_COMMA  shift, and go to state 23
@@ -449,9 +459,9 @@ State 18
 
 State 19
 
-   90 DEC_LIST: VAR_DEC .
+   97 DEC_LIST: VAR_DEC .
 
-    $default  reduce using rule 90 (DEC_LIST)
+    $default  reduce using rule 97 (DEC_LIST)
 
 
 State 20
@@ -477,7 +487,7 @@ State 20
 
 State 21
 
-   92 VAR_DEC: T_VARIABLE T_ASSIGN . EXPR
+   99 VAR_DEC: T_VARIABLE T_ASSIGN . EXPR
 
     T_LBRAC     shift, and go to state 27
     T_NUMBER    shift, and go to state 28
@@ -505,14 +515,14 @@ State 21
 
 State 22
 
-   89 DEC_ST: TYPE DEC_LIST T_SEMIC .
+   96 DEC_ST: TYPE DEC_LIST T_SEMIC .
 
-    $default  reduce using rule 89 (DEC_ST)
+    $default  reduce using rule 96 (DEC_ST)
 
 
 State 23
 
-   91 DEC_LIST: DEC_LIST T_COMMA . VAR_DEC
+   98 DEC_LIST: DEC_LIST T_COMMA . VAR_DEC
 
     T_VARIABLE  shift, and go to state 48
 
@@ -547,7 +557,7 @@ State 26
 
 State 27
 
-   70 PRIMATIVE: T_LBRAC . EXPR T_RBRAC
+   77 PRIMATIVE: T_LBRAC . EXPR T_RBRAC
 
     T_LBRAC     shift, and go to state 27
     T_NUMBER    shift, and go to state 28
@@ -575,54 +585,62 @@ State 27
 
 State 28
 
-   69 PRIMATIVE: T_NUMBER .
+   76 PRIMATIVE: T_NUMBER .
 
-    $default  reduce using rule 69 (PRIMATIVE)
+    $default  reduce using rule 76 (PRIMATIVE)
 
 
 State 29
 
    26 EXPR_ASSIGN: T_VARIABLE . T_ASSIGN EXPR_ASSIGN
-   27            | T_VARIABLE . T_ADDEQUAL EXPR_ASSIGN
-   28            | T_VARIABLE . T_SUBEQUAL EXPR_ASSIGN
-   62 POSTFIX: T_VARIABLE . T_INCREM
-   63        | T_VARIABLE . T_DECREM
-   64        | T_VARIABLE . T_LBRAC CALL_PARAM T_RBRAC
-   65        | T_VARIABLE . T_LBRAC T_RBRAC
-   68 PRIMATIVE: T_VARIABLE .
+   27            | T_VARIABLE . T_LSBRAC T_FLOAT T_RSBRAC T_ASSIGN EXPR_ASSIGN
+   28            | T_VARIABLE . T_ADDEQUAL EXPR_ASSIGN
+   29            | T_VARIABLE . T_LSBRAC T_FLOAT T_RSBRAC T_ADDEQUAL EXPR_ASSIGN
+   30            | T_VARIABLE . T_SUBEQUAL EXPR_ASSIGN
+   31            | T_VARIABLE . T_LSBRAC T_FLOAT T_RSBRAC T_SUBEQUAL EXPR_ASSIGN
+   67 POSTFIX: T_VARIABLE . T_INCREM
+   68        | T_VARIABLE . T_LSBRAC T_FLOAT T_RSBRAC T_INCREM
+   69        | T_VARIABLE . T_DECREM
+   70        | T_VARIABLE . T_LSBRAC T_FLOAT T_RSBRAC T_DECREM
+   71        | T_VARIABLE . T_LBRAC CALL_PARAM T_RBRAC
+   72        | T_VARIABLE . T_LBRAC T_RBRAC
+   75 PRIMATIVE: T_VARIABLE .
 
     T_LBRAC     shift, and go to state 56
-    T_ASSIGN    shift, and go to state 57
-    T_ADDEQUAL  shift, and go to state 58
-    T_SUBEQUAL  shift, and go to state 59
-    T_INCREM    shift, and go to state 60
-    T_DECREM    shift, and go to state 61
+    T_LSBRAC    shift, and go to state 57
+    T_ASSIGN    shift, and go to state 58
+    T_ADDEQUAL  shift, and go to state 59
+    T_SUBEQUAL  shift, and go to state 60
+    T_INCREM    shift, and go to state 61
+    T_DECREM    shift, and go to state 62
 
-    T_LBRAC   [reduce using rule 68 (PRIMATIVE)]
-    T_INCREM  [reduce using rule 68 (PRIMATIVE)]
-    T_DECREM  [reduce using rule 68 (PRIMATIVE)]
-    $default  reduce using rule 68 (PRIMATIVE)
+    T_LBRAC   [reduce using rule 75 (PRIMATIVE)]
+    T_INCREM  [reduce using rule 75 (PRIMATIVE)]
+    T_DECREM  [reduce using rule 75 (PRIMATIVE)]
+    $default  reduce using rule 75 (PRIMATIVE)
 
 
 State 30
 
-   60 UNARY: T_INCREM . T_VARIABLE
-
-    T_VARIABLE  shift, and go to state 62
-
-
-State 31
-
-   59 UNARY: T_DECREM . T_VARIABLE
+   64 UNARY: T_INCREM . T_VARIABLE
+   65      | T_INCREM . T_VARIABLE T_LSBRAC T_FLOAT T_RSBRAC
 
     T_VARIABLE  shift, and go to state 63
 
 
+State 31
+
+   62 UNARY: T_DECREM . T_VARIABLE
+   63      | T_DECREM . T_VARIABLE T_LSBRAC T_FLOAT T_RSBRAC
+
+    T_VARIABLE  shift, and go to state 64
+
+
 State 32
 
-   92 VAR_DEC: T_VARIABLE T_ASSIGN EXPR .
+   99 VAR_DEC: T_VARIABLE T_ASSIGN EXPR .
 
-    $default  reduce using rule 92 (VAR_DEC)
+    $default  reduce using rule 99 (VAR_DEC)
 
 
 State 33
@@ -641,154 +659,154 @@ State 34
 
 State 35
 
-   29 EXPR_COND: OR .
+   32 EXPR_COND: OR .
 
-    $default  reduce using rule 29 (EXPR_COND)
+    $default  reduce using rule 32 (EXPR_COND)
 
 
 State 36
 
-   30 OR: AND .
-   31   | AND . T_OR BOR
-   33 AND: AND . T_AND BOR
+   33 OR: AND .
+   34   | AND . T_OR BOR
+   36 AND: AND . T_AND BOR
 
-    T_AND  shift, and go to state 64
-    T_OR   shift, and go to state 65
+    T_AND  shift, and go to state 65
+    T_OR   shift, and go to state 66
 
-    $default  reduce using rule 30 (OR)
+    $default  reduce using rule 33 (OR)
 
 
 State 37
 
-   32 AND: BOR .
-   35 BOR: BOR . T_BOR BXOR
-   37 BXOR: BOR . T_BXOR BXOR
+   35 AND: BOR .
+   38 BOR: BOR . T_BOR BXOR
+   40 BXOR: BOR . T_BXOR BXOR
 
-    T_BOR   shift, and go to state 66
-    T_BXOR  shift, and go to state 67
+    T_BOR   shift, and go to state 67
+    T_BXOR  shift, and go to state 68
 
-    $default  reduce using rule 32 (AND)
+    $default  reduce using rule 35 (AND)
 
 
 State 38
 
-   34 BOR: BXOR .
+   37 BOR: BXOR .
 
-    $default  reduce using rule 34 (BOR)
+    $default  reduce using rule 37 (BOR)
 
 
 State 39
 
-   36 BXOR: BAND .
-   39 BAND: BAND . T_BAND EQUAL
+   39 BXOR: BAND .
+   42 BAND: BAND . T_BAND EQUAL
 
-    T_BAND  shift, and go to state 68
+    T_BAND  shift, and go to state 69
 
-    $default  reduce using rule 36 (BXOR)
+    $default  reduce using rule 39 (BXOR)
 
 
 State 40
 
-   38 BAND: EQUAL .
-   41 EQUAL: EQUAL . T_EQUAL LESS
-   42      | EQUAL . T_NEQUAL LESS
+   41 BAND: EQUAL .
+   44 EQUAL: EQUAL . T_EQUAL LESS
+   45      | EQUAL . T_NEQUAL LESS
 
-    T_EQUAL   shift, and go to state 69
-    T_NEQUAL  shift, and go to state 70
+    T_EQUAL   shift, and go to state 70
+    T_NEQUAL  shift, and go to state 71
 
-    $default  reduce using rule 38 (BAND)
+    $default  reduce using rule 41 (BAND)
 
 
 State 41
 
-   40 EQUAL: LESS .
-   44 LESS: LESS . T_LT SHIFT
-   45     | LESS . T_GT SHIFT
-   46     | LESS . T_LEQUAL SHIFT
-   47     | LESS . T_GEQUAL SHIFT
+   43 EQUAL: LESS .
+   47 LESS: LESS . T_LT SHIFT
+   48     | LESS . T_GT SHIFT
+   49     | LESS . T_LEQUAL SHIFT
+   50     | LESS . T_GEQUAL SHIFT
 
-    T_GT      shift, and go to state 71
-    T_LT      shift, and go to state 72
-    T_LEQUAL  shift, and go to state 73
-    T_GEQUAL  shift, and go to state 74
+    T_GT      shift, and go to state 72
+    T_LT      shift, and go to state 73
+    T_LEQUAL  shift, and go to state 74
+    T_GEQUAL  shift, and go to state 75
 
-    $default  reduce using rule 40 (EQUAL)
+    $default  reduce using rule 43 (EQUAL)
 
 
 State 42
 
-   43 LESS: SHIFT .
-   49 SHIFT: SHIFT . T_LSHIFT ADD
-   50      | SHIFT . T_RSHIFT ADD
+   46 LESS: SHIFT .
+   52 SHIFT: SHIFT . T_LSHIFT ADD
+   53      | SHIFT . T_RSHIFT ADD
 
-    T_LSHIFT  shift, and go to state 75
-    T_RSHIFT  shift, and go to state 76
+    T_LSHIFT  shift, and go to state 76
+    T_RSHIFT  shift, and go to state 77
 
-    $default  reduce using rule 43 (LESS)
+    $default  reduce using rule 46 (LESS)
 
 
 State 43
 
-   48 SHIFT: ADD .
-   52 ADD: ADD . T_PLUS MUL
-   53    | ADD . T_MINUS MUL
+   51 SHIFT: ADD .
+   55 ADD: ADD . T_PLUS MUL
+   56    | ADD . T_MINUS MUL
 
-    T_PLUS   shift, and go to state 77
-    T_MINUS  shift, and go to state 78
+    T_PLUS   shift, and go to state 78
+    T_MINUS  shift, and go to state 79
 
-    $default  reduce using rule 48 (SHIFT)
+    $default  reduce using rule 51 (SHIFT)
 
 
 State 44
 
-   51 ADD: MUL .
-   55 MUL: MUL . T_TIMES UNARY
-   56    | MUL . T_DIVIDE UNARY
-   57    | MUL . T_MOD UNARY
+   54 ADD: MUL .
+   58 MUL: MUL . T_TIMES UNARY
+   59    | MUL . T_DIVIDE UNARY
+   60    | MUL . T_MOD UNARY
 
-    T_TIMES   shift, and go to state 79
-    T_DIVIDE  shift, and go to state 80
-    T_MOD     shift, and go to state 81
+    T_TIMES   shift, and go to state 80
+    T_DIVIDE  shift, and go to state 81
+    T_MOD     shift, and go to state 82
 
-    $default  reduce using rule 51 (ADD)
+    $default  reduce using rule 54 (ADD)
 
 
 State 45
 
-   54 MUL: UNARY .
+   57 MUL: UNARY .
 
-    $default  reduce using rule 54 (MUL)
+    $default  reduce using rule 57 (MUL)
 
 
 State 46
 
-   58 UNARY: POSTFIX .
+   61 UNARY: POSTFIX .
 
-    $default  reduce using rule 58 (UNARY)
+    $default  reduce using rule 61 (UNARY)
 
 
 State 47
 
-   61 POSTFIX: PRIMATIVE .
+   66 POSTFIX: PRIMATIVE .
 
-    $default  reduce using rule 61 (POSTFIX)
+    $default  reduce using rule 66 (POSTFIX)
 
 
 State 48
 
-   92 VAR_DEC: T_VARIABLE . T_ASSIGN EXPR
-   93        | T_VARIABLE .
+   99 VAR_DEC: T_VARIABLE . T_ASSIGN EXPR
+  100        | T_VARIABLE .
 
     T_ASSIGN  shift, and go to state 21
 
-    $default  reduce using rule 93 (VAR_DEC)
+    $default  reduce using rule 100 (VAR_DEC)
 
 
 State 49
 
-   91 DEC_LIST: DEC_LIST T_COMMA VAR_DEC .
+   98 DEC_LIST: DEC_LIST T_COMMA VAR_DEC .
 
-    $default  reduce using rule 91 (DEC_LIST)
+    $default  reduce using rule 98 (DEC_LIST)
 
 
 State 50
@@ -796,19 +814,19 @@ State 50
     7 FUNDEC: TYPE T_VARIABLE T_LBRAC T_RBRAC T_LCURL . SCOPE T_RCURL
 
     T_LBRAC     shift, and go to state 27
-    T_LCURL     shift, and go to state 82
+    T_LCURL     shift, and go to state 83
     T_NUMBER    shift, and go to state 28
     T_VARIABLE  shift, and go to state 29
-    T_SEMIC     shift, and go to state 83
+    T_SEMIC     shift, and go to state 84
     T_INCREM    shift, and go to state 30
     T_DECREM    shift, and go to state 31
-    T_WHILE     shift, and go to state 84
-    T_DO        shift, and go to state 85
-    T_IF        shift, and go to state 86
-    T_FOR       shift, and go to state 87
-    T_BREAK     shift, and go to state 88
-    T_CONTINUE  shift, and go to state 89
-    T_SWITCH    shift, and go to state 90
+    T_WHILE     shift, and go to state 85
+    T_DO        shift, and go to state 86
+    T_IF        shift, and go to state 87
+    T_FOR       shift, and go to state 88
+    T_BREAK     shift, and go to state 89
+    T_CONTINUE  shift, and go to state 90
+    T_SWITCH    shift, and go to state 91
     T_INT       shift, and go to state 1
     T_VOID      shift, and go to state 2
     T_CHAR      shift, and go to state 3
@@ -817,12 +835,12 @@ State 50
     T_FLOAT     shift, and go to state 6
     T_DOUBLE    shift, and go to state 7
     T_SIGNED    shift, and go to state 8
-    T_RETURN    shift, and go to state 91
+    T_RETURN    shift, and go to state 92
 
-    TYPE         go to state 92
-    SCOPE        go to state 93
-    EXPR_ST      go to state 94
-    EXPR         go to state 95
+    TYPE         go to state 93
+    SCOPE        go to state 94
+    EXPR_ST      go to state 95
+    EXPR         go to state 96
     EXPR_ASSIGN  go to state 33
     EXPR_COND    go to state 34
     OR           go to state 35
@@ -838,12 +856,12 @@ State 50
     UNARY        go to state 45
     POSTFIX      go to state 46
     PRIMATIVE    go to state 47
-    STMT         go to state 96
-    JMP_ST       go to state 97
-    IF_ST        go to state 98
-    ITER_ST      go to state 99
-    NEW_SCOPE    go to state 100
-    DEC_ST       go to state 101
+    STMT         go to state 97
+    JMP_ST       go to state 98
+    IF_ST        go to state 99
+    ITER_ST      go to state 100
+    NEW_SCOPE    go to state 101
+    DEC_ST       go to state 102
 
 
 State 51
@@ -865,8 +883,8 @@ State 53
     6 FUNDEC: TYPE T_VARIABLE T_LBRAC PARAM_LIST T_RBRAC . T_LCURL SCOPE T_RCURL
     8       | TYPE T_VARIABLE T_LBRAC PARAM_LIST T_RBRAC . T_SEMIC
 
-    T_LCURL  shift, and go to state 102
-    T_SEMIC  shift, and go to state 103
+    T_LCURL  shift, and go to state 103
+    T_SEMIC  shift, and go to state 104
 
 
 State 54
@@ -882,29 +900,29 @@ State 54
     T_DOUBLE  shift, and go to state 7
     T_SIGNED  shift, and go to state 8
 
-    TYPE  go to state 104
+    TYPE  go to state 105
 
 
 State 55
 
-   70 PRIMATIVE: T_LBRAC EXPR . T_RBRAC
+   77 PRIMATIVE: T_LBRAC EXPR . T_RBRAC
 
-    T_RBRAC  shift, and go to state 105
+    T_RBRAC  shift, and go to state 106
 
 
 State 56
 
-   64 POSTFIX: T_VARIABLE T_LBRAC . CALL_PARAM T_RBRAC
-   65        | T_VARIABLE T_LBRAC . T_RBRAC
+   71 POSTFIX: T_VARIABLE T_LBRAC . CALL_PARAM T_RBRAC
+   72        | T_VARIABLE T_LBRAC . T_RBRAC
 
     T_LBRAC     shift, and go to state 27
-    T_RBRAC     shift, and go to state 106
+    T_RBRAC     shift, and go to state 107
     T_NUMBER    shift, and go to state 28
     T_VARIABLE  shift, and go to state 29
     T_INCREM    shift, and go to state 30
     T_DECREM    shift, and go to state 31
 
-    EXPR         go to state 107
+    EXPR         go to state 108
     EXPR_ASSIGN  go to state 33
     EXPR_COND    go to state 34
     OR           go to state 35
@@ -919,67 +937,24 @@ State 56
     MUL          go to state 44
     UNARY        go to state 45
     POSTFIX      go to state 46
-    CALL_PARAM   go to state 108
+    CALL_PARAM   go to state 109
     PRIMATIVE    go to state 47
 
 
 State 57
 
-   26 EXPR_ASSIGN: T_VARIABLE T_ASSIGN . EXPR_ASSIGN
+   27 EXPR_ASSIGN: T_VARIABLE T_LSBRAC . T_FLOAT T_RSBRAC T_ASSIGN EXPR_ASSIGN
+   29            | T_VARIABLE T_LSBRAC . T_FLOAT T_RSBRAC T_ADDEQUAL EXPR_ASSIGN
+   31            | T_VARIABLE T_LSBRAC . T_FLOAT T_RSBRAC T_SUBEQUAL EXPR_ASSIGN
+   68 POSTFIX: T_VARIABLE T_LSBRAC . T_FLOAT T_RSBRAC T_INCREM
+   70        | T_VARIABLE T_LSBRAC . T_FLOAT T_RSBRAC T_DECREM
 
-    T_LBRAC     shift, and go to state 27
-    T_NUMBER    shift, and go to state 28
-    T_VARIABLE  shift, and go to state 29
-    T_INCREM    shift, and go to state 30
-    T_DECREM    shift, and go to state 31
-
-    EXPR_ASSIGN  go to state 109
-    EXPR_COND    go to state 34
-    OR           go to state 35
-    AND          go to state 36
-    BOR          go to state 37
-    BXOR         go to state 38
-    BAND         go to state 39
-    EQUAL        go to state 40
-    LESS         go to state 41
-    SHIFT        go to state 42
-    ADD          go to state 43
-    MUL          go to state 44
-    UNARY        go to state 45
-    POSTFIX      go to state 46
-    PRIMATIVE    go to state 47
+    T_FLOAT  shift, and go to state 110
 
 
 State 58
 
-   27 EXPR_ASSIGN: T_VARIABLE T_ADDEQUAL . EXPR_ASSIGN
-
-    T_LBRAC     shift, and go to state 27
-    T_NUMBER    shift, and go to state 28
-    T_VARIABLE  shift, and go to state 29
-    T_INCREM    shift, and go to state 30
-    T_DECREM    shift, and go to state 31
-
-    EXPR_ASSIGN  go to state 110
-    EXPR_COND    go to state 34
-    OR           go to state 35
-    AND          go to state 36
-    BOR          go to state 37
-    BXOR         go to state 38
-    BAND         go to state 39
-    EQUAL        go to state 40
-    LESS         go to state 41
-    SHIFT        go to state 42
-    ADD          go to state 43
-    MUL          go to state 44
-    UNARY        go to state 45
-    POSTFIX      go to state 46
-    PRIMATIVE    go to state 47
-
-
-State 59
-
-   28 EXPR_ASSIGN: T_VARIABLE T_SUBEQUAL . EXPR_ASSIGN
+   26 EXPR_ASSIGN: T_VARIABLE T_ASSIGN . EXPR_ASSIGN
 
     T_LBRAC     shift, and go to state 27
     T_NUMBER    shift, and go to state 28
@@ -1004,68 +979,105 @@ State 59
     PRIMATIVE    go to state 47
 
 
+State 59
+
+   28 EXPR_ASSIGN: T_VARIABLE T_ADDEQUAL . EXPR_ASSIGN
+
+    T_LBRAC     shift, and go to state 27
+    T_NUMBER    shift, and go to state 28
+    T_VARIABLE  shift, and go to state 29
+    T_INCREM    shift, and go to state 30
+    T_DECREM    shift, and go to state 31
+
+    EXPR_ASSIGN  go to state 112
+    EXPR_COND    go to state 34
+    OR           go to state 35
+    AND          go to state 36
+    BOR          go to state 37
+    BXOR         go to state 38
+    BAND         go to state 39
+    EQUAL        go to state 40
+    LESS         go to state 41
+    SHIFT        go to state 42
+    ADD          go to state 43
+    MUL          go to state 44
+    UNARY        go to state 45
+    POSTFIX      go to state 46
+    PRIMATIVE    go to state 47
+
+
 State 60
 
-   62 POSTFIX: T_VARIABLE T_INCREM .
+   30 EXPR_ASSIGN: T_VARIABLE T_SUBEQUAL . EXPR_ASSIGN
 
-    $default  reduce using rule 62 (POSTFIX)
+    T_LBRAC     shift, and go to state 27
+    T_NUMBER    shift, and go to state 28
+    T_VARIABLE  shift, and go to state 29
+    T_INCREM    shift, and go to state 30
+    T_DECREM    shift, and go to state 31
+
+    EXPR_ASSIGN  go to state 113
+    EXPR_COND    go to state 34
+    OR           go to state 35
+    AND          go to state 36
+    BOR          go to state 37
+    BXOR         go to state 38
+    BAND         go to state 39
+    EQUAL        go to state 40
+    LESS         go to state 41
+    SHIFT        go to state 42
+    ADD          go to state 43
+    MUL          go to state 44
+    UNARY        go to state 45
+    POSTFIX      go to state 46
+    PRIMATIVE    go to state 47
 
 
 State 61
 
-   63 POSTFIX: T_VARIABLE T_DECREM .
+   67 POSTFIX: T_VARIABLE T_INCREM .
 
-    $default  reduce using rule 63 (POSTFIX)
+    $default  reduce using rule 67 (POSTFIX)
 
 
 State 62
 
-   60 UNARY: T_INCREM T_VARIABLE .
+   69 POSTFIX: T_VARIABLE T_DECREM .
 
-    $default  reduce using rule 60 (UNARY)
+    $default  reduce using rule 69 (POSTFIX)
 
 
 State 63
 
-   59 UNARY: T_DECREM T_VARIABLE .
+   64 UNARY: T_INCREM T_VARIABLE .
+   65      | T_INCREM T_VARIABLE . T_LSBRAC T_FLOAT T_RSBRAC
 
-    $default  reduce using rule 59 (UNARY)
+    T_LSBRAC  shift, and go to state 114
+
+    $default  reduce using rule 64 (UNARY)
 
 
 State 64
 
-   33 AND: AND T_AND . BOR
+   62 UNARY: T_DECREM T_VARIABLE .
+   63      | T_DECREM T_VARIABLE . T_LSBRAC T_FLOAT T_RSBRAC
 
-    T_LBRAC     shift, and go to state 27
-    T_NUMBER    shift, and go to state 28
-    T_VARIABLE  shift, and go to state 112
-    T_INCREM    shift, and go to state 30
-    T_DECREM    shift, and go to state 31
+    T_LSBRAC  shift, and go to state 115
 
-    BOR        go to state 113
-    BXOR       go to state 38
-    BAND       go to state 39
-    EQUAL      go to state 40
-    LESS       go to state 41
-    SHIFT      go to state 42
-    ADD        go to state 43
-    MUL        go to state 44
-    UNARY      go to state 45
-    POSTFIX    go to state 46
-    PRIMATIVE  go to state 47
+    $default  reduce using rule 62 (UNARY)
 
 
 State 65
 
-   31 OR: AND T_OR . BOR
+   36 AND: AND T_AND . BOR
 
     T_LBRAC     shift, and go to state 27
     T_NUMBER    shift, and go to state 28
-    T_VARIABLE  shift, and go to state 112
+    T_VARIABLE  shift, and go to state 116
     T_INCREM    shift, and go to state 30
     T_DECREM    shift, and go to state 31
 
-    BOR        go to state 114
+    BOR        go to state 117
     BXOR       go to state 38
     BAND       go to state 39
     EQUAL      go to state 40
@@ -1080,16 +1092,16 @@ State 65
 
 State 66
 
-   35 BOR: BOR T_BOR . BXOR
+   34 OR: AND T_OR . BOR
 
     T_LBRAC     shift, and go to state 27
     T_NUMBER    shift, and go to state 28
-    T_VARIABLE  shift, and go to state 112
+    T_VARIABLE  shift, and go to state 116
     T_INCREM    shift, and go to state 30
     T_DECREM    shift, and go to state 31
 
-    BOR        go to state 115
-    BXOR       go to state 116
+    BOR        go to state 118
+    BXOR       go to state 38
     BAND       go to state 39
     EQUAL      go to state 40
     LESS       go to state 41
@@ -1103,16 +1115,16 @@ State 66
 
 State 67
 
-   37 BXOR: BOR T_BXOR . BXOR
+   38 BOR: BOR T_BOR . BXOR
 
     T_LBRAC     shift, and go to state 27
     T_NUMBER    shift, and go to state 28
-    T_VARIABLE  shift, and go to state 112
+    T_VARIABLE  shift, and go to state 116
     T_INCREM    shift, and go to state 30
     T_DECREM    shift, and go to state 31
 
-    BOR        go to state 115
-    BXOR       go to state 117
+    BOR        go to state 119
+    BXOR       go to state 120
     BAND       go to state 39
     EQUAL      go to state 40
     LESS       go to state 41
@@ -1126,15 +1138,18 @@ State 67
 
 State 68
 
-   39 BAND: BAND T_BAND . EQUAL
+   40 BXOR: BOR T_BXOR . BXOR
 
     T_LBRAC     shift, and go to state 27
     T_NUMBER    shift, and go to state 28
-    T_VARIABLE  shift, and go to state 112
+    T_VARIABLE  shift, and go to state 116
     T_INCREM    shift, and go to state 30
     T_DECREM    shift, and go to state 31
 
-    EQUAL      go to state 118
+    BOR        go to state 119
+    BXOR       go to state 121
+    BAND       go to state 39
+    EQUAL      go to state 40
     LESS       go to state 41
     SHIFT      go to state 42
     ADD        go to state 43
@@ -1146,15 +1161,16 @@ State 68
 
 State 69
 
-   41 EQUAL: EQUAL T_EQUAL . LESS
+   42 BAND: BAND T_BAND . EQUAL
 
     T_LBRAC     shift, and go to state 27
     T_NUMBER    shift, and go to state 28
-    T_VARIABLE  shift, and go to state 112
+    T_VARIABLE  shift, and go to state 116
     T_INCREM    shift, and go to state 30
     T_DECREM    shift, and go to state 31
 
-    LESS       go to state 119
+    EQUAL      go to state 122
+    LESS       go to state 41
     SHIFT      go to state 42
     ADD        go to state 43
     MUL        go to state 44
@@ -1165,15 +1181,15 @@ State 69
 
 State 70
 
-   42 EQUAL: EQUAL T_NEQUAL . LESS
+   44 EQUAL: EQUAL T_EQUAL . LESS
 
     T_LBRAC     shift, and go to state 27
     T_NUMBER    shift, and go to state 28
-    T_VARIABLE  shift, and go to state 112
+    T_VARIABLE  shift, and go to state 116
     T_INCREM    shift, and go to state 30
     T_DECREM    shift, and go to state 31
 
-    LESS       go to state 120
+    LESS       go to state 123
     SHIFT      go to state 42
     ADD        go to state 43
     MUL        go to state 44
@@ -1184,15 +1200,16 @@ State 70
 
 State 71
 
-   45 LESS: LESS T_GT . SHIFT
+   45 EQUAL: EQUAL T_NEQUAL . LESS
 
     T_LBRAC     shift, and go to state 27
     T_NUMBER    shift, and go to state 28
-    T_VARIABLE  shift, and go to state 112
+    T_VARIABLE  shift, and go to state 116
     T_INCREM    shift, and go to state 30
     T_DECREM    shift, and go to state 31
 
-    SHIFT      go to state 121
+    LESS       go to state 124
+    SHIFT      go to state 42
     ADD        go to state 43
     MUL        go to state 44
     UNARY      go to state 45
@@ -1202,15 +1219,15 @@ State 71
 
 State 72
 
-   44 LESS: LESS T_LT . SHIFT
+   48 LESS: LESS T_GT . SHIFT
 
     T_LBRAC     shift, and go to state 27
     T_NUMBER    shift, and go to state 28
-    T_VARIABLE  shift, and go to state 112
+    T_VARIABLE  shift, and go to state 116
     T_INCREM    shift, and go to state 30
     T_DECREM    shift, and go to state 31
 
-    SHIFT      go to state 122
+    SHIFT      go to state 125
     ADD        go to state 43
     MUL        go to state 44
     UNARY      go to state 45
@@ -1220,15 +1237,15 @@ State 72
 
 State 73
 
-   46 LESS: LESS T_LEQUAL . SHIFT
+   47 LESS: LESS T_LT . SHIFT
 
     T_LBRAC     shift, and go to state 27
     T_NUMBER    shift, and go to state 28
-    T_VARIABLE  shift, and go to state 112
+    T_VARIABLE  shift, and go to state 116
     T_INCREM    shift, and go to state 30
     T_DECREM    shift, and go to state 31
 
-    SHIFT      go to state 123
+    SHIFT      go to state 126
     ADD        go to state 43
     MUL        go to state 44
     UNARY      go to state 45
@@ -1238,15 +1255,15 @@ State 73
 
 State 74
 
-   47 LESS: LESS T_GEQUAL . SHIFT
+   49 LESS: LESS T_LEQUAL . SHIFT
 
     T_LBRAC     shift, and go to state 27
     T_NUMBER    shift, and go to state 28
-    T_VARIABLE  shift, and go to state 112
+    T_VARIABLE  shift, and go to state 116
     T_INCREM    shift, and go to state 30
     T_DECREM    shift, and go to state 31
 
-    SHIFT      go to state 124
+    SHIFT      go to state 127
     ADD        go to state 43
     MUL        go to state 44
     UNARY      go to state 45
@@ -1256,15 +1273,16 @@ State 74
 
 State 75
 
-   49 SHIFT: SHIFT T_LSHIFT . ADD
+   50 LESS: LESS T_GEQUAL . SHIFT
 
     T_LBRAC     shift, and go to state 27
     T_NUMBER    shift, and go to state 28
-    T_VARIABLE  shift, and go to state 112
+    T_VARIABLE  shift, and go to state 116
     T_INCREM    shift, and go to state 30
     T_DECREM    shift, and go to state 31
 
-    ADD        go to state 125
+    SHIFT      go to state 128
+    ADD        go to state 43
     MUL        go to state 44
     UNARY      go to state 45
     POSTFIX    go to state 46
@@ -1273,15 +1291,15 @@ State 75
 
 State 76
 
-   50 SHIFT: SHIFT T_RSHIFT . ADD
+   52 SHIFT: SHIFT T_LSHIFT . ADD
 
     T_LBRAC     shift, and go to state 27
     T_NUMBER    shift, and go to state 28
-    T_VARIABLE  shift, and go to state 112
+    T_VARIABLE  shift, and go to state 116
     T_INCREM    shift, and go to state 30
     T_DECREM    shift, and go to state 31
 
-    ADD        go to state 126
+    ADD        go to state 129
     MUL        go to state 44
     UNARY      go to state 45
     POSTFIX    go to state 46
@@ -1290,15 +1308,16 @@ State 76
 
 State 77
 
-   52 ADD: ADD T_PLUS . MUL
+   53 SHIFT: SHIFT T_RSHIFT . ADD
 
     T_LBRAC     shift, and go to state 27
     T_NUMBER    shift, and go to state 28
-    T_VARIABLE  shift, and go to state 112
+    T_VARIABLE  shift, and go to state 116
     T_INCREM    shift, and go to state 30
     T_DECREM    shift, and go to state 31
 
-    MUL        go to state 127
+    ADD        go to state 130
+    MUL        go to state 44
     UNARY      go to state 45
     POSTFIX    go to state 46
     PRIMATIVE  go to state 47
@@ -1306,15 +1325,15 @@ State 77
 
 State 78
 
-   53 ADD: ADD T_MINUS . MUL
+   55 ADD: ADD T_PLUS . MUL
 
     T_LBRAC     shift, and go to state 27
     T_NUMBER    shift, and go to state 28
-    T_VARIABLE  shift, and go to state 112
+    T_VARIABLE  shift, and go to state 116
     T_INCREM    shift, and go to state 30
     T_DECREM    shift, and go to state 31
 
-    MUL        go to state 128
+    MUL        go to state 131
     UNARY      go to state 45
     POSTFIX    go to state 46
     PRIMATIVE  go to state 47
@@ -1322,67 +1341,83 @@ State 78
 
 State 79
 
-   55 MUL: MUL T_TIMES . UNARY
+   56 ADD: ADD T_MINUS . MUL
 
     T_LBRAC     shift, and go to state 27
     T_NUMBER    shift, and go to state 28
-    T_VARIABLE  shift, and go to state 112
+    T_VARIABLE  shift, and go to state 116
     T_INCREM    shift, and go to state 30
     T_DECREM    shift, and go to state 31
 
-    UNARY      go to state 129
+    MUL        go to state 132
+    UNARY      go to state 45
     POSTFIX    go to state 46
     PRIMATIVE  go to state 47
 
 
 State 80
 
-   56 MUL: MUL T_DIVIDE . UNARY
+   58 MUL: MUL T_TIMES . UNARY
 
     T_LBRAC     shift, and go to state 27
     T_NUMBER    shift, and go to state 28
-    T_VARIABLE  shift, and go to state 112
+    T_VARIABLE  shift, and go to state 116
     T_INCREM    shift, and go to state 30
     T_DECREM    shift, and go to state 31
 
-    UNARY      go to state 130
+    UNARY      go to state 133
     POSTFIX    go to state 46
     PRIMATIVE  go to state 47
 
 
 State 81
 
-   57 MUL: MUL T_MOD . UNARY
+   59 MUL: MUL T_DIVIDE . UNARY
 
     T_LBRAC     shift, and go to state 27
     T_NUMBER    shift, and go to state 28
-    T_VARIABLE  shift, and go to state 112
+    T_VARIABLE  shift, and go to state 116
     T_INCREM    shift, and go to state 30
     T_DECREM    shift, and go to state 31
 
-    UNARY      go to state 131
+    UNARY      go to state 134
     POSTFIX    go to state 46
     PRIMATIVE  go to state 47
 
 
 State 82
 
-   88 NEW_SCOPE: T_LCURL . SCOPE T_RCURL
+   60 MUL: MUL T_MOD . UNARY
 
     T_LBRAC     shift, and go to state 27
-    T_LCURL     shift, and go to state 82
     T_NUMBER    shift, and go to state 28
-    T_VARIABLE  shift, and go to state 29
-    T_SEMIC     shift, and go to state 83
+    T_VARIABLE  shift, and go to state 116
     T_INCREM    shift, and go to state 30
     T_DECREM    shift, and go to state 31
-    T_WHILE     shift, and go to state 84
-    T_DO        shift, and go to state 85
-    T_IF        shift, and go to state 86
-    T_FOR       shift, and go to state 87
-    T_BREAK     shift, and go to state 88
-    T_CONTINUE  shift, and go to state 89
-    T_SWITCH    shift, and go to state 90
+
+    UNARY      go to state 135
+    POSTFIX    go to state 46
+    PRIMATIVE  go to state 47
+
+
+State 83
+
+   95 NEW_SCOPE: T_LCURL . SCOPE T_RCURL
+
+    T_LBRAC     shift, and go to state 27
+    T_LCURL     shift, and go to state 83
+    T_NUMBER    shift, and go to state 28
+    T_VARIABLE  shift, and go to state 29
+    T_SEMIC     shift, and go to state 84
+    T_INCREM    shift, and go to state 30
+    T_DECREM    shift, and go to state 31
+    T_WHILE     shift, and go to state 85
+    T_DO        shift, and go to state 86
+    T_IF        shift, and go to state 87
+    T_FOR       shift, and go to state 88
+    T_BREAK     shift, and go to state 89
+    T_CONTINUE  shift, and go to state 90
+    T_SWITCH    shift, and go to state 91
     T_INT       shift, and go to state 1
     T_VOID      shift, and go to state 2
     T_CHAR      shift, and go to state 3
@@ -1391,12 +1426,12 @@ State 82
     T_FLOAT     shift, and go to state 6
     T_DOUBLE    shift, and go to state 7
     T_SIGNED    shift, and go to state 8
-    T_RETURN    shift, and go to state 91
+    T_RETURN    shift, and go to state 92
 
-    TYPE         go to state 92
-    SCOPE        go to state 132
-    EXPR_ST      go to state 94
-    EXPR         go to state 95
+    TYPE         go to state 93
+    SCOPE        go to state 136
+    EXPR_ST      go to state 95
+    EXPR         go to state 96
     EXPR_ASSIGN  go to state 33
     EXPR_COND    go to state 34
     OR           go to state 35
@@ -1412,46 +1447,46 @@ State 82
     UNARY        go to state 45
     POSTFIX      go to state 46
     PRIMATIVE    go to state 47
-    STMT         go to state 96
-    JMP_ST       go to state 97
-    IF_ST        go to state 98
-    ITER_ST      go to state 99
-    NEW_SCOPE    go to state 100
-    DEC_ST       go to state 101
+    STMT         go to state 97
+    JMP_ST       go to state 98
+    IF_ST        go to state 99
+    ITER_ST      go to state 100
+    NEW_SCOPE    go to state 101
+    DEC_ST       go to state 102
 
 
-State 83
+State 84
 
    22 EXPR_ST: T_SEMIC .
 
     $default  reduce using rule 22 (EXPR_ST)
 
 
-State 84
-
-   84 ITER_ST: T_WHILE . T_LBRAC EXPR T_RBRAC STMT
-
-    T_LBRAC  shift, and go to state 133
-
-
 State 85
 
-   85 ITER_ST: T_DO . STMT T_WHILE T_LBRAC EXPR T_RBRAC T_SEMIC
+   91 ITER_ST: T_WHILE . T_LBRAC EXPR T_RBRAC STMT
+
+    T_LBRAC  shift, and go to state 137
+
+
+State 86
+
+   92 ITER_ST: T_DO . STMT T_WHILE T_LBRAC EXPR T_RBRAC T_SEMIC
 
     T_LBRAC     shift, and go to state 27
-    T_LCURL     shift, and go to state 82
+    T_LCURL     shift, and go to state 83
     T_NUMBER    shift, and go to state 28
     T_VARIABLE  shift, and go to state 29
-    T_SEMIC     shift, and go to state 83
+    T_SEMIC     shift, and go to state 84
     T_INCREM    shift, and go to state 30
     T_DECREM    shift, and go to state 31
-    T_WHILE     shift, and go to state 84
-    T_DO        shift, and go to state 85
-    T_IF        shift, and go to state 86
-    T_FOR       shift, and go to state 87
-    T_BREAK     shift, and go to state 88
-    T_CONTINUE  shift, and go to state 89
-    T_SWITCH    shift, and go to state 90
+    T_WHILE     shift, and go to state 85
+    T_DO        shift, and go to state 86
+    T_IF        shift, and go to state 87
+    T_FOR       shift, and go to state 88
+    T_BREAK     shift, and go to state 89
+    T_CONTINUE  shift, and go to state 90
+    T_SWITCH    shift, and go to state 91
     T_INT       shift, and go to state 1
     T_VOID      shift, and go to state 2
     T_CHAR      shift, and go to state 3
@@ -1460,11 +1495,11 @@ State 85
     T_FLOAT     shift, and go to state 6
     T_DOUBLE    shift, and go to state 7
     T_SIGNED    shift, and go to state 8
-    T_RETURN    shift, and go to state 91
+    T_RETURN    shift, and go to state 92
 
-    TYPE         go to state 92
-    EXPR_ST      go to state 94
-    EXPR         go to state 95
+    TYPE         go to state 93
+    EXPR_ST      go to state 95
+    EXPR         go to state 96
     EXPR_ASSIGN  go to state 33
     EXPR_COND    go to state 34
     OR           go to state 35
@@ -1480,85 +1515,55 @@ State 85
     UNARY        go to state 45
     POSTFIX      go to state 46
     PRIMATIVE    go to state 47
-    STMT         go to state 134
-    JMP_ST       go to state 97
-    IF_ST        go to state 98
-    ITER_ST      go to state 99
-    NEW_SCOPE    go to state 100
-    DEC_ST       go to state 101
-
-
-State 86
-
-   81 IF_ST: T_IF . T_LBRAC EXPR T_RBRAC STMT
-   82      | T_IF . T_LBRAC EXPR T_RBRAC STMT T_ELSE STMT
-
-    T_LBRAC  shift, and go to state 135
+    STMT         go to state 138
+    JMP_ST       go to state 98
+    IF_ST        go to state 99
+    ITER_ST      go to state 100
+    NEW_SCOPE    go to state 101
+    DEC_ST       go to state 102
 
 
 State 87
 
-   86 ITER_ST: T_FOR . T_LBRAC EXPR_ST EXPR_ST T_RBRAC STMT
-   87        | T_FOR . T_LBRAC EXPR_ST EXPR_ST EXPR T_RBRAC STMT
+   88 IF_ST: T_IF . T_LBRAC EXPR T_RBRAC STMT
+   89      | T_IF . T_LBRAC EXPR T_RBRAC STMT T_ELSE STMT
 
-    T_LBRAC  shift, and go to state 136
+    T_LBRAC  shift, and go to state 139
 
 
 State 88
 
-   79 JMP_ST: T_BREAK .
+   93 ITER_ST: T_FOR . T_LBRAC EXPR_ST EXPR_ST T_RBRAC STMT
+   94        | T_FOR . T_LBRAC EXPR_ST EXPR_ST EXPR T_RBRAC STMT
 
-    $default  reduce using rule 79 (JMP_ST)
+    T_LBRAC  shift, and go to state 140
 
 
 State 89
 
-   80 JMP_ST: T_CONTINUE .
+   86 JMP_ST: T_BREAK .
 
-    $default  reduce using rule 80 (JMP_ST)
+    $default  reduce using rule 86 (JMP_ST)
 
 
 State 90
 
-   83 IF_ST: T_SWITCH . EXPR STMT
+   87 JMP_ST: T_CONTINUE .
 
-    T_LBRAC     shift, and go to state 27
-    T_NUMBER    shift, and go to state 28
-    T_VARIABLE  shift, and go to state 29
-    T_INCREM    shift, and go to state 30
-    T_DECREM    shift, and go to state 31
-
-    EXPR         go to state 137
-    EXPR_ASSIGN  go to state 33
-    EXPR_COND    go to state 34
-    OR           go to state 35
-    AND          go to state 36
-    BOR          go to state 37
-    BXOR         go to state 38
-    BAND         go to state 39
-    EQUAL        go to state 40
-    LESS         go to state 41
-    SHIFT        go to state 42
-    ADD          go to state 43
-    MUL          go to state 44
-    UNARY        go to state 45
-    POSTFIX      go to state 46
-    PRIMATIVE    go to state 47
+    $default  reduce using rule 87 (JMP_ST)
 
 
 State 91
 
-   77 JMP_ST: T_RETURN . T_SEMIC
-   78       | T_RETURN . EXPR T_SEMIC
+   90 IF_ST: T_SWITCH . EXPR STMT
 
     T_LBRAC     shift, and go to state 27
     T_NUMBER    shift, and go to state 28
     T_VARIABLE  shift, and go to state 29
-    T_SEMIC     shift, and go to state 138
     T_INCREM    shift, and go to state 30
     T_DECREM    shift, and go to state 31
 
-    EXPR         go to state 139
+    EXPR         go to state 141
     EXPR_ASSIGN  go to state 33
     EXPR_COND    go to state 34
     OR           go to state 35
@@ -1578,7 +1583,37 @@ State 91
 
 State 92
 
-   89 DEC_ST: TYPE . DEC_LIST T_SEMIC
+   84 JMP_ST: T_RETURN . T_SEMIC
+   85       | T_RETURN . EXPR T_SEMIC
+
+    T_LBRAC     shift, and go to state 27
+    T_NUMBER    shift, and go to state 28
+    T_VARIABLE  shift, and go to state 29
+    T_SEMIC     shift, and go to state 142
+    T_INCREM    shift, and go to state 30
+    T_DECREM    shift, and go to state 31
+
+    EXPR         go to state 143
+    EXPR_ASSIGN  go to state 33
+    EXPR_COND    go to state 34
+    OR           go to state 35
+    AND          go to state 36
+    BOR          go to state 37
+    BXOR         go to state 38
+    BAND         go to state 39
+    EQUAL        go to state 40
+    LESS         go to state 41
+    SHIFT        go to state 42
+    ADD          go to state 43
+    MUL          go to state 44
+    UNARY        go to state 45
+    POSTFIX      go to state 46
+    PRIMATIVE    go to state 47
+
+
+State 93
+
+   96 DEC_ST: TYPE . DEC_LIST T_SEMIC
 
     T_VARIABLE  shift, and go to state 48
 
@@ -1586,26 +1621,26 @@ State 92
     VAR_DEC   go to state 19
 
 
-State 93
+State 94
 
     7 FUNDEC: TYPE T_VARIABLE T_LBRAC T_RBRAC T_LCURL SCOPE . T_RCURL
    20 SCOPE: SCOPE . STMT
 
     T_LBRAC     shift, and go to state 27
-    T_LCURL     shift, and go to state 82
-    T_RCURL     shift, and go to state 140
+    T_LCURL     shift, and go to state 83
+    T_RCURL     shift, and go to state 144
     T_NUMBER    shift, and go to state 28
     T_VARIABLE  shift, and go to state 29
-    T_SEMIC     shift, and go to state 83
+    T_SEMIC     shift, and go to state 84
     T_INCREM    shift, and go to state 30
     T_DECREM    shift, and go to state 31
-    T_WHILE     shift, and go to state 84
-    T_DO        shift, and go to state 85
-    T_IF        shift, and go to state 86
-    T_FOR       shift, and go to state 87
-    T_BREAK     shift, and go to state 88
-    T_CONTINUE  shift, and go to state 89
-    T_SWITCH    shift, and go to state 90
+    T_WHILE     shift, and go to state 85
+    T_DO        shift, and go to state 86
+    T_IF        shift, and go to state 87
+    T_FOR       shift, and go to state 88
+    T_BREAK     shift, and go to state 89
+    T_CONTINUE  shift, and go to state 90
+    T_SWITCH    shift, and go to state 91
     T_INT       shift, and go to state 1
     T_VOID      shift, and go to state 2
     T_CHAR      shift, and go to state 3
@@ -1614,11 +1649,11 @@ State 93
     T_FLOAT     shift, and go to state 6
     T_DOUBLE    shift, and go to state 7
     T_SIGNED    shift, and go to state 8
-    T_RETURN    shift, and go to state 91
+    T_RETURN    shift, and go to state 92
 
-    TYPE         go to state 92
-    EXPR_ST      go to state 94
-    EXPR         go to state 95
+    TYPE         go to state 93
+    EXPR_ST      go to state 95
+    EXPR         go to state 96
     EXPR_ASSIGN  go to state 33
     EXPR_COND    go to state 34
     OR           go to state 35
@@ -1634,88 +1669,88 @@ State 93
     UNARY        go to state 45
     POSTFIX      go to state 46
     PRIMATIVE    go to state 47
-    STMT         go to state 141
-    JMP_ST       go to state 97
-    IF_ST        go to state 98
-    ITER_ST      go to state 99
-    NEW_SCOPE    go to state 100
-    DEC_ST       go to state 101
-
-
-State 94
-
-   72 STMT: EXPR_ST .
-
-    $default  reduce using rule 72 (STMT)
+    STMT         go to state 145
+    JMP_ST       go to state 98
+    IF_ST        go to state 99
+    ITER_ST      go to state 100
+    NEW_SCOPE    go to state 101
+    DEC_ST       go to state 102
 
 
 State 95
 
-   23 EXPR_ST: EXPR . T_SEMIC
+   79 STMT: EXPR_ST .
 
-    T_SEMIC  shift, and go to state 142
+    $default  reduce using rule 79 (STMT)
 
 
 State 96
+
+   23 EXPR_ST: EXPR . T_SEMIC
+
+    T_SEMIC  shift, and go to state 146
+
+
+State 97
 
    21 SCOPE: STMT .
 
     $default  reduce using rule 21 (SCOPE)
 
 
-State 97
-
-   71 STMT: JMP_ST .
-
-    $default  reduce using rule 71 (STMT)
-
-
 State 98
 
-   73 STMT: IF_ST .
+   78 STMT: JMP_ST .
 
-    $default  reduce using rule 73 (STMT)
+    $default  reduce using rule 78 (STMT)
 
 
 State 99
 
-   74 STMT: ITER_ST .
+   80 STMT: IF_ST .
 
-    $default  reduce using rule 74 (STMT)
+    $default  reduce using rule 80 (STMT)
 
 
 State 100
 
-   75 STMT: NEW_SCOPE .
+   81 STMT: ITER_ST .
 
-    $default  reduce using rule 75 (STMT)
+    $default  reduce using rule 81 (STMT)
 
 
 State 101
 
-   76 STMT: DEC_ST .
+   82 STMT: NEW_SCOPE .
 
-    $default  reduce using rule 76 (STMT)
+    $default  reduce using rule 82 (STMT)
 
 
 State 102
 
+   83 STMT: DEC_ST .
+
+    $default  reduce using rule 83 (STMT)
+
+
+State 103
+
     6 FUNDEC: TYPE T_VARIABLE T_LBRAC PARAM_LIST T_RBRAC T_LCURL . SCOPE T_RCURL
 
     T_LBRAC     shift, and go to state 27
-    T_LCURL     shift, and go to state 82
+    T_LCURL     shift, and go to state 83
     T_NUMBER    shift, and go to state 28
     T_VARIABLE  shift, and go to state 29
-    T_SEMIC     shift, and go to state 83
+    T_SEMIC     shift, and go to state 84
     T_INCREM    shift, and go to state 30
     T_DECREM    shift, and go to state 31
-    T_WHILE     shift, and go to state 84
-    T_DO        shift, and go to state 85
-    T_IF        shift, and go to state 86
-    T_FOR       shift, and go to state 87
-    T_BREAK     shift, and go to state 88
-    T_CONTINUE  shift, and go to state 89
-    T_SWITCH    shift, and go to state 90
+    T_WHILE     shift, and go to state 85
+    T_DO        shift, and go to state 86
+    T_IF        shift, and go to state 87
+    T_FOR       shift, and go to state 88
+    T_BREAK     shift, and go to state 89
+    T_CONTINUE  shift, and go to state 90
+    T_SWITCH    shift, and go to state 91
     T_INT       shift, and go to state 1
     T_VOID      shift, and go to state 2
     T_CHAR      shift, and go to state 3
@@ -1724,12 +1759,12 @@ State 102
     T_FLOAT     shift, and go to state 6
     T_DOUBLE    shift, and go to state 7
     T_SIGNED    shift, and go to state 8
-    T_RETURN    shift, and go to state 91
+    T_RETURN    shift, and go to state 92
 
-    TYPE         go to state 92
-    SCOPE        go to state 143
-    EXPR_ST      go to state 94
-    EXPR         go to state 95
+    TYPE         go to state 93
+    SCOPE        go to state 147
+    EXPR_ST      go to state 95
+    EXPR         go to state 96
     EXPR_ASSIGN  go to state 33
     EXPR_COND    go to state 34
     OR           go to state 35
@@ -1745,453 +1780,380 @@ State 102
     UNARY        go to state 45
     POSTFIX      go to state 46
     PRIMATIVE    go to state 47
-    STMT         go to state 96
-    JMP_ST       go to state 97
-    IF_ST        go to state 98
-    ITER_ST      go to state 99
-    NEW_SCOPE    go to state 100
-    DEC_ST       go to state 101
+    STMT         go to state 97
+    JMP_ST       go to state 98
+    IF_ST        go to state 99
+    ITER_ST      go to state 100
+    NEW_SCOPE    go to state 101
+    DEC_ST       go to state 102
 
 
-State 103
+State 104
 
     8 FUNDEC: TYPE T_VARIABLE T_LBRAC PARAM_LIST T_RBRAC T_SEMIC .
 
     $default  reduce using rule 8 (FUNDEC)
 
 
-State 104
+State 105
 
    18 PARAM_LIST: PARAM_LIST T_COMMA TYPE . T_VARIABLE
 
-    T_VARIABLE  shift, and go to state 144
-
-
-State 105
-
-   70 PRIMATIVE: T_LBRAC EXPR T_RBRAC .
-
-    $default  reduce using rule 70 (PRIMATIVE)
+    T_VARIABLE  shift, and go to state 148
 
 
 State 106
 
-   65 POSTFIX: T_VARIABLE T_LBRAC T_RBRAC .
+   77 PRIMATIVE: T_LBRAC EXPR T_RBRAC .
 
-    $default  reduce using rule 65 (POSTFIX)
+    $default  reduce using rule 77 (PRIMATIVE)
 
 
 State 107
 
-   67 CALL_PARAM: EXPR .
+   72 POSTFIX: T_VARIABLE T_LBRAC T_RBRAC .
 
-    $default  reduce using rule 67 (CALL_PARAM)
+    $default  reduce using rule 72 (POSTFIX)
 
 
 State 108
 
-   64 POSTFIX: T_VARIABLE T_LBRAC CALL_PARAM . T_RBRAC
-   66 CALL_PARAM: CALL_PARAM . T_COMMA EXPR
+   74 CALL_PARAM: EXPR .
 
-    T_RBRAC  shift, and go to state 145
-    T_COMMA  shift, and go to state 146
+    $default  reduce using rule 74 (CALL_PARAM)
 
 
 State 109
+
+   71 POSTFIX: T_VARIABLE T_LBRAC CALL_PARAM . T_RBRAC
+   73 CALL_PARAM: CALL_PARAM . T_COMMA EXPR
+
+    T_RBRAC  shift, and go to state 149
+    T_COMMA  shift, and go to state 150
+
+
+State 110
+
+   27 EXPR_ASSIGN: T_VARIABLE T_LSBRAC T_FLOAT . T_RSBRAC T_ASSIGN EXPR_ASSIGN
+   29            | T_VARIABLE T_LSBRAC T_FLOAT . T_RSBRAC T_ADDEQUAL EXPR_ASSIGN
+   31            | T_VARIABLE T_LSBRAC T_FLOAT . T_RSBRAC T_SUBEQUAL EXPR_ASSIGN
+   68 POSTFIX: T_VARIABLE T_LSBRAC T_FLOAT . T_RSBRAC T_INCREM
+   70        | T_VARIABLE T_LSBRAC T_FLOAT . T_RSBRAC T_DECREM
+
+    T_RSBRAC  shift, and go to state 151
+
+
+State 111
 
    26 EXPR_ASSIGN: T_VARIABLE T_ASSIGN EXPR_ASSIGN .
 
     $default  reduce using rule 26 (EXPR_ASSIGN)
 
 
-State 110
+State 112
 
-   27 EXPR_ASSIGN: T_VARIABLE T_ADDEQUAL EXPR_ASSIGN .
-
-    $default  reduce using rule 27 (EXPR_ASSIGN)
-
-
-State 111
-
-   28 EXPR_ASSIGN: T_VARIABLE T_SUBEQUAL EXPR_ASSIGN .
+   28 EXPR_ASSIGN: T_VARIABLE T_ADDEQUAL EXPR_ASSIGN .
 
     $default  reduce using rule 28 (EXPR_ASSIGN)
 
 
-State 112
-
-   62 POSTFIX: T_VARIABLE . T_INCREM
-   63        | T_VARIABLE . T_DECREM
-   64        | T_VARIABLE . T_LBRAC CALL_PARAM T_RBRAC
-   65        | T_VARIABLE . T_LBRAC T_RBRAC
-   68 PRIMATIVE: T_VARIABLE .
-
-    T_LBRAC   shift, and go to state 56
-    T_INCREM  shift, and go to state 60
-    T_DECREM  shift, and go to state 61
-
-    T_LBRAC   [reduce using rule 68 (PRIMATIVE)]
-    T_INCREM  [reduce using rule 68 (PRIMATIVE)]
-    T_DECREM  [reduce using rule 68 (PRIMATIVE)]
-    $default  reduce using rule 68 (PRIMATIVE)
-
-
 State 113
 
-   33 AND: AND T_AND BOR .
-   35 BOR: BOR . T_BOR BXOR
-   37 BXOR: BOR . T_BXOR BXOR
+   30 EXPR_ASSIGN: T_VARIABLE T_SUBEQUAL EXPR_ASSIGN .
 
-    T_BOR   shift, and go to state 66
-    T_BXOR  shift, and go to state 67
-
-    $default  reduce using rule 33 (AND)
+    $default  reduce using rule 30 (EXPR_ASSIGN)
 
 
 State 114
 
-   31 OR: AND T_OR BOR .
-   35 BOR: BOR . T_BOR BXOR
-   37 BXOR: BOR . T_BXOR BXOR
+   65 UNARY: T_INCREM T_VARIABLE T_LSBRAC . T_FLOAT T_RSBRAC
 
-    T_BOR   shift, and go to state 66
-    T_BXOR  shift, and go to state 67
-
-    $default  reduce using rule 31 (OR)
+    T_FLOAT  shift, and go to state 152
 
 
 State 115
 
-   35 BOR: BOR . T_BOR BXOR
-   37 BXOR: BOR . T_BXOR BXOR
+   63 UNARY: T_DECREM T_VARIABLE T_LSBRAC . T_FLOAT T_RSBRAC
 
-    T_BOR   shift, and go to state 66
-    T_BXOR  shift, and go to state 67
+    T_FLOAT  shift, and go to state 153
 
 
 State 116
 
-   34 BOR: BXOR .
-   35    | BOR T_BOR BXOR .
+   67 POSTFIX: T_VARIABLE . T_INCREM
+   68        | T_VARIABLE . T_LSBRAC T_FLOAT T_RSBRAC T_INCREM
+   69        | T_VARIABLE . T_DECREM
+   70        | T_VARIABLE . T_LSBRAC T_FLOAT T_RSBRAC T_DECREM
+   71        | T_VARIABLE . T_LBRAC CALL_PARAM T_RBRAC
+   72        | T_VARIABLE . T_LBRAC T_RBRAC
+   75 PRIMATIVE: T_VARIABLE .
 
-    T_BOR     reduce using rule 34 (BOR)
-    T_BOR     [reduce using rule 35 (BOR)]
-    T_BXOR    reduce using rule 34 (BOR)
-    T_BXOR    [reduce using rule 35 (BOR)]
-    $default  reduce using rule 35 (BOR)
+    T_LBRAC   shift, and go to state 56
+    T_LSBRAC  shift, and go to state 154
+    T_INCREM  shift, and go to state 61
+    T_DECREM  shift, and go to state 62
+
+    T_LBRAC   [reduce using rule 75 (PRIMATIVE)]
+    T_INCREM  [reduce using rule 75 (PRIMATIVE)]
+    T_DECREM  [reduce using rule 75 (PRIMATIVE)]
+    $default  reduce using rule 75 (PRIMATIVE)
 
 
 State 117
 
-   34 BOR: BXOR .
-   37 BXOR: BOR T_BXOR BXOR .
+   36 AND: AND T_AND BOR .
+   38 BOR: BOR . T_BOR BXOR
+   40 BXOR: BOR . T_BXOR BXOR
 
-    T_BOR     reduce using rule 34 (BOR)
-    T_BOR     [reduce using rule 37 (BXOR)]
-    T_BXOR    reduce using rule 34 (BOR)
-    T_BXOR    [reduce using rule 37 (BXOR)]
-    $default  reduce using rule 37 (BXOR)
+    T_BOR   shift, and go to state 67
+    T_BXOR  shift, and go to state 68
+
+    $default  reduce using rule 36 (AND)
 
 
 State 118
 
-   39 BAND: BAND T_BAND EQUAL .
-   41 EQUAL: EQUAL . T_EQUAL LESS
-   42      | EQUAL . T_NEQUAL LESS
+   34 OR: AND T_OR BOR .
+   38 BOR: BOR . T_BOR BXOR
+   40 BXOR: BOR . T_BXOR BXOR
 
-    T_EQUAL   shift, and go to state 69
-    T_NEQUAL  shift, and go to state 70
+    T_BOR   shift, and go to state 67
+    T_BXOR  shift, and go to state 68
 
-    $default  reduce using rule 39 (BAND)
+    $default  reduce using rule 34 (OR)
 
 
 State 119
 
-   41 EQUAL: EQUAL T_EQUAL LESS .
-   44 LESS: LESS . T_LT SHIFT
-   45     | LESS . T_GT SHIFT
-   46     | LESS . T_LEQUAL SHIFT
-   47     | LESS . T_GEQUAL SHIFT
+   38 BOR: BOR . T_BOR BXOR
+   40 BXOR: BOR . T_BXOR BXOR
 
-    T_GT      shift, and go to state 71
-    T_LT      shift, and go to state 72
-    T_LEQUAL  shift, and go to state 73
-    T_GEQUAL  shift, and go to state 74
-
-    $default  reduce using rule 41 (EQUAL)
+    T_BOR   shift, and go to state 67
+    T_BXOR  shift, and go to state 68
 
 
 State 120
 
-   42 EQUAL: EQUAL T_NEQUAL LESS .
-   44 LESS: LESS . T_LT SHIFT
-   45     | LESS . T_GT SHIFT
-   46     | LESS . T_LEQUAL SHIFT
-   47     | LESS . T_GEQUAL SHIFT
+   37 BOR: BXOR .
+   38    | BOR T_BOR BXOR .
 
-    T_GT      shift, and go to state 71
-    T_LT      shift, and go to state 72
-    T_LEQUAL  shift, and go to state 73
-    T_GEQUAL  shift, and go to state 74
-
-    $default  reduce using rule 42 (EQUAL)
+    T_BOR     reduce using rule 37 (BOR)
+    T_BOR     [reduce using rule 38 (BOR)]
+    T_BXOR    reduce using rule 37 (BOR)
+    T_BXOR    [reduce using rule 38 (BOR)]
+    $default  reduce using rule 38 (BOR)
 
 
 State 121
 
-   45 LESS: LESS T_GT SHIFT .
-   49 SHIFT: SHIFT . T_LSHIFT ADD
-   50      | SHIFT . T_RSHIFT ADD
+   37 BOR: BXOR .
+   40 BXOR: BOR T_BXOR BXOR .
 
-    T_LSHIFT  shift, and go to state 75
-    T_RSHIFT  shift, and go to state 76
-
-    $default  reduce using rule 45 (LESS)
+    T_BOR     reduce using rule 37 (BOR)
+    T_BOR     [reduce using rule 40 (BXOR)]
+    T_BXOR    reduce using rule 37 (BOR)
+    T_BXOR    [reduce using rule 40 (BXOR)]
+    $default  reduce using rule 40 (BXOR)
 
 
 State 122
 
-   44 LESS: LESS T_LT SHIFT .
-   49 SHIFT: SHIFT . T_LSHIFT ADD
-   50      | SHIFT . T_RSHIFT ADD
+   42 BAND: BAND T_BAND EQUAL .
+   44 EQUAL: EQUAL . T_EQUAL LESS
+   45      | EQUAL . T_NEQUAL LESS
 
-    T_LSHIFT  shift, and go to state 75
-    T_RSHIFT  shift, and go to state 76
+    T_EQUAL   shift, and go to state 70
+    T_NEQUAL  shift, and go to state 71
 
-    $default  reduce using rule 44 (LESS)
+    $default  reduce using rule 42 (BAND)
 
 
 State 123
 
-   46 LESS: LESS T_LEQUAL SHIFT .
-   49 SHIFT: SHIFT . T_LSHIFT ADD
-   50      | SHIFT . T_RSHIFT ADD
+   44 EQUAL: EQUAL T_EQUAL LESS .
+   47 LESS: LESS . T_LT SHIFT
+   48     | LESS . T_GT SHIFT
+   49     | LESS . T_LEQUAL SHIFT
+   50     | LESS . T_GEQUAL SHIFT
 
-    T_LSHIFT  shift, and go to state 75
-    T_RSHIFT  shift, and go to state 76
+    T_GT      shift, and go to state 72
+    T_LT      shift, and go to state 73
+    T_LEQUAL  shift, and go to state 74
+    T_GEQUAL  shift, and go to state 75
 
-    $default  reduce using rule 46 (LESS)
+    $default  reduce using rule 44 (EQUAL)
 
 
 State 124
 
-   47 LESS: LESS T_GEQUAL SHIFT .
-   49 SHIFT: SHIFT . T_LSHIFT ADD
-   50      | SHIFT . T_RSHIFT ADD
+   45 EQUAL: EQUAL T_NEQUAL LESS .
+   47 LESS: LESS . T_LT SHIFT
+   48     | LESS . T_GT SHIFT
+   49     | LESS . T_LEQUAL SHIFT
+   50     | LESS . T_GEQUAL SHIFT
 
-    T_LSHIFT  shift, and go to state 75
-    T_RSHIFT  shift, and go to state 76
+    T_GT      shift, and go to state 72
+    T_LT      shift, and go to state 73
+    T_LEQUAL  shift, and go to state 74
+    T_GEQUAL  shift, and go to state 75
 
-    $default  reduce using rule 47 (LESS)
+    $default  reduce using rule 45 (EQUAL)
 
 
 State 125
 
-   49 SHIFT: SHIFT T_LSHIFT ADD .
-   52 ADD: ADD . T_PLUS MUL
-   53    | ADD . T_MINUS MUL
+   48 LESS: LESS T_GT SHIFT .
+   52 SHIFT: SHIFT . T_LSHIFT ADD
+   53      | SHIFT . T_RSHIFT ADD
 
-    T_PLUS   shift, and go to state 77
-    T_MINUS  shift, and go to state 78
+    T_LSHIFT  shift, and go to state 76
+    T_RSHIFT  shift, and go to state 77
 
-    $default  reduce using rule 49 (SHIFT)
+    $default  reduce using rule 48 (LESS)
 
 
 State 126
 
-   50 SHIFT: SHIFT T_RSHIFT ADD .
-   52 ADD: ADD . T_PLUS MUL
-   53    | ADD . T_MINUS MUL
+   47 LESS: LESS T_LT SHIFT .
+   52 SHIFT: SHIFT . T_LSHIFT ADD
+   53      | SHIFT . T_RSHIFT ADD
 
-    T_PLUS   shift, and go to state 77
-    T_MINUS  shift, and go to state 78
+    T_LSHIFT  shift, and go to state 76
+    T_RSHIFT  shift, and go to state 77
 
-    $default  reduce using rule 50 (SHIFT)
+    $default  reduce using rule 47 (LESS)
 
 
 State 127
 
-   52 ADD: ADD T_PLUS MUL .
-   55 MUL: MUL . T_TIMES UNARY
-   56    | MUL . T_DIVIDE UNARY
-   57    | MUL . T_MOD UNARY
+   49 LESS: LESS T_LEQUAL SHIFT .
+   52 SHIFT: SHIFT . T_LSHIFT ADD
+   53      | SHIFT . T_RSHIFT ADD
 
-    T_TIMES   shift, and go to state 79
-    T_DIVIDE  shift, and go to state 80
-    T_MOD     shift, and go to state 81
+    T_LSHIFT  shift, and go to state 76
+    T_RSHIFT  shift, and go to state 77
 
-    $default  reduce using rule 52 (ADD)
+    $default  reduce using rule 49 (LESS)
 
 
 State 128
 
-   53 ADD: ADD T_MINUS MUL .
-   55 MUL: MUL . T_TIMES UNARY
-   56    | MUL . T_DIVIDE UNARY
-   57    | MUL . T_MOD UNARY
+   50 LESS: LESS T_GEQUAL SHIFT .
+   52 SHIFT: SHIFT . T_LSHIFT ADD
+   53      | SHIFT . T_RSHIFT ADD
 
-    T_TIMES   shift, and go to state 79
-    T_DIVIDE  shift, and go to state 80
-    T_MOD     shift, and go to state 81
+    T_LSHIFT  shift, and go to state 76
+    T_RSHIFT  shift, and go to state 77
 
-    $default  reduce using rule 53 (ADD)
+    $default  reduce using rule 50 (LESS)
 
 
 State 129
 
-   55 MUL: MUL T_TIMES UNARY .
+   52 SHIFT: SHIFT T_LSHIFT ADD .
+   55 ADD: ADD . T_PLUS MUL
+   56    | ADD . T_MINUS MUL
 
-    $default  reduce using rule 55 (MUL)
+    T_PLUS   shift, and go to state 78
+    T_MINUS  shift, and go to state 79
+
+    $default  reduce using rule 52 (SHIFT)
 
 
 State 130
 
-   56 MUL: MUL T_DIVIDE UNARY .
+   53 SHIFT: SHIFT T_RSHIFT ADD .
+   55 ADD: ADD . T_PLUS MUL
+   56    | ADD . T_MINUS MUL
 
-    $default  reduce using rule 56 (MUL)
+    T_PLUS   shift, and go to state 78
+    T_MINUS  shift, and go to state 79
+
+    $default  reduce using rule 53 (SHIFT)
 
 
 State 131
 
-   57 MUL: MUL T_MOD UNARY .
+   55 ADD: ADD T_PLUS MUL .
+   58 MUL: MUL . T_TIMES UNARY
+   59    | MUL . T_DIVIDE UNARY
+   60    | MUL . T_MOD UNARY
 
-    $default  reduce using rule 57 (MUL)
+    T_TIMES   shift, and go to state 80
+    T_DIVIDE  shift, and go to state 81
+    T_MOD     shift, and go to state 82
+
+    $default  reduce using rule 55 (ADD)
 
 
 State 132
 
-   20 SCOPE: SCOPE . STMT
-   88 NEW_SCOPE: T_LCURL SCOPE . T_RCURL
+   56 ADD: ADD T_MINUS MUL .
+   58 MUL: MUL . T_TIMES UNARY
+   59    | MUL . T_DIVIDE UNARY
+   60    | MUL . T_MOD UNARY
 
-    T_LBRAC     shift, and go to state 27
-    T_LCURL     shift, and go to state 82
-    T_RCURL     shift, and go to state 147
-    T_NUMBER    shift, and go to state 28
-    T_VARIABLE  shift, and go to state 29
-    T_SEMIC     shift, and go to state 83
-    T_INCREM    shift, and go to state 30
-    T_DECREM    shift, and go to state 31
-    T_WHILE     shift, and go to state 84
-    T_DO        shift, and go to state 85
-    T_IF        shift, and go to state 86
-    T_FOR       shift, and go to state 87
-    T_BREAK     shift, and go to state 88
-    T_CONTINUE  shift, and go to state 89
-    T_SWITCH    shift, and go to state 90
-    T_INT       shift, and go to state 1
-    T_VOID      shift, and go to state 2
-    T_CHAR      shift, and go to state 3
-    T_SHORT     shift, and go to state 4
-    T_LONG      shift, and go to state 5
-    T_FLOAT     shift, and go to state 6
-    T_DOUBLE    shift, and go to state 7
-    T_SIGNED    shift, and go to state 8
-    T_RETURN    shift, and go to state 91
+    T_TIMES   shift, and go to state 80
+    T_DIVIDE  shift, and go to state 81
+    T_MOD     shift, and go to state 82
 
-    TYPE         go to state 92
-    EXPR_ST      go to state 94
-    EXPR         go to state 95
-    EXPR_ASSIGN  go to state 33
-    EXPR_COND    go to state 34
-    OR           go to state 35
-    AND          go to state 36
-    BOR          go to state 37
-    BXOR         go to state 38
-    BAND         go to state 39
-    EQUAL        go to state 40
-    LESS         go to state 41
-    SHIFT        go to state 42
-    ADD          go to state 43
-    MUL          go to state 44
-    UNARY        go to state 45
-    POSTFIX      go to state 46
-    PRIMATIVE    go to state 47
-    STMT         go to state 141
-    JMP_ST       go to state 97
-    IF_ST        go to state 98
-    ITER_ST      go to state 99
-    NEW_SCOPE    go to state 100
-    DEC_ST       go to state 101
+    $default  reduce using rule 56 (ADD)
 
 
 State 133
 
-   84 ITER_ST: T_WHILE T_LBRAC . EXPR T_RBRAC STMT
+   58 MUL: MUL T_TIMES UNARY .
 
-    T_LBRAC     shift, and go to state 27
-    T_NUMBER    shift, and go to state 28
-    T_VARIABLE  shift, and go to state 29
-    T_INCREM    shift, and go to state 30
-    T_DECREM    shift, and go to state 31
-
-    EXPR         go to state 148
-    EXPR_ASSIGN  go to state 33
-    EXPR_COND    go to state 34
-    OR           go to state 35
-    AND          go to state 36
-    BOR          go to state 37
-    BXOR         go to state 38
-    BAND         go to state 39
-    EQUAL        go to state 40
-    LESS         go to state 41
-    SHIFT        go to state 42
-    ADD          go to state 43
-    MUL          go to state 44
-    UNARY        go to state 45
-    POSTFIX      go to state 46
-    PRIMATIVE    go to state 47
+    $default  reduce using rule 58 (MUL)
 
 
 State 134
 
-   85 ITER_ST: T_DO STMT . T_WHILE T_LBRAC EXPR T_RBRAC T_SEMIC
+   59 MUL: MUL T_DIVIDE UNARY .
 
-    T_WHILE  shift, and go to state 149
+    $default  reduce using rule 59 (MUL)
 
 
 State 135
 
-   81 IF_ST: T_IF T_LBRAC . EXPR T_RBRAC STMT
-   82      | T_IF T_LBRAC . EXPR T_RBRAC STMT T_ELSE STMT
+   60 MUL: MUL T_MOD UNARY .
 
-    T_LBRAC     shift, and go to state 27
-    T_NUMBER    shift, and go to state 28
-    T_VARIABLE  shift, and go to state 29
-    T_INCREM    shift, and go to state 30
-    T_DECREM    shift, and go to state 31
-
-    EXPR         go to state 150
-    EXPR_ASSIGN  go to state 33
-    EXPR_COND    go to state 34
-    OR           go to state 35
-    AND          go to state 36
-    BOR          go to state 37
-    BXOR         go to state 38
-    BAND         go to state 39
-    EQUAL        go to state 40
-    LESS         go to state 41
-    SHIFT        go to state 42
-    ADD          go to state 43
-    MUL          go to state 44
-    UNARY        go to state 45
-    POSTFIX      go to state 46
-    PRIMATIVE    go to state 47
+    $default  reduce using rule 60 (MUL)
 
 
 State 136
 
-   86 ITER_ST: T_FOR T_LBRAC . EXPR_ST EXPR_ST T_RBRAC STMT
-   87        | T_FOR T_LBRAC . EXPR_ST EXPR_ST EXPR T_RBRAC STMT
+   20 SCOPE: SCOPE . STMT
+   95 NEW_SCOPE: T_LCURL SCOPE . T_RCURL
 
     T_LBRAC     shift, and go to state 27
+    T_LCURL     shift, and go to state 83
+    T_RCURL     shift, and go to state 155
     T_NUMBER    shift, and go to state 28
     T_VARIABLE  shift, and go to state 29
-    T_SEMIC     shift, and go to state 83
+    T_SEMIC     shift, and go to state 84
     T_INCREM    shift, and go to state 30
     T_DECREM    shift, and go to state 31
+    T_WHILE     shift, and go to state 85
+    T_DO        shift, and go to state 86
+    T_IF        shift, and go to state 87
+    T_FOR       shift, and go to state 88
+    T_BREAK     shift, and go to state 89
+    T_CONTINUE  shift, and go to state 90
+    T_SWITCH    shift, and go to state 91
+    T_INT       shift, and go to state 1
+    T_VOID      shift, and go to state 2
+    T_CHAR      shift, and go to state 3
+    T_SHORT     shift, and go to state 4
+    T_LONG      shift, and go to state 5
+    T_FLOAT     shift, and go to state 6
+    T_DOUBLE    shift, and go to state 7
+    T_SIGNED    shift, and go to state 8
+    T_RETURN    shift, and go to state 92
 
-    EXPR_ST      go to state 151
-    EXPR         go to state 95
+    TYPE         go to state 93
+    EXPR_ST      go to state 95
+    EXPR         go to state 96
     EXPR_ASSIGN  go to state 33
     EXPR_COND    go to state 34
     OR           go to state 35
@@ -2207,39 +2169,25 @@ State 136
     UNARY        go to state 45
     POSTFIX      go to state 46
     PRIMATIVE    go to state 47
+    STMT         go to state 145
+    JMP_ST       go to state 98
+    IF_ST        go to state 99
+    ITER_ST      go to state 100
+    NEW_SCOPE    go to state 101
+    DEC_ST       go to state 102
 
 
 State 137
 
-   83 IF_ST: T_SWITCH EXPR . STMT
+   91 ITER_ST: T_WHILE T_LBRAC . EXPR T_RBRAC STMT
 
     T_LBRAC     shift, and go to state 27
-    T_LCURL     shift, and go to state 82
     T_NUMBER    shift, and go to state 28
     T_VARIABLE  shift, and go to state 29
-    T_SEMIC     shift, and go to state 83
     T_INCREM    shift, and go to state 30
     T_DECREM    shift, and go to state 31
-    T_WHILE     shift, and go to state 84
-    T_DO        shift, and go to state 85
-    T_IF        shift, and go to state 86
-    T_FOR       shift, and go to state 87
-    T_BREAK     shift, and go to state 88
-    T_CONTINUE  shift, and go to state 89
-    T_SWITCH    shift, and go to state 90
-    T_INT       shift, and go to state 1
-    T_VOID      shift, and go to state 2
-    T_CHAR      shift, and go to state 3
-    T_SHORT     shift, and go to state 4
-    T_LONG      shift, and go to state 5
-    T_FLOAT     shift, and go to state 6
-    T_DOUBLE    shift, and go to state 7
-    T_SIGNED    shift, and go to state 8
-    T_RETURN    shift, and go to state 91
 
-    TYPE         go to state 92
-    EXPR_ST      go to state 94
-    EXPR         go to state 95
+    EXPR         go to state 156
     EXPR_ASSIGN  go to state 33
     EXPR_COND    go to state 34
     OR           go to state 35
@@ -2255,190 +2203,58 @@ State 137
     UNARY        go to state 45
     POSTFIX      go to state 46
     PRIMATIVE    go to state 47
-    STMT         go to state 152
-    JMP_ST       go to state 97
-    IF_ST        go to state 98
-    ITER_ST      go to state 99
-    NEW_SCOPE    go to state 100
-    DEC_ST       go to state 101
 
 
 State 138
 
-   77 JMP_ST: T_RETURN T_SEMIC .
+   92 ITER_ST: T_DO STMT . T_WHILE T_LBRAC EXPR T_RBRAC T_SEMIC
 
-    $default  reduce using rule 77 (JMP_ST)
+    T_WHILE  shift, and go to state 157
 
 
 State 139
 
-   78 JMP_ST: T_RETURN EXPR . T_SEMIC
+   88 IF_ST: T_IF T_LBRAC . EXPR T_RBRAC STMT
+   89      | T_IF T_LBRAC . EXPR T_RBRAC STMT T_ELSE STMT
 
-    T_SEMIC  shift, and go to state 153
+    T_LBRAC     shift, and go to state 27
+    T_NUMBER    shift, and go to state 28
+    T_VARIABLE  shift, and go to state 29
+    T_INCREM    shift, and go to state 30
+    T_DECREM    shift, and go to state 31
+
+    EXPR         go to state 158
+    EXPR_ASSIGN  go to state 33
+    EXPR_COND    go to state 34
+    OR           go to state 35
+    AND          go to state 36
+    BOR          go to state 37
+    BXOR         go to state 38
+    BAND         go to state 39
+    EQUAL        go to state 40
+    LESS         go to state 41
+    SHIFT        go to state 42
+    ADD          go to state 43
+    MUL          go to state 44
+    UNARY        go to state 45
+    POSTFIX      go to state 46
+    PRIMATIVE    go to state 47
 
 
 State 140
 
-    7 FUNDEC: TYPE T_VARIABLE T_LBRAC T_RBRAC T_LCURL SCOPE T_RCURL .
-
-    $default  reduce using rule 7 (FUNDEC)
-
-
-State 141
-
-   20 SCOPE: SCOPE STMT .
-
-    $default  reduce using rule 20 (SCOPE)
-
-
-State 142
-
-   23 EXPR_ST: EXPR T_SEMIC .
-
-    $default  reduce using rule 23 (EXPR_ST)
-
-
-State 143
-
-    6 FUNDEC: TYPE T_VARIABLE T_LBRAC PARAM_LIST T_RBRAC T_LCURL SCOPE . T_RCURL
-   20 SCOPE: SCOPE . STMT
-
-    T_LBRAC     shift, and go to state 27
-    T_LCURL     shift, and go to state 82
-    T_RCURL     shift, and go to state 154
-    T_NUMBER    shift, and go to state 28
-    T_VARIABLE  shift, and go to state 29
-    T_SEMIC     shift, and go to state 83
-    T_INCREM    shift, and go to state 30
-    T_DECREM    shift, and go to state 31
-    T_WHILE     shift, and go to state 84
-    T_DO        shift, and go to state 85
-    T_IF        shift, and go to state 86
-    T_FOR       shift, and go to state 87
-    T_BREAK     shift, and go to state 88
-    T_CONTINUE  shift, and go to state 89
-    T_SWITCH    shift, and go to state 90
-    T_INT       shift, and go to state 1
-    T_VOID      shift, and go to state 2
-    T_CHAR      shift, and go to state 3
-    T_SHORT     shift, and go to state 4
-    T_LONG      shift, and go to state 5
-    T_FLOAT     shift, and go to state 6
-    T_DOUBLE    shift, and go to state 7
-    T_SIGNED    shift, and go to state 8
-    T_RETURN    shift, and go to state 91
-
-    TYPE         go to state 92
-    EXPR_ST      go to state 94
-    EXPR         go to state 95
-    EXPR_ASSIGN  go to state 33
-    EXPR_COND    go to state 34
-    OR           go to state 35
-    AND          go to state 36
-    BOR          go to state 37
-    BXOR         go to state 38
-    BAND         go to state 39
-    EQUAL        go to state 40
-    LESS         go to state 41
-    SHIFT        go to state 42
-    ADD          go to state 43
-    MUL          go to state 44
-    UNARY        go to state 45
-    POSTFIX      go to state 46
-    PRIMATIVE    go to state 47
-    STMT         go to state 141
-    JMP_ST       go to state 97
-    IF_ST        go to state 98
-    ITER_ST      go to state 99
-    NEW_SCOPE    go to state 100
-    DEC_ST       go to state 101
-
-
-State 144
-
-   18 PARAM_LIST: PARAM_LIST T_COMMA TYPE T_VARIABLE .
-
-    $default  reduce using rule 18 (PARAM_LIST)
-
-
-State 145
-
-   64 POSTFIX: T_VARIABLE T_LBRAC CALL_PARAM T_RBRAC .
-
-    $default  reduce using rule 64 (POSTFIX)
-
-
-State 146
-
-   66 CALL_PARAM: CALL_PARAM T_COMMA . EXPR
+   93 ITER_ST: T_FOR T_LBRAC . EXPR_ST EXPR_ST T_RBRAC STMT
+   94        | T_FOR T_LBRAC . EXPR_ST EXPR_ST EXPR T_RBRAC STMT
 
     T_LBRAC     shift, and go to state 27
     T_NUMBER    shift, and go to state 28
     T_VARIABLE  shift, and go to state 29
-    T_INCREM    shift, and go to state 30
-    T_DECREM    shift, and go to state 31
-
-    EXPR         go to state 155
-    EXPR_ASSIGN  go to state 33
-    EXPR_COND    go to state 34
-    OR           go to state 35
-    AND          go to state 36
-    BOR          go to state 37
-    BXOR         go to state 38
-    BAND         go to state 39
-    EQUAL        go to state 40
-    LESS         go to state 41
-    SHIFT        go to state 42
-    ADD          go to state 43
-    MUL          go to state 44
-    UNARY        go to state 45
-    POSTFIX      go to state 46
-    PRIMATIVE    go to state 47
-
-
-State 147
-
-   88 NEW_SCOPE: T_LCURL SCOPE T_RCURL .
-
-    $default  reduce using rule 88 (NEW_SCOPE)
-
-
-State 148
-
-   84 ITER_ST: T_WHILE T_LBRAC EXPR . T_RBRAC STMT
-
-    T_RBRAC  shift, and go to state 156
-
-
-State 149
-
-   85 ITER_ST: T_DO STMT T_WHILE . T_LBRAC EXPR T_RBRAC T_SEMIC
-
-    T_LBRAC  shift, and go to state 157
-
-
-State 150
-
-   81 IF_ST: T_IF T_LBRAC EXPR . T_RBRAC STMT
-   82      | T_IF T_LBRAC EXPR . T_RBRAC STMT T_ELSE STMT
-
-    T_RBRAC  shift, and go to state 158
-
-
-State 151
-
-   86 ITER_ST: T_FOR T_LBRAC EXPR_ST . EXPR_ST T_RBRAC STMT
-   87        | T_FOR T_LBRAC EXPR_ST . EXPR_ST EXPR T_RBRAC STMT
-
-    T_LBRAC     shift, and go to state 27
-    T_NUMBER    shift, and go to state 28
-    T_VARIABLE  shift, and go to state 29
-    T_SEMIC     shift, and go to state 83
+    T_SEMIC     shift, and go to state 84
     T_INCREM    shift, and go to state 30
     T_DECREM    shift, and go to state 31
 
     EXPR_ST      go to state 159
-    EXPR         go to state 95
+    EXPR         go to state 96
     EXPR_ASSIGN  go to state 33
     EXPR_COND    go to state 34
     OR           go to state 35
@@ -2456,52 +2272,24 @@ State 151
     PRIMATIVE    go to state 47
 
 
-State 152
+State 141
 
-   83 IF_ST: T_SWITCH EXPR STMT .
-
-    $default  reduce using rule 83 (IF_ST)
-
-
-State 153
-
-   78 JMP_ST: T_RETURN EXPR T_SEMIC .
-
-    $default  reduce using rule 78 (JMP_ST)
-
-
-State 154
-
-    6 FUNDEC: TYPE T_VARIABLE T_LBRAC PARAM_LIST T_RBRAC T_LCURL SCOPE T_RCURL .
-
-    $default  reduce using rule 6 (FUNDEC)
-
-
-State 155
-
-   66 CALL_PARAM: CALL_PARAM T_COMMA EXPR .
-
-    $default  reduce using rule 66 (CALL_PARAM)
-
-
-State 156
-
-   84 ITER_ST: T_WHILE T_LBRAC EXPR T_RBRAC . STMT
+   90 IF_ST: T_SWITCH EXPR . STMT
 
     T_LBRAC     shift, and go to state 27
-    T_LCURL     shift, and go to state 82
+    T_LCURL     shift, and go to state 83
     T_NUMBER    shift, and go to state 28
     T_VARIABLE  shift, and go to state 29
-    T_SEMIC     shift, and go to state 83
+    T_SEMIC     shift, and go to state 84
     T_INCREM    shift, and go to state 30
     T_DECREM    shift, and go to state 31
-    T_WHILE     shift, and go to state 84
-    T_DO        shift, and go to state 85
-    T_IF        shift, and go to state 86
-    T_FOR       shift, and go to state 87
-    T_BREAK     shift, and go to state 88
-    T_CONTINUE  shift, and go to state 89
-    T_SWITCH    shift, and go to state 90
+    T_WHILE     shift, and go to state 85
+    T_DO        shift, and go to state 86
+    T_IF        shift, and go to state 87
+    T_FOR       shift, and go to state 88
+    T_BREAK     shift, and go to state 89
+    T_CONTINUE  shift, and go to state 90
+    T_SWITCH    shift, and go to state 91
     T_INT       shift, and go to state 1
     T_VOID      shift, and go to state 2
     T_CHAR      shift, and go to state 3
@@ -2510,11 +2298,11 @@ State 156
     T_FLOAT     shift, and go to state 6
     T_DOUBLE    shift, and go to state 7
     T_SIGNED    shift, and go to state 8
-    T_RETURN    shift, and go to state 91
+    T_RETURN    shift, and go to state 92
 
-    TYPE         go to state 92
-    EXPR_ST      go to state 94
-    EXPR         go to state 95
+    TYPE         go to state 93
+    EXPR_ST      go to state 95
+    EXPR         go to state 96
     EXPR_ASSIGN  go to state 33
     EXPR_COND    go to state 34
     OR           go to state 35
@@ -2531,60 +2319,68 @@ State 156
     POSTFIX      go to state 46
     PRIMATIVE    go to state 47
     STMT         go to state 160
-    JMP_ST       go to state 97
-    IF_ST        go to state 98
-    ITER_ST      go to state 99
-    NEW_SCOPE    go to state 100
-    DEC_ST       go to state 101
+    JMP_ST       go to state 98
+    IF_ST        go to state 99
+    ITER_ST      go to state 100
+    NEW_SCOPE    go to state 101
+    DEC_ST       go to state 102
 
 
-State 157
+State 142
 
-   85 ITER_ST: T_DO STMT T_WHILE T_LBRAC . EXPR T_RBRAC T_SEMIC
+   84 JMP_ST: T_RETURN T_SEMIC .
+
+    $default  reduce using rule 84 (JMP_ST)
+
+
+State 143
+
+   85 JMP_ST: T_RETURN EXPR . T_SEMIC
+
+    T_SEMIC  shift, and go to state 161
+
+
+State 144
+
+    7 FUNDEC: TYPE T_VARIABLE T_LBRAC T_RBRAC T_LCURL SCOPE T_RCURL .
+
+    $default  reduce using rule 7 (FUNDEC)
+
+
+State 145
+
+   20 SCOPE: SCOPE STMT .
+
+    $default  reduce using rule 20 (SCOPE)
+
+
+State 146
+
+   23 EXPR_ST: EXPR T_SEMIC .
+
+    $default  reduce using rule 23 (EXPR_ST)
+
+
+State 147
+
+    6 FUNDEC: TYPE T_VARIABLE T_LBRAC PARAM_LIST T_RBRAC T_LCURL SCOPE . T_RCURL
+   20 SCOPE: SCOPE . STMT
 
     T_LBRAC     shift, and go to state 27
+    T_LCURL     shift, and go to state 83
+    T_RCURL     shift, and go to state 162
     T_NUMBER    shift, and go to state 28
     T_VARIABLE  shift, and go to state 29
+    T_SEMIC     shift, and go to state 84
     T_INCREM    shift, and go to state 30
     T_DECREM    shift, and go to state 31
-
-    EXPR         go to state 161
-    EXPR_ASSIGN  go to state 33
-    EXPR_COND    go to state 34
-    OR           go to state 35
-    AND          go to state 36
-    BOR          go to state 37
-    BXOR         go to state 38
-    BAND         go to state 39
-    EQUAL        go to state 40
-    LESS         go to state 41
-    SHIFT        go to state 42
-    ADD          go to state 43
-    MUL          go to state 44
-    UNARY        go to state 45
-    POSTFIX      go to state 46
-    PRIMATIVE    go to state 47
-
-
-State 158
-
-   81 IF_ST: T_IF T_LBRAC EXPR T_RBRAC . STMT
-   82      | T_IF T_LBRAC EXPR T_RBRAC . STMT T_ELSE STMT
-
-    T_LBRAC     shift, and go to state 27
-    T_LCURL     shift, and go to state 82
-    T_NUMBER    shift, and go to state 28
-    T_VARIABLE  shift, and go to state 29
-    T_SEMIC     shift, and go to state 83
-    T_INCREM    shift, and go to state 30
-    T_DECREM    shift, and go to state 31
-    T_WHILE     shift, and go to state 84
-    T_DO        shift, and go to state 85
-    T_IF        shift, and go to state 86
-    T_FOR       shift, and go to state 87
-    T_BREAK     shift, and go to state 88
-    T_CONTINUE  shift, and go to state 89
-    T_SWITCH    shift, and go to state 90
+    T_WHILE     shift, and go to state 85
+    T_DO        shift, and go to state 86
+    T_IF        shift, and go to state 87
+    T_FOR       shift, and go to state 88
+    T_BREAK     shift, and go to state 89
+    T_CONTINUE  shift, and go to state 90
+    T_SWITCH    shift, and go to state 91
     T_INT       shift, and go to state 1
     T_VOID      shift, and go to state 2
     T_CHAR      shift, and go to state 3
@@ -2593,11 +2389,11 @@ State 158
     T_FLOAT     shift, and go to state 6
     T_DOUBLE    shift, and go to state 7
     T_SIGNED    shift, and go to state 8
-    T_RETURN    shift, and go to state 91
+    T_RETURN    shift, and go to state 92
 
-    TYPE         go to state 92
-    EXPR_ST      go to state 94
-    EXPR         go to state 95
+    TYPE         go to state 93
+    EXPR_ST      go to state 95
+    EXPR         go to state 96
     EXPR_ASSIGN  go to state 33
     EXPR_COND    go to state 34
     OR           go to state 35
@@ -2613,27 +2409,136 @@ State 158
     UNARY        go to state 45
     POSTFIX      go to state 46
     PRIMATIVE    go to state 47
-    STMT         go to state 162
-    JMP_ST       go to state 97
-    IF_ST        go to state 98
-    ITER_ST      go to state 99
-    NEW_SCOPE    go to state 100
-    DEC_ST       go to state 101
+    STMT         go to state 145
+    JMP_ST       go to state 98
+    IF_ST        go to state 99
+    ITER_ST      go to state 100
+    NEW_SCOPE    go to state 101
+    DEC_ST       go to state 102
 
 
-State 159
+State 148
 
-   86 ITER_ST: T_FOR T_LBRAC EXPR_ST EXPR_ST . T_RBRAC STMT
-   87        | T_FOR T_LBRAC EXPR_ST EXPR_ST . EXPR T_RBRAC STMT
+   18 PARAM_LIST: PARAM_LIST T_COMMA TYPE T_VARIABLE .
+
+    $default  reduce using rule 18 (PARAM_LIST)
+
+
+State 149
+
+   71 POSTFIX: T_VARIABLE T_LBRAC CALL_PARAM T_RBRAC .
+
+    $default  reduce using rule 71 (POSTFIX)
+
+
+State 150
+
+   73 CALL_PARAM: CALL_PARAM T_COMMA . EXPR
 
     T_LBRAC     shift, and go to state 27
-    T_RBRAC     shift, and go to state 163
     T_NUMBER    shift, and go to state 28
     T_VARIABLE  shift, and go to state 29
     T_INCREM    shift, and go to state 30
     T_DECREM    shift, and go to state 31
 
-    EXPR         go to state 164
+    EXPR         go to state 163
+    EXPR_ASSIGN  go to state 33
+    EXPR_COND    go to state 34
+    OR           go to state 35
+    AND          go to state 36
+    BOR          go to state 37
+    BXOR         go to state 38
+    BAND         go to state 39
+    EQUAL        go to state 40
+    LESS         go to state 41
+    SHIFT        go to state 42
+    ADD          go to state 43
+    MUL          go to state 44
+    UNARY        go to state 45
+    POSTFIX      go to state 46
+    PRIMATIVE    go to state 47
+
+
+State 151
+
+   27 EXPR_ASSIGN: T_VARIABLE T_LSBRAC T_FLOAT T_RSBRAC . T_ASSIGN EXPR_ASSIGN
+   29            | T_VARIABLE T_LSBRAC T_FLOAT T_RSBRAC . T_ADDEQUAL EXPR_ASSIGN
+   31            | T_VARIABLE T_LSBRAC T_FLOAT T_RSBRAC . T_SUBEQUAL EXPR_ASSIGN
+   68 POSTFIX: T_VARIABLE T_LSBRAC T_FLOAT T_RSBRAC . T_INCREM
+   70        | T_VARIABLE T_LSBRAC T_FLOAT T_RSBRAC . T_DECREM
+
+    T_ASSIGN    shift, and go to state 164
+    T_ADDEQUAL  shift, and go to state 165
+    T_SUBEQUAL  shift, and go to state 166
+    T_INCREM    shift, and go to state 167
+    T_DECREM    shift, and go to state 168
+
+
+State 152
+
+   65 UNARY: T_INCREM T_VARIABLE T_LSBRAC T_FLOAT . T_RSBRAC
+
+    T_RSBRAC  shift, and go to state 169
+
+
+State 153
+
+   63 UNARY: T_DECREM T_VARIABLE T_LSBRAC T_FLOAT . T_RSBRAC
+
+    T_RSBRAC  shift, and go to state 170
+
+
+State 154
+
+   68 POSTFIX: T_VARIABLE T_LSBRAC . T_FLOAT T_RSBRAC T_INCREM
+   70        | T_VARIABLE T_LSBRAC . T_FLOAT T_RSBRAC T_DECREM
+
+    T_FLOAT  shift, and go to state 171
+
+
+State 155
+
+   95 NEW_SCOPE: T_LCURL SCOPE T_RCURL .
+
+    $default  reduce using rule 95 (NEW_SCOPE)
+
+
+State 156
+
+   91 ITER_ST: T_WHILE T_LBRAC EXPR . T_RBRAC STMT
+
+    T_RBRAC  shift, and go to state 172
+
+
+State 157
+
+   92 ITER_ST: T_DO STMT T_WHILE . T_LBRAC EXPR T_RBRAC T_SEMIC
+
+    T_LBRAC  shift, and go to state 173
+
+
+State 158
+
+   88 IF_ST: T_IF T_LBRAC EXPR . T_RBRAC STMT
+   89      | T_IF T_LBRAC EXPR . T_RBRAC STMT T_ELSE STMT
+
+    T_RBRAC  shift, and go to state 174
+
+
+State 159
+
+   93 ITER_ST: T_FOR T_LBRAC EXPR_ST . EXPR_ST T_RBRAC STMT
+   94        | T_FOR T_LBRAC EXPR_ST . EXPR_ST EXPR T_RBRAC STMT
+
+    T_LBRAC     shift, and go to state 27
+    T_NUMBER    shift, and go to state 28
+    T_VARIABLE  shift, and go to state 29
+    T_SEMIC     shift, and go to state 84
+    T_INCREM    shift, and go to state 30
+    T_DECREM    shift, and go to state 31
+
+    EXPR_ST      go to state 175
+    EXPR         go to state 96
     EXPR_ASSIGN  go to state 33
     EXPR_COND    go to state 34
     OR           go to state 35
@@ -2653,129 +2558,97 @@ State 159
 
 State 160
 
-   84 ITER_ST: T_WHILE T_LBRAC EXPR T_RBRAC STMT .
+   90 IF_ST: T_SWITCH EXPR STMT .
 
-    $default  reduce using rule 84 (ITER_ST)
+    $default  reduce using rule 90 (IF_ST)
 
 
 State 161
 
-   85 ITER_ST: T_DO STMT T_WHILE T_LBRAC EXPR . T_RBRAC T_SEMIC
+   85 JMP_ST: T_RETURN EXPR T_SEMIC .
 
-    T_RBRAC  shift, and go to state 165
+    $default  reduce using rule 85 (JMP_ST)
 
 
 State 162
 
-   81 IF_ST: T_IF T_LBRAC EXPR T_RBRAC STMT .
-   82      | T_IF T_LBRAC EXPR T_RBRAC STMT . T_ELSE STMT
+    6 FUNDEC: TYPE T_VARIABLE T_LBRAC PARAM_LIST T_RBRAC T_LCURL SCOPE T_RCURL .
 
-    T_ELSE  shift, and go to state 166
-
-    T_ELSE    [reduce using rule 81 (IF_ST)]
-    $default  reduce using rule 81 (IF_ST)
+    $default  reduce using rule 6 (FUNDEC)
 
 
 State 163
 
-   86 ITER_ST: T_FOR T_LBRAC EXPR_ST EXPR_ST T_RBRAC . STMT
+   73 CALL_PARAM: CALL_PARAM T_COMMA EXPR .
 
-    T_LBRAC     shift, and go to state 27
-    T_LCURL     shift, and go to state 82
-    T_NUMBER    shift, and go to state 28
-    T_VARIABLE  shift, and go to state 29
-    T_SEMIC     shift, and go to state 83
-    T_INCREM    shift, and go to state 30
-    T_DECREM    shift, and go to state 31
-    T_WHILE     shift, and go to state 84
-    T_DO        shift, and go to state 85
-    T_IF        shift, and go to state 86
-    T_FOR       shift, and go to state 87
-    T_BREAK     shift, and go to state 88
-    T_CONTINUE  shift, and go to state 89
-    T_SWITCH    shift, and go to state 90
-    T_INT       shift, and go to state 1
-    T_VOID      shift, and go to state 2
-    T_CHAR      shift, and go to state 3
-    T_SHORT     shift, and go to state 4
-    T_LONG      shift, and go to state 5
-    T_FLOAT     shift, and go to state 6
-    T_DOUBLE    shift, and go to state 7
-    T_SIGNED    shift, and go to state 8
-    T_RETURN    shift, and go to state 91
-
-    TYPE         go to state 92
-    EXPR_ST      go to state 94
-    EXPR         go to state 95
-    EXPR_ASSIGN  go to state 33
-    EXPR_COND    go to state 34
-    OR           go to state 35
-    AND          go to state 36
-    BOR          go to state 37
-    BXOR         go to state 38
-    BAND         go to state 39
-    EQUAL        go to state 40
-    LESS         go to state 41
-    SHIFT        go to state 42
-    ADD          go to state 43
-    MUL          go to state 44
-    UNARY        go to state 45
-    POSTFIX      go to state 46
-    PRIMATIVE    go to state 47
-    STMT         go to state 167
-    JMP_ST       go to state 97
-    IF_ST        go to state 98
-    ITER_ST      go to state 99
-    NEW_SCOPE    go to state 100
-    DEC_ST       go to state 101
+    $default  reduce using rule 73 (CALL_PARAM)
 
 
 State 164
 
-   87 ITER_ST: T_FOR T_LBRAC EXPR_ST EXPR_ST EXPR . T_RBRAC STMT
+   27 EXPR_ASSIGN: T_VARIABLE T_LSBRAC T_FLOAT T_RSBRAC T_ASSIGN . EXPR_ASSIGN
 
-    T_RBRAC  shift, and go to state 168
+    T_LBRAC     shift, and go to state 27
+    T_NUMBER    shift, and go to state 28
+    T_VARIABLE  shift, and go to state 29
+    T_INCREM    shift, and go to state 30
+    T_DECREM    shift, and go to state 31
+
+    EXPR_ASSIGN  go to state 176
+    EXPR_COND    go to state 34
+    OR           go to state 35
+    AND          go to state 36
+    BOR          go to state 37
+    BXOR         go to state 38
+    BAND         go to state 39
+    EQUAL        go to state 40
+    LESS         go to state 41
+    SHIFT        go to state 42
+    ADD          go to state 43
+    MUL          go to state 44
+    UNARY        go to state 45
+    POSTFIX      go to state 46
+    PRIMATIVE    go to state 47
 
 
 State 165
 
-   85 ITER_ST: T_DO STMT T_WHILE T_LBRAC EXPR T_RBRAC . T_SEMIC
+   29 EXPR_ASSIGN: T_VARIABLE T_LSBRAC T_FLOAT T_RSBRAC T_ADDEQUAL . EXPR_ASSIGN
 
-    T_SEMIC  shift, and go to state 169
+    T_LBRAC     shift, and go to state 27
+    T_NUMBER    shift, and go to state 28
+    T_VARIABLE  shift, and go to state 29
+    T_INCREM    shift, and go to state 30
+    T_DECREM    shift, and go to state 31
+
+    EXPR_ASSIGN  go to state 177
+    EXPR_COND    go to state 34
+    OR           go to state 35
+    AND          go to state 36
+    BOR          go to state 37
+    BXOR         go to state 38
+    BAND         go to state 39
+    EQUAL        go to state 40
+    LESS         go to state 41
+    SHIFT        go to state 42
+    ADD          go to state 43
+    MUL          go to state 44
+    UNARY        go to state 45
+    POSTFIX      go to state 46
+    PRIMATIVE    go to state 47
 
 
 State 166
 
-   82 IF_ST: T_IF T_LBRAC EXPR T_RBRAC STMT T_ELSE . STMT
+   31 EXPR_ASSIGN: T_VARIABLE T_LSBRAC T_FLOAT T_RSBRAC T_SUBEQUAL . EXPR_ASSIGN
 
     T_LBRAC     shift, and go to state 27
-    T_LCURL     shift, and go to state 82
     T_NUMBER    shift, and go to state 28
     T_VARIABLE  shift, and go to state 29
-    T_SEMIC     shift, and go to state 83
     T_INCREM    shift, and go to state 30
     T_DECREM    shift, and go to state 31
-    T_WHILE     shift, and go to state 84
-    T_DO        shift, and go to state 85
-    T_IF        shift, and go to state 86
-    T_FOR       shift, and go to state 87
-    T_BREAK     shift, and go to state 88
-    T_CONTINUE  shift, and go to state 89
-    T_SWITCH    shift, and go to state 90
-    T_INT       shift, and go to state 1
-    T_VOID      shift, and go to state 2
-    T_CHAR      shift, and go to state 3
-    T_SHORT     shift, and go to state 4
-    T_LONG      shift, and go to state 5
-    T_FLOAT     shift, and go to state 6
-    T_DOUBLE    shift, and go to state 7
-    T_SIGNED    shift, and go to state 8
-    T_RETURN    shift, and go to state 91
 
-    TYPE         go to state 92
-    EXPR_ST      go to state 94
-    EXPR         go to state 95
-    EXPR_ASSIGN  go to state 33
+    EXPR_ASSIGN  go to state 178
     EXPR_COND    go to state 34
     OR           go to state 35
     AND          go to state 36
@@ -2790,39 +2663,62 @@ State 166
     UNARY        go to state 45
     POSTFIX      go to state 46
     PRIMATIVE    go to state 47
-    STMT         go to state 170
-    JMP_ST       go to state 97
-    IF_ST        go to state 98
-    ITER_ST      go to state 99
-    NEW_SCOPE    go to state 100
-    DEC_ST       go to state 101
 
 
 State 167
 
-   86 ITER_ST: T_FOR T_LBRAC EXPR_ST EXPR_ST T_RBRAC STMT .
+   68 POSTFIX: T_VARIABLE T_LSBRAC T_FLOAT T_RSBRAC T_INCREM .
 
-    $default  reduce using rule 86 (ITER_ST)
+    $default  reduce using rule 68 (POSTFIX)
 
 
 State 168
 
-   87 ITER_ST: T_FOR T_LBRAC EXPR_ST EXPR_ST EXPR T_RBRAC . STMT
+   70 POSTFIX: T_VARIABLE T_LSBRAC T_FLOAT T_RSBRAC T_DECREM .
+
+    $default  reduce using rule 70 (POSTFIX)
+
+
+State 169
+
+   65 UNARY: T_INCREM T_VARIABLE T_LSBRAC T_FLOAT T_RSBRAC .
+
+    $default  reduce using rule 65 (UNARY)
+
+
+State 170
+
+   63 UNARY: T_DECREM T_VARIABLE T_LSBRAC T_FLOAT T_RSBRAC .
+
+    $default  reduce using rule 63 (UNARY)
+
+
+State 171
+
+   68 POSTFIX: T_VARIABLE T_LSBRAC T_FLOAT . T_RSBRAC T_INCREM
+   70        | T_VARIABLE T_LSBRAC T_FLOAT . T_RSBRAC T_DECREM
+
+    T_RSBRAC  shift, and go to state 179
+
+
+State 172
+
+   91 ITER_ST: T_WHILE T_LBRAC EXPR T_RBRAC . STMT
 
     T_LBRAC     shift, and go to state 27
-    T_LCURL     shift, and go to state 82
+    T_LCURL     shift, and go to state 83
     T_NUMBER    shift, and go to state 28
     T_VARIABLE  shift, and go to state 29
-    T_SEMIC     shift, and go to state 83
+    T_SEMIC     shift, and go to state 84
     T_INCREM    shift, and go to state 30
     T_DECREM    shift, and go to state 31
-    T_WHILE     shift, and go to state 84
-    T_DO        shift, and go to state 85
-    T_IF        shift, and go to state 86
-    T_FOR       shift, and go to state 87
-    T_BREAK     shift, and go to state 88
-    T_CONTINUE  shift, and go to state 89
-    T_SWITCH    shift, and go to state 90
+    T_WHILE     shift, and go to state 85
+    T_DO        shift, and go to state 86
+    T_IF        shift, and go to state 87
+    T_FOR       shift, and go to state 88
+    T_BREAK     shift, and go to state 89
+    T_CONTINUE  shift, and go to state 90
+    T_SWITCH    shift, and go to state 91
     T_INT       shift, and go to state 1
     T_VOID      shift, and go to state 2
     T_CHAR      shift, and go to state 3
@@ -2831,11 +2727,11 @@ State 168
     T_FLOAT     shift, and go to state 6
     T_DOUBLE    shift, and go to state 7
     T_SIGNED    shift, and go to state 8
-    T_RETURN    shift, and go to state 91
+    T_RETURN    shift, and go to state 92
 
-    TYPE         go to state 92
-    EXPR_ST      go to state 94
-    EXPR         go to state 95
+    TYPE         go to state 93
+    EXPR_ST      go to state 95
+    EXPR         go to state 96
     EXPR_ASSIGN  go to state 33
     EXPR_COND    go to state 34
     OR           go to state 35
@@ -2851,30 +2747,381 @@ State 168
     UNARY        go to state 45
     POSTFIX      go to state 46
     PRIMATIVE    go to state 47
-    STMT         go to state 171
-    JMP_ST       go to state 97
-    IF_ST        go to state 98
-    ITER_ST      go to state 99
-    NEW_SCOPE    go to state 100
-    DEC_ST       go to state 101
+    STMT         go to state 180
+    JMP_ST       go to state 98
+    IF_ST        go to state 99
+    ITER_ST      go to state 100
+    NEW_SCOPE    go to state 101
+    DEC_ST       go to state 102
 
 
-State 169
+State 173
 
-   85 ITER_ST: T_DO STMT T_WHILE T_LBRAC EXPR T_RBRAC T_SEMIC .
+   92 ITER_ST: T_DO STMT T_WHILE T_LBRAC . EXPR T_RBRAC T_SEMIC
 
-    $default  reduce using rule 85 (ITER_ST)
+    T_LBRAC     shift, and go to state 27
+    T_NUMBER    shift, and go to state 28
+    T_VARIABLE  shift, and go to state 29
+    T_INCREM    shift, and go to state 30
+    T_DECREM    shift, and go to state 31
+
+    EXPR         go to state 181
+    EXPR_ASSIGN  go to state 33
+    EXPR_COND    go to state 34
+    OR           go to state 35
+    AND          go to state 36
+    BOR          go to state 37
+    BXOR         go to state 38
+    BAND         go to state 39
+    EQUAL        go to state 40
+    LESS         go to state 41
+    SHIFT        go to state 42
+    ADD          go to state 43
+    MUL          go to state 44
+    UNARY        go to state 45
+    POSTFIX      go to state 46
+    PRIMATIVE    go to state 47
 
 
-State 170
+State 174
 
-   82 IF_ST: T_IF T_LBRAC EXPR T_RBRAC STMT T_ELSE STMT .
+   88 IF_ST: T_IF T_LBRAC EXPR T_RBRAC . STMT
+   89      | T_IF T_LBRAC EXPR T_RBRAC . STMT T_ELSE STMT
 
-    $default  reduce using rule 82 (IF_ST)
+    T_LBRAC     shift, and go to state 27
+    T_LCURL     shift, and go to state 83
+    T_NUMBER    shift, and go to state 28
+    T_VARIABLE  shift, and go to state 29
+    T_SEMIC     shift, and go to state 84
+    T_INCREM    shift, and go to state 30
+    T_DECREM    shift, and go to state 31
+    T_WHILE     shift, and go to state 85
+    T_DO        shift, and go to state 86
+    T_IF        shift, and go to state 87
+    T_FOR       shift, and go to state 88
+    T_BREAK     shift, and go to state 89
+    T_CONTINUE  shift, and go to state 90
+    T_SWITCH    shift, and go to state 91
+    T_INT       shift, and go to state 1
+    T_VOID      shift, and go to state 2
+    T_CHAR      shift, and go to state 3
+    T_SHORT     shift, and go to state 4
+    T_LONG      shift, and go to state 5
+    T_FLOAT     shift, and go to state 6
+    T_DOUBLE    shift, and go to state 7
+    T_SIGNED    shift, and go to state 8
+    T_RETURN    shift, and go to state 92
+
+    TYPE         go to state 93
+    EXPR_ST      go to state 95
+    EXPR         go to state 96
+    EXPR_ASSIGN  go to state 33
+    EXPR_COND    go to state 34
+    OR           go to state 35
+    AND          go to state 36
+    BOR          go to state 37
+    BXOR         go to state 38
+    BAND         go to state 39
+    EQUAL        go to state 40
+    LESS         go to state 41
+    SHIFT        go to state 42
+    ADD          go to state 43
+    MUL          go to state 44
+    UNARY        go to state 45
+    POSTFIX      go to state 46
+    PRIMATIVE    go to state 47
+    STMT         go to state 182
+    JMP_ST       go to state 98
+    IF_ST        go to state 99
+    ITER_ST      go to state 100
+    NEW_SCOPE    go to state 101
+    DEC_ST       go to state 102
 
 
-State 171
+State 175
 
-   87 ITER_ST: T_FOR T_LBRAC EXPR_ST EXPR_ST EXPR T_RBRAC STMT .
+   93 ITER_ST: T_FOR T_LBRAC EXPR_ST EXPR_ST . T_RBRAC STMT
+   94        | T_FOR T_LBRAC EXPR_ST EXPR_ST . EXPR T_RBRAC STMT
 
-    $default  reduce using rule 87 (ITER_ST)
+    T_LBRAC     shift, and go to state 27
+    T_RBRAC     shift, and go to state 183
+    T_NUMBER    shift, and go to state 28
+    T_VARIABLE  shift, and go to state 29
+    T_INCREM    shift, and go to state 30
+    T_DECREM    shift, and go to state 31
+
+    EXPR         go to state 184
+    EXPR_ASSIGN  go to state 33
+    EXPR_COND    go to state 34
+    OR           go to state 35
+    AND          go to state 36
+    BOR          go to state 37
+    BXOR         go to state 38
+    BAND         go to state 39
+    EQUAL        go to state 40
+    LESS         go to state 41
+    SHIFT        go to state 42
+    ADD          go to state 43
+    MUL          go to state 44
+    UNARY        go to state 45
+    POSTFIX      go to state 46
+    PRIMATIVE    go to state 47
+
+
+State 176
+
+   27 EXPR_ASSIGN: T_VARIABLE T_LSBRAC T_FLOAT T_RSBRAC T_ASSIGN EXPR_ASSIGN .
+
+    $default  reduce using rule 27 (EXPR_ASSIGN)
+
+
+State 177
+
+   29 EXPR_ASSIGN: T_VARIABLE T_LSBRAC T_FLOAT T_RSBRAC T_ADDEQUAL EXPR_ASSIGN .
+
+    $default  reduce using rule 29 (EXPR_ASSIGN)
+
+
+State 178
+
+   31 EXPR_ASSIGN: T_VARIABLE T_LSBRAC T_FLOAT T_RSBRAC T_SUBEQUAL EXPR_ASSIGN .
+
+    $default  reduce using rule 31 (EXPR_ASSIGN)
+
+
+State 179
+
+   68 POSTFIX: T_VARIABLE T_LSBRAC T_FLOAT T_RSBRAC . T_INCREM
+   70        | T_VARIABLE T_LSBRAC T_FLOAT T_RSBRAC . T_DECREM
+
+    T_INCREM  shift, and go to state 167
+    T_DECREM  shift, and go to state 168
+
+
+State 180
+
+   91 ITER_ST: T_WHILE T_LBRAC EXPR T_RBRAC STMT .
+
+    $default  reduce using rule 91 (ITER_ST)
+
+
+State 181
+
+   92 ITER_ST: T_DO STMT T_WHILE T_LBRAC EXPR . T_RBRAC T_SEMIC
+
+    T_RBRAC  shift, and go to state 185
+
+
+State 182
+
+   88 IF_ST: T_IF T_LBRAC EXPR T_RBRAC STMT .
+   89      | T_IF T_LBRAC EXPR T_RBRAC STMT . T_ELSE STMT
+
+    T_ELSE  shift, and go to state 186
+
+    T_ELSE    [reduce using rule 88 (IF_ST)]
+    $default  reduce using rule 88 (IF_ST)
+
+
+State 183
+
+   93 ITER_ST: T_FOR T_LBRAC EXPR_ST EXPR_ST T_RBRAC . STMT
+
+    T_LBRAC     shift, and go to state 27
+    T_LCURL     shift, and go to state 83
+    T_NUMBER    shift, and go to state 28
+    T_VARIABLE  shift, and go to state 29
+    T_SEMIC     shift, and go to state 84
+    T_INCREM    shift, and go to state 30
+    T_DECREM    shift, and go to state 31
+    T_WHILE     shift, and go to state 85
+    T_DO        shift, and go to state 86
+    T_IF        shift, and go to state 87
+    T_FOR       shift, and go to state 88
+    T_BREAK     shift, and go to state 89
+    T_CONTINUE  shift, and go to state 90
+    T_SWITCH    shift, and go to state 91
+    T_INT       shift, and go to state 1
+    T_VOID      shift, and go to state 2
+    T_CHAR      shift, and go to state 3
+    T_SHORT     shift, and go to state 4
+    T_LONG      shift, and go to state 5
+    T_FLOAT     shift, and go to state 6
+    T_DOUBLE    shift, and go to state 7
+    T_SIGNED    shift, and go to state 8
+    T_RETURN    shift, and go to state 92
+
+    TYPE         go to state 93
+    EXPR_ST      go to state 95
+    EXPR         go to state 96
+    EXPR_ASSIGN  go to state 33
+    EXPR_COND    go to state 34
+    OR           go to state 35
+    AND          go to state 36
+    BOR          go to state 37
+    BXOR         go to state 38
+    BAND         go to state 39
+    EQUAL        go to state 40
+    LESS         go to state 41
+    SHIFT        go to state 42
+    ADD          go to state 43
+    MUL          go to state 44
+    UNARY        go to state 45
+    POSTFIX      go to state 46
+    PRIMATIVE    go to state 47
+    STMT         go to state 187
+    JMP_ST       go to state 98
+    IF_ST        go to state 99
+    ITER_ST      go to state 100
+    NEW_SCOPE    go to state 101
+    DEC_ST       go to state 102
+
+
+State 184
+
+   94 ITER_ST: T_FOR T_LBRAC EXPR_ST EXPR_ST EXPR . T_RBRAC STMT
+
+    T_RBRAC  shift, and go to state 188
+
+
+State 185
+
+   92 ITER_ST: T_DO STMT T_WHILE T_LBRAC EXPR T_RBRAC . T_SEMIC
+
+    T_SEMIC  shift, and go to state 189
+
+
+State 186
+
+   89 IF_ST: T_IF T_LBRAC EXPR T_RBRAC STMT T_ELSE . STMT
+
+    T_LBRAC     shift, and go to state 27
+    T_LCURL     shift, and go to state 83
+    T_NUMBER    shift, and go to state 28
+    T_VARIABLE  shift, and go to state 29
+    T_SEMIC     shift, and go to state 84
+    T_INCREM    shift, and go to state 30
+    T_DECREM    shift, and go to state 31
+    T_WHILE     shift, and go to state 85
+    T_DO        shift, and go to state 86
+    T_IF        shift, and go to state 87
+    T_FOR       shift, and go to state 88
+    T_BREAK     shift, and go to state 89
+    T_CONTINUE  shift, and go to state 90
+    T_SWITCH    shift, and go to state 91
+    T_INT       shift, and go to state 1
+    T_VOID      shift, and go to state 2
+    T_CHAR      shift, and go to state 3
+    T_SHORT     shift, and go to state 4
+    T_LONG      shift, and go to state 5
+    T_FLOAT     shift, and go to state 6
+    T_DOUBLE    shift, and go to state 7
+    T_SIGNED    shift, and go to state 8
+    T_RETURN    shift, and go to state 92
+
+    TYPE         go to state 93
+    EXPR_ST      go to state 95
+    EXPR         go to state 96
+    EXPR_ASSIGN  go to state 33
+    EXPR_COND    go to state 34
+    OR           go to state 35
+    AND          go to state 36
+    BOR          go to state 37
+    BXOR         go to state 38
+    BAND         go to state 39
+    EQUAL        go to state 40
+    LESS         go to state 41
+    SHIFT        go to state 42
+    ADD          go to state 43
+    MUL          go to state 44
+    UNARY        go to state 45
+    POSTFIX      go to state 46
+    PRIMATIVE    go to state 47
+    STMT         go to state 190
+    JMP_ST       go to state 98
+    IF_ST        go to state 99
+    ITER_ST      go to state 100
+    NEW_SCOPE    go to state 101
+    DEC_ST       go to state 102
+
+
+State 187
+
+   93 ITER_ST: T_FOR T_LBRAC EXPR_ST EXPR_ST T_RBRAC STMT .
+
+    $default  reduce using rule 93 (ITER_ST)
+
+
+State 188
+
+   94 ITER_ST: T_FOR T_LBRAC EXPR_ST EXPR_ST EXPR T_RBRAC . STMT
+
+    T_LBRAC     shift, and go to state 27
+    T_LCURL     shift, and go to state 83
+    T_NUMBER    shift, and go to state 28
+    T_VARIABLE  shift, and go to state 29
+    T_SEMIC     shift, and go to state 84
+    T_INCREM    shift, and go to state 30
+    T_DECREM    shift, and go to state 31
+    T_WHILE     shift, and go to state 85
+    T_DO        shift, and go to state 86
+    T_IF        shift, and go to state 87
+    T_FOR       shift, and go to state 88
+    T_BREAK     shift, and go to state 89
+    T_CONTINUE  shift, and go to state 90
+    T_SWITCH    shift, and go to state 91
+    T_INT       shift, and go to state 1
+    T_VOID      shift, and go to state 2
+    T_CHAR      shift, and go to state 3
+    T_SHORT     shift, and go to state 4
+    T_LONG      shift, and go to state 5
+    T_FLOAT     shift, and go to state 6
+    T_DOUBLE    shift, and go to state 7
+    T_SIGNED    shift, and go to state 8
+    T_RETURN    shift, and go to state 92
+
+    TYPE         go to state 93
+    EXPR_ST      go to state 95
+    EXPR         go to state 96
+    EXPR_ASSIGN  go to state 33
+    EXPR_COND    go to state 34
+    OR           go to state 35
+    AND          go to state 36
+    BOR          go to state 37
+    BXOR         go to state 38
+    BAND         go to state 39
+    EQUAL        go to state 40
+    LESS         go to state 41
+    SHIFT        go to state 42
+    ADD          go to state 43
+    MUL          go to state 44
+    UNARY        go to state 45
+    POSTFIX      go to state 46
+    PRIMATIVE    go to state 47
+    STMT         go to state 191
+    JMP_ST       go to state 98
+    IF_ST        go to state 99
+    ITER_ST      go to state 100
+    NEW_SCOPE    go to state 101
+    DEC_ST       go to state 102
+
+
+State 189
+
+   92 ITER_ST: T_DO STMT T_WHILE T_LBRAC EXPR T_RBRAC T_SEMIC .
+
+    $default  reduce using rule 92 (ITER_ST)
+
+
+State 190
+
+   89 IF_ST: T_IF T_LBRAC EXPR T_RBRAC STMT T_ELSE STMT .
+
+    $default  reduce using rule 89 (IF_ST)
+
+
+State 191
+
+   94 ITER_ST: T_FOR T_LBRAC EXPR_ST EXPR_ST EXPR T_RBRAC STMT .
+
+    $default  reduce using rule 94 (ITER_ST)
