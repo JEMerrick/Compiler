@@ -57,12 +57,12 @@ protected:
     int index;
     std::string name;
 public:
-    Number(std::string _name, int _index)
+    Array(std::string _name, int _index)
         : name(_name), index(_index)
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const{
-        
+
     }
     virtual void printC (std::ostream &out) const{
         out << name << "[" << index << "]";

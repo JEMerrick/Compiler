@@ -71,7 +71,7 @@ public:
             for(int j = myPy.indent; j > 0; j--){
                 out << "\t";
             }
-            out << "global " << myPy.globalv[i] << std::endl
+            out << "global " << myPy.globalv[i] << std::endl;
         }
         branch->printPy(out, myPy);//return 1
         myPy.indent--;

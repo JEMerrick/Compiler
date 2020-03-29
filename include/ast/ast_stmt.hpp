@@ -17,9 +17,7 @@ public:
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
     }
     virtual void printC (std::ostream &out) const override{
-        out << id << "=";
-        expr->printC(out);
-        out << ";";
+        out << id << ";";
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
         myPy.globalv.push_back(id);
