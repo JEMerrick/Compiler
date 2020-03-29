@@ -184,3 +184,33 @@ public:
         }
     }
 };
+
+class DeclareArray
+    : public Base
+{
+protected:
+    std::string id;
+    BasePtr expr;
+public:
+    DeclareArray(std::string _id, BasePtr _expr)
+        : id(_id), expr(_expr)
+    {}
+
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+        //int address = help.createarray(id, )
+    }
+    virtual void printC (std::ostream &out) const override{}
+    }
+    virtual void printPy (std::ostream &out, Py &myPy) const override{
+        for(int i = myPy.indent; i > 0; i--){
+            out << "\t";
+        }
+        if(expr!=NULL){
+            out << id << " =[";
+            expr->printPy(out, myPy);
+        }
+        else{
+          out << id << " = []";
+        }
+    }
+};
