@@ -105,7 +105,7 @@ public:
     virtual void printPy (std::ostream &out, Py &myPy) const override{
         out << variable;
         out << "[" << index << "]=";
-        val->printPy(out);
+        val->printPy(out, myPy);
     }
 };
 
@@ -182,7 +182,7 @@ public:
     virtual void printPy (std::ostream &out, Py &myPy) const override{
         out << variable;
         out << "[" << index << "]+=";
-        val->printPy(out);
+        val->printPy(out, myPy);
     }
 };
 
@@ -246,7 +246,7 @@ public:
     virtual void printPy (std::ostream &out, Py &myPy) const override{
         out << variable;
         out << "[" << index << "]-=";
-        val->printPy(out);
+        val->printPy(out, myPy);
     }
 };
 
