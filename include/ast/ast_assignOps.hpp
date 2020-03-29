@@ -66,6 +66,49 @@ public:
     }
 };
 
+class AssignEqualArray
+    : public AssignOp
+{
+protected:
+    BasePtr val;
+    int index;
+public:
+    AssignEqualArray(std::string &_variable, BasePtr _val, int _index)
+        : AssignOp(_variable), val(_val), index(_index)
+    {}
+
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+        std::string r1 = "$" + std::to_string(help.findreg());
+        val->printMIPS(r1, out, help);
+        if(!(help.globalexists(variable) && help.localexists(variable))){
+            throw "Variable not declared.";
+        }
+        out << "ADDU " << reg << ", %0, " << r1 << std::endl;
+        if(help.localexists(variable)){
+            out << "SW " << reg << ", " << help.findlocal(variable) << "($fp)" << std::endl;
+        }
+        else if(help.globalexists(variable)){
+            std::string r2 = "$" + std::to_string(help.findreg());
+            val->printMIPS(r2, out, help);
+            help.regFlag[std::stoi(r2.substr(1))] = 0;
+        }
+        else{
+            throw "Variable not declared.";
+        }
+        help.regFlag[std::stoi(r1.substr(1))] = 0;
+    }
+    virtual void printC (std::ostream &out) const override{
+        out << variable;
+        out << "[" << index << "]=";
+        val->printC(out);
+    }
+    virtual void printPy (std::ostream &out, Py &myPy) const override{
+        out << variable;
+        out << "[" << index << "]=";
+        val->printPy(out);
+    }
+};
+
 class AddEqualOperator
     : public AssignOp
 {
@@ -104,6 +147,45 @@ public:
     }
 };
 
+class AddEqualArray
+    : public AssignOp
+{
+protected:
+    BasePtr val;
+    int index;
+public:
+    AddEqualArray(std::string &_variable, BasePtr _val, int _index)
+        : AssignOp(_variable), val(_val), index(_index)
+    {}
+
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+        std::string r1 = "$" + std::to_string(help.findreg());
+        val->printMIPS(r1, out, help);
+        if(help.localexists(variable)){
+            out << "SW " << reg << ", " << help.findlocal(variable) << "($fp)" << std::endl;
+        }
+        else if(help.globalexists(variable)){
+            std::string r2 = "$" + std::to_string(help.findreg());
+            val->printMIPS(r2, out, help);
+            help.regFlag[std::stoi(r2.substr(1))] = 0;
+        }
+        else{
+            throw "Variable not declared.";
+        }
+        help.regFlag[std::stoi(r1.substr(1))] = 0;
+    }
+    virtual void printC (std::ostream &out) const override{
+        out << variable;
+        out << "[" << index << "]+=";
+        val->printC(out);
+    }
+    virtual void printPy (std::ostream &out, Py &myPy) const override{
+        out << variable;
+        out << "[" << index << "]+=";
+        val->printPy(out);
+    }
+};
+
 class SubEqualOperator
     : public AssignOp
 {
@@ -129,6 +211,45 @@ public:
     }
 };
 
+class SubEqualArray
+    : public AssignOp
+{
+protected:
+    BasePtr val;
+    int index;
+public:
+    SubEqualArray(std::string &_variable, BasePtr _val, int _index)
+        : AssignOp(_variable), val(_val), index(_index)
+    {}
+
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+        std::string r1 = "$" + std::to_string(help.findreg());
+        val->printMIPS(r1, out, help);
+        if(help.localexists(variable)){
+            out << "SW " << reg << ", " << help.findlocal(variable) << "($fp)" << std::endl;
+        }
+        else if(help.globalexists(variable)){
+            std::string r2 = "$" + std::to_string(help.findreg());
+            val->printMIPS(r2, out, help);
+            help.regFlag[std::stoi(r2.substr(1))] = 0;
+        }
+        else{
+            throw "Variable not declared.";
+        }
+        help.regFlag[std::stoi(r1.substr(1))] = 0;
+    }
+    virtual void printC (std::ostream &out) const override{
+        out << variable;
+        out << "[" << index << "]-=";
+        val->printC(out);
+    }
+    virtual void printPy (std::ostream &out, Py &myPy) const override{
+        out << variable;
+        out << "[" << index << "]-=";
+        val->printPy(out);
+    }
+};
+
 class PreIncrement
     : public AssignOp
 {
@@ -142,16 +263,35 @@ public:
 
     }
     virtual void printC (std::ostream &out) const override{
-        // if(index == -1){
-        //     out << "++" << variable;
-        // }
-        // else{
-        //     out << "++" << variable << "[" << index << "]";
-        // }
+        out << "++" << variable;
 
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
         out << "++" << variable;
+    }
+};
+
+class PreIncrementArray
+    : public AssignOp
+{
+
+protected:
+    int index;
+
+public:
+    PreIncrementArray(std::string &_variable, int _index)
+        : AssignOp(_variable), index(_index)
+    {}
+
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+
+    }
+    virtual void printC (std::ostream &out) const override{
+        out << "++" << variable << "[" << index << "]" << std::endl;
+
+    }
+    virtual void printPy (std::ostream &out, Py &myPy) const override{
+        out << "++" << variable << "[" << index << "]" << std::endl;
     }
 };
 
@@ -175,6 +315,30 @@ public:
     }
 };
 
+class PreDecrementArray
+    : public AssignOp
+{
+
+protected:
+    int index;
+
+public:
+    PreDecrementArray(std::string &_variable, int _index)
+        : AssignOp(_variable), index(_index)
+    {}
+
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+
+    }
+    virtual void printC (std::ostream &out) const override{
+        out << "--" << variable << "[" << index << "]" << std::endl;
+
+    }
+    virtual void printPy (std::ostream &out, Py &myPy) const override{
+        out << "--" << variable << "[" << index << "]" << std::endl;
+    }
+};
+
 class PostIncrement
     : public AssignOp
 {
@@ -195,6 +359,30 @@ public:
     }
 };
 
+class PostIncrementArray
+    : public AssignOp
+{
+
+protected:
+    int index;
+
+public:
+    PostIncrementArray(std::string &_variable, int _index)
+        : AssignOp(_variable), index(_index)
+    {}
+
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+
+    }
+    virtual void printC (std::ostream &out) const override{
+        out << variable << "[" << index << "]++" << std::endl;
+
+    }
+    virtual void printPy (std::ostream &out, Py &myPy) const override{
+        out << variable << "[" << index << "]++" << std::endl;
+    }
+};
+
 class PostDecrement
     : public AssignOp
 {
@@ -212,6 +400,30 @@ public:
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
         out << variable << "--";
+    }
+};
+
+class PostDecrementArray
+    : public AssignOp
+{
+
+protected:
+    int index;
+
+public:
+    PostDecrementArray(std::string &_variable, int _index)
+        : AssignOp(_variable), index(_index)
+    {}
+
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+
+    }
+    virtual void printC (std::ostream &out) const override{
+        out << variable << "[" << index << "]--" << std::endl;
+
+    }
+    virtual void printPy (std::ostream &out, Py &myPy) const override{
+        out << variable << "[" << index << "]--" << std::endl;
     }
 };
 
