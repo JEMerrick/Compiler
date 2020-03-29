@@ -87,8 +87,8 @@ public:
         out << "\t";
       }
       branch->printPy(out, myPy);
-      myPy.indent--;
       out << std::endl;
+      myPy.indent--;
     }
 };
 
@@ -131,8 +131,8 @@ public:
             out << "\t";
         }
         branch->printPy(out, myPy);
-        myPy.indent--;
         out << std::endl;
+        myPy.indent--;
     }
 };
 

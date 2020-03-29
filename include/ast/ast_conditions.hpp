@@ -67,8 +67,8 @@ public:
         for(int i = myPy.indent; i > 0; i--){
           out << "\t";
         }
-        myPy.indent--;
         branch->printPy(out, myPy);
+        myPy.indent--;
     }
 };
 
@@ -126,9 +126,9 @@ public:
         for(int i = myPy.indent; i > 0; i--){
           out << "\t";
         }
-        myPy.indent--;
         elseBranch->printPy(out, myPy);
         out << std::endl;
+        myPy.indent--;
     }
 };
 
@@ -163,8 +163,8 @@ public:
         for(int i = myPy.indent; i > 0; i--){
           out << "\t";
         }
-        myPy.indent--;
         branch->printPy(out, myPy);
+        myPy.indent--;
     }
 };
 #endif
