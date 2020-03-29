@@ -164,9 +164,6 @@ public:
         out << type << " " << id;
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
-        if(type != ""){
-            out << type << " ";
-        }
         out << id;
         if(nextArg!=NULL){
             nextArg->printPy(out, myPy);
