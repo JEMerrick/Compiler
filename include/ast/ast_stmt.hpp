@@ -127,7 +127,12 @@ public:
         for(int i = myPy.indent; i > 0; i--){
             out << "\t";
         }
-        out << id << "=";
-        expr->printPy(out, myPy);
+        if(expr != NULL){
+            out << id << "=";
+            expr->printPy(out, myPy);
+        }
+        else{
+            out << id << ";";
+        }
     }
 };
