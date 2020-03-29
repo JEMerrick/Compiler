@@ -39,9 +39,6 @@ for i in ${input_dir}/*.c ; do
         # Run the DUT python version
         python3 ${working}/$base-got.py
         GOT_P_OUT=$?
-
-        # Create the DUT python version by invoking the compiler with S flags
-        $compiler -S $i -o ${working}/$base-got.s
     fi
 
     if [[ $REF_C_OUT -ne $REF_P_OUT ]] ; then
