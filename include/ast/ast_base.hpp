@@ -147,8 +147,8 @@ class MIPZ {
             return (frameptr + 4*n);
         }
 
-        int findarrayelement(std::string str, int n){
-            return (localVars[str] - 4*n);
+        int findarrayelement(std::string str, std::string n){
+            return (localVars[str] - 4*std::stoi(n));
         }
 };
 
