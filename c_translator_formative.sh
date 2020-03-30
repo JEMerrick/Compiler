@@ -12,9 +12,9 @@ if [[ ! -f bin/c_compiler ]] ; then
     have_compiler=1
 fi
 
-input_dir="compiler_tests/strings"
+input_dir="c_translator/formative"
 
-working="compiler_tests/strings/output"
+working="tmp/formative"
 mkdir -p ${working}
 
 for i in ${input_dir}/*.c ; do

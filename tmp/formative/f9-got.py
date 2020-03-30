@@ -1,4 +1,4 @@
-def function(ba, ):
+def function(a, b):
 	if (a < b) :
 		a = a - 1
 		if (b < a) :
@@ -8,7 +8,7 @@ def function(ba, ):
 		return b
 	return 13
 def main():
-	return function(00, ) + function(21, ) + function(34, ) + function(76, )
+	return function(0, 0) + function(1, 2) + function(4, 3) + function(6, 7)
 
 # Boilerplat
 if __name__ == "__main__":
