@@ -120,33 +120,80 @@ public:
 };
 
 class Switch
-    : public Conditions
+    : public Base
 {
-
+protected:
+    std::string condition;
+    BasePtr branch;
 public:
-    Switch(BasePtr _condition, BasePtr _branch)
-        : Conditions(_condition, _branch)
+    Switch(std::string _condition, BasePtr _branch)
+        : condition(_condition), branch(_branch)
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
         out << "switch " << std::endl;
     }
     virtual void printC (std::ostream &out) const override{
-        out << "switch (";
+        /*out << "switch (";
         condition->printC(out);
         out << ") \n";
         out << "{";
         branch->printC(out);
-        out << " }";
+        out << " }";*/
+    }
+    virtual void printPy (std::ostream &out, Py &myPy) const override{
+        myPy.switchCase.push_back(condition);
+        branch->printPy(out, myPy);
+    }
+};
+
+
+class Case
+    : public Base
+{
+protected:
+    int index;
+    BasePtr stmt;
+    BasePtr nextStmt;
+
+public:
+    Case(int _index, BasePtr _stmt, BasePtr _nextStmt)
+    : index(_index), stmt(_stmt), nextStmt(_nextStmt)
+    {}
+
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+        out << "case " << std::endl;
+    }
+    virtual void printC (std::ostream &out) const override{
+        /*out << "switch (";
+        condition->printC(out);
+        out << ") \n";
+        out << "{";
+        branch->printC(out);
+        out << " }";*/
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
         for(int i = myPy.indent; i > 0; i--){
           out << "\t";
         }
-        out << "switch (";
-        condition->printPy(out, myPy);
-        out << ") :\n";
-        branch->printPy(out, myPy);
+        if(index != 1000){
+            out << "if ( " << myPy.switchCase[myPy.switchCase.size() - 1] << " = " << index << " ) : \n";
+            myPy.indent++;
+            stmt->printPy(out, myPy);
+            myPy.indent--;
+            out << std::endl;
+        }
+        if(nextStmt != NULL){
+            nextStmt-> printPy(out, myPy);
+        }
+        if(index == 1000 && nextStmt == NULL){
+            out << "else :\n";
+            myPy.indent++;
+            stmt->printPy(out, myPy);
+            myPy.indent--;
+            out << std::endl;
+        }
+        
     }
 };
 #endif

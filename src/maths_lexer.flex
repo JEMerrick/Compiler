@@ -8,6 +8,7 @@ extern "C" int fileno(FILE *stream);
 "int"           { yylval.string = new std::string(yytext); return T_INT; }
 "return"        { yylval.string = new std::string(yytext); return T_RETURN; }
 [;]             { return T_SEMIC; }
+[:]             { return T_COLON; }
 [{]             { return T_LCURL; }
 [}]             { return T_RCURL; }
 [(]             { return T_LBRAC; }
@@ -59,6 +60,9 @@ extern "C" int fileno(FILE *stream);
 
 
 "switch"        { yylval.string = new std::string(yytext); return T_SWITCH; }
+"case"          { yylval.string = new std::string(yytext); return T_CASE; }
+"default"       { yylval.string = new std::string(yytext); return T_DEFAULT; }
+"break"         { yylval.string = new std::string(yytext); return T_BREAK; }
 
 "void"          { yylval.string = new std::string(yytext); return T_VOID; }
 "while"         { yylval.string = new std::string(yytext); return T_WHILE; }
