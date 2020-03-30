@@ -1,7 +1,1 @@
-
-int f(int x, int y);
-
-int main()
-{
-    return !( 40 == f(30,10) );
-}
+mips-linux-gnu-gcc: error: driver.compile.stderr: No such file or directory

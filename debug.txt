@@ -10,7 +10,22 @@ gdb bin/c_compiler
 set args --translate c_translator/formative/f5.c
 
 //set breakpoint to the line where we print the ast e.g.
-break c_compiler.cpp:18
+break c_compiler.cpp:23
+
+uncomment yydebug lines in print_canonical.cpp
+
+in terminal:
+//open gdb
+gdb bin/print_canonical
+
+//write file you want to test, remove '.c' if u want to test all folder
+set args --S compiler_tests/default/ADD0.c
+
+//set breakpoint to the line where we print the ast e.g.
+break print_canonical.cpp:18
+
+
+
 
 //run the program in gdb
 run
