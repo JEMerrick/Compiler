@@ -179,6 +179,9 @@ public:
             out << id << "=";
             expr->printPy(out, myPy);
         }
+        else{
+            out << id << " = 0";
+        }
     }
 };
 
