@@ -169,7 +169,7 @@ public:
         out << "\n\t\tif (";
         branch->printPy(out, myPy);
         out << "):\n";
-        out << "\t\t\tbreak;";
+        out << "\t\t\tbreak";
         
     }
 };
