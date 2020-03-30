@@ -297,7 +297,7 @@ public:
     }
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-      var->printMIPS(reg, out, help);
+        var->printMIPS(reg, out, help);
         if(nextVar != NULL){
             nextVar->printMIPS(reg, out, help);
             out << std::endl;
@@ -342,7 +342,11 @@ public:
     }
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-          out << "funcs" << std::endl;
+        func->printMIPS(reg, out, help);
+        if(nextFunc != NULL){
+            nextFunc->printMIPS(reg, out, help);
+            out << std::endl;
+        }
     }
     virtual void printC (std::ostream &out) const override{
         if(func != NULL){
