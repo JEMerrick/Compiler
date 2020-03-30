@@ -40,7 +40,7 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const{
-        out << "ADDI  NUMBER " << reg << "$0, " << value;
+        out << "ADDI " << reg << ", $0, " << value << std::endl;
     }
     virtual void printC (std::ostream &out) const{
         out << value;
