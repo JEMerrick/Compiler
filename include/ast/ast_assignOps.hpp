@@ -401,7 +401,7 @@ public:
         : AssignOp(_variable), index(_index)
     {}
 
-    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{/*
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
         out << "array" << std::endl;
     }
     virtual void printC (std::ostream &out) const override{
