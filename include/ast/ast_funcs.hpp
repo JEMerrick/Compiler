@@ -94,7 +94,7 @@ public:
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
         MIPZ newMIPZ(help);
         newMIPZ.parameters = 0;
-        varList->printMIPS(reg, newMIPZ, out);
+        varList->printMIPS(reg, out, newMIPZ);
         out << "ADDI $sp, $fp, " << newMIPZ.frameptr << std::endl;
         out << "JAL " << funcName;
     }
@@ -129,7 +129,7 @@ public:
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
         MIPZ newMIPZ(help);
         newMIPZ.parameters = 0;
-        varList->printMIPS(reg, newMIPZ, out);
+        varList->printMIPS(reg, out, newMIPZ);
         out << "ADDI $sp, $fp, " << newMIPZ.frameptr << std::endl;
         out << "JAL " << funcName;
     }
@@ -213,7 +213,7 @@ public:
         if(nextArg!= NULL){
             nextArg->printMIPS(reg, out, help);
         }
-        out << "SW $1, " << help.createlocal(id) << "($fp)" << std::endl;
+        out << "SW $1, " << "($fp)" << std::endl;
     }
     virtual void printC (std::ostream &out) const override{
         if(nextArg != NULL){
