@@ -54,8 +54,8 @@ class Array
     : public Base
 {
 protected:
-    int index;
     std::string name;
+    int index;
 public:
     Array(std::string _name, int _index)
         : name(_name), index(_index)

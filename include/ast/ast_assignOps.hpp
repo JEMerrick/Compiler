@@ -53,9 +53,9 @@ class AssignEqualArray
 {
 protected:
     BasePtr val;
-    std::string index;
+    double index;
 public:
-    AssignEqualArray(std::string &_variable, BasePtr _val, std::string &_index)
+    AssignEqualArray(std::string &_variable, BasePtr _val, double _index)
         : AssignOp(_variable), val(_val), index(_index)
     {}
 
@@ -102,9 +102,9 @@ class AddEqualArray
 {
 protected:
     BasePtr val;
-    std::string index;
+    double index;
 public:
-    AddEqualArray(std::string &_variable, BasePtr _val, std::string &_index)
+    AddEqualArray(std::string &_variable, BasePtr _val, double _index)
         : AssignOp(_variable), val(_val), index(_index)
     {}
 
@@ -152,9 +152,9 @@ class SubEqualArray
 {
 protected:
     BasePtr val;
-    std::string index;
+    double index;
 public:
-    SubEqualArray(std::string &_variable, BasePtr _val, std::string &_index)
+    SubEqualArray(std::string &_variable, BasePtr _val, double _index)
         : AssignOp(_variable), val(_val), index(_index)
     {}
 
@@ -226,10 +226,10 @@ class PreIncrementArray
 {
 
 protected:
-    std::string index;
+    double index;
 
 public:
-    PreIncrementArray(std::string &_variable, std::string &_index)
+    PreIncrementArray(std::string &_variable, double _index)
         : AssignOp(_variable), index(_index)
     {}
 
@@ -274,10 +274,10 @@ class PreDecrementArray
 {
 
 protected:
-    std::string index;
+    double index;
 
 public:
-    PreDecrementArray(std::string &_variable, std::string &_index)
+    PreDecrementArray(std::string &_variable, double _index)
         : AssignOp(_variable), index(_index)
     {}
 
@@ -318,10 +318,10 @@ class PostIncrementArray
 {
 
 protected:
-    std::string index;
+    int index;
 
 public:
-    PostIncrementArray(std::string &_variable, std::string &_index)
+    PostIncrementArray(std::string &_variable, double _index)
         : AssignOp(_variable), index(_index)
     {}
 
@@ -362,10 +362,10 @@ class PostDecrementArray
 {
 
 protected:
-    std::string index;
+    int index;
 
 public:
-    PostDecrementArray(std::string &_variable, std::string &_index)
+    PostDecrementArray(std::string &_variable, double _index)
         : AssignOp(_variable), index(_index)
     {}
 
