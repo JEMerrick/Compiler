@@ -297,7 +297,11 @@ public:
     }
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-        out << "funcs" << std::endl;
+      var->printMIPS(reg, out, help);
+        if(nextVar != NULL){
+            nextVar->printMIPS(reg, out, help);
+            out << std::endl;
+        }
     }
     virtual void printC (std::ostream &out) const override{
         if(var != NULL){
@@ -379,7 +383,11 @@ public:
     }
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-        out << "funcs" << std::endl;
+        if(branch != NULL){
+            branch->printMIPS(reg, out, help);
+        }
+        statement->printMIPS(reg, out , help);
+
     }
     virtual void printC (std::ostream &out) const override{
         if(statement != NULL){
