@@ -92,6 +92,7 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+        out << "funcs" << std::endl;
     }
     virtual void printC (std::ostream &out) const override{
         out << type << " " << funcName << "(";
@@ -122,6 +123,7 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+        out << "funcs" << std::endl;
     }
     virtual void printC (std::ostream &out) const override{
         if(varList != NULL){
@@ -158,6 +160,7 @@ public:
     }
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+        out << "funcs" << std::endl;
     }
     virtual void printC (std::ostream &out) const override{
         if(nextArg != NULL){
@@ -196,6 +199,7 @@ public:
     }
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+        out << "funcs" << std::endl;
     }
     virtual void printC (std::ostream &out) const override{
         if(nextArg != NULL){
@@ -234,6 +238,7 @@ public:
     }
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+        out << "funcs" << std::endl;
     }
     virtual void printC (std::ostream &out) const override{
         if(arg != NULL){
@@ -274,6 +279,7 @@ public:
     }
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+        out << "funcs" << std::endl;
     }
     virtual void printC (std::ostream &out) const override{
         if(var != NULL){
@@ -314,6 +320,7 @@ public:
     }
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+          out << "funcs" << std::endl;
     }
     virtual void printC (std::ostream &out) const override{
         if(func != NULL){
@@ -354,6 +361,7 @@ public:
     }
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+        out << "funcs" << std::endl;
     }
     virtual void printC (std::ostream &out) const override{
         if(statement != NULL){

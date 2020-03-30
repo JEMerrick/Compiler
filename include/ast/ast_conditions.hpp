@@ -137,7 +137,7 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-
+        out << "switch " << std::endl;
     }
     virtual void printC (std::ostream &out) const override{
         out << "switch (";
