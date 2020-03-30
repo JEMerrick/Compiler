@@ -35,6 +35,7 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+        out << "assign" << std::endl;
     }
     virtual void printC (std::ostream &out) const override{
         out << variable;
@@ -60,6 +61,7 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+        out << "assign" << std::endl;
     }
     virtual void printC (std::ostream &out) const override{
         out << variable;
@@ -86,6 +88,7 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+        out << "assign" << std::endl;
     }
     virtual void printC (std::ostream &out) const override{
         out << variable;
@@ -111,6 +114,7 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+        out << "assign" << std::endl;
     }
     virtual void printC (std::ostream &out) const override{
         out << variable;
@@ -137,7 +141,7 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-
+        out << "assign" << std::endl;
     }
     virtual void printC (std::ostream &out) const override{
         out << variable;
@@ -163,6 +167,7 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+        out << "assign" << std::endl;
     }
     virtual void printC (std::ostream &out) const override{
         out << variable;
@@ -270,7 +275,7 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-
+        out << "assign" << std::endl;
     }
     virtual void printC (std::ostream &out) const override{
         out << "--" << variable;
@@ -293,7 +298,7 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-
+        out << "assign" << std::endl;
     }
     virtual void printC (std::ostream &out) const override{
         //out << "--" << variable << "[" << index << "]" << std::endl;
@@ -316,7 +321,7 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-
+        out << "assign" << std::endl;
     }
     virtual void printC (std::ostream &out) const override{
         out << variable << "++";
@@ -339,7 +344,7 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-
+        out << "assign" << std::endl;
     }
     virtual void printC (std::ostream &out) const override{
         //out << variable << "[" << index << "]++" << std::endl;
@@ -362,7 +367,7 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-
+        out << "assign" << std::endl;
     }
     virtual void printC (std::ostream &out) const override{
         out << variable << "--";
@@ -385,7 +390,7 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-
+        out << "assign" << std::endl;
     }
     virtual void printC (std::ostream &out) const override{
         //out << variable << "[" << index << "]--" << std::endl;
