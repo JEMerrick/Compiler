@@ -28,7 +28,7 @@ public:
             out << "LW " << reg << ", " << help.findlocal(id) << "($fp)" << std::endl;
         }
         else{
-            throw "variable not declared."
+            throw "variable not declared.";
         }
     }
     virtual void printC (std::ostream &out) const{

@@ -49,7 +49,7 @@ public:
             help.regFlag[std::stoi(r2.substr(1))] = 0;
         }
         else{
-          throw "Variable not declared. "
+          throw "Variable not declared. ";
         }
         help.regFlag[std::stoi(r1.substr(1))] = 0;
     }
@@ -91,7 +91,7 @@ public:
           help.regFlag[std::stoi(r2.substr(1))] = 0;
       }
       else{
-        throw "Variable not declared. "
+        throw "Variable not declared. ";
       }
       help.regFlag[std::stoi(r1.substr(1))] = 0;
     }
