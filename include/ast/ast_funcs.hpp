@@ -300,29 +300,31 @@ public:
     }
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-        var->printMIPS(reg, out, help);
-        if(nextVar != NULL){
-            nextVar->printMIPS(reg, out, help);
-            out << std::endl;
+        if(var != NULL){
+            if(nextVar != NULL){
+                nextVar->printMIPS(reg, out, help);
+                out << std::endl;
+            }
+            var->printMIPS(reg, out, help);
         }
     }
     virtual void printC (std::ostream &out) const override{
         if(var != NULL){
-          if(nextVar != NULL){
-              nextVar->printC(out);
-              out << ", ";
-          }
-          var->printC(out);
+            if(nextVar != NULL){
+                nextVar->printC(out);
+                out << ", ";
+              }
+            var->printC(out);
         }
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
-      if(var != NULL){
-        if(nextVar != NULL){
-            nextVar->printPy(out, myPy);
-            out << ", ";
-        }
+        if(var != NULL){
+            if(nextVar != NULL){
+                nextVar->printPy(out, myPy);
+                out << ", ";
+            }
         var->printPy(out, myPy);
-      }
+        }
     }
 };
 
