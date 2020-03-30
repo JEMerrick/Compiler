@@ -1,12 +1,12 @@
 #include <iostream>
 #include <fstream>
 #include "ast.hpp"
-//extern "C" int yydebug;
+extern "C" int yydebug;
 
 extern "C" FILE *yyin;
 
 int main(int argc, char *argv[]){
-    //yydebug = 1;
+    yydebug = 1;
     //std::fstream fs;
     //fs.open(argv[2]);
     yyin = fopen(argv[2], "r");

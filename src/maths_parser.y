@@ -182,11 +182,12 @@ DEC_ST : TYPE DEC_LIST T_SEMIC { $$ = new Decl_stmt(*$1, $2); }
 DEC_LIST : VAR_DEC { $$ = new ArgList($1, NULL); }
         | DEC_LIST T_COMMA VAR_DEC { $$ = new ArgList($3, $1); }
 
-VAR_DEC : T_VARIABLE T_ASSIGN EXPR { $$ = new Declare (*$1, $3); }
+VAR_DEC : T_VARIABLE T_ASSIGN T_LSBRAC EXPR T_RSBRAC { $$ = new DeclareArray (*$1, $4); }
+        | T_VARIABLE T_LSBRAC EXPR T_RSBRAC { $$ = new DeclareArray (*$1, $3); }
+        | T_VARIABLE T_LSBRAC T_RSBRAC { $$ = new DeclareArray (*$1, NULL); }
+        | T_VARIABLE T_ASSIGN EXPR { $$ = new Declare (*$1, $3); }
         | T_VARIABLE { $$ = new Declare(*$1, NULL);}
-        | TYPE T_VARIABLE T_ASSIGN T_LSBRAC VAR_DEC T_RSBRAC { $$ = new DeclareArray (*$2, $5); }
-        | TYPE T_VARIABLE T_ASSIGN T_LSBRAC T_NUMBER T_RSBRAC { $$ = new DeclareArray (*$2, NULL); }
-        | TYPE T_VARIABLE T_ASSIGN T_LSBRAC T_RSBRAC { $$ = new DeclareArray (*$2, NULL); }
+        
 
 
 
