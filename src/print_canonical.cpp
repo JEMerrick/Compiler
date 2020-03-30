@@ -6,12 +6,10 @@ int main()
 {
     const Base* ast = parseAST();
 
-    Py myPython;
-    ast -> printPy(std::cout, myPython);
-    std::cout << std::endl;
-
     MIPZ myMIPS;
+    std::cout << "1" << '\n';
     ast->printMIPS("Hi", std::cout, myMIPS);
+    std::cout << "2" << '\n';
     std::cout<<std::endl;
 
     return 0;

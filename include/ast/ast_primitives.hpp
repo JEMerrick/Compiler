@@ -17,6 +17,7 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const{
+        out << "MIPS " << reg << "$0, " << value;
     }
     virtual void printC (std::ostream &out) const{
         out << id;
