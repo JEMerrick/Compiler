@@ -184,8 +184,8 @@ DEC_LIST : VAR_DEC { $$ = new ArgList($1, NULL); }
 
 VAR_DEC : T_VARIABLE T_ASSIGN EXPR { $$ = new Declare (*$1, $3); }
         | T_VARIABLE { $$ = new Declare(*$1, NULL);}
-        | T_VARIABLE T_ASSIGN T_LSBRAC VAR_DEC T_RSBRAC { $$ = new DeclareArray (*s1, $4)}
-        | T_VARIABLE T_ASSIGN T_LSBRAC T_RSBRAC { $$ = new DeclareArray (*s1, NULL)}
+        | T_VARIABLE T_ASSIGN T_LSBRAC VAR_DEC T_RSBRAC { $$ = new DeclareArray (*$1, $4)}
+        | T_VARIABLE T_ASSIGN T_LSBRAC T_RSBRAC { $$ = new DeclareArray (*$1, NULL)}
 
 
 
