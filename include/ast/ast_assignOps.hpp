@@ -187,7 +187,7 @@ public:
             out << "LUI " << r3 << ", %hi(" << variable << ")" << std::endl;
             out << "ADDI " << r2 << ", " << r2 << ", %lo(" << variable << ")" << std::endl;
             out << "LW " << r2 << ", ";
-            (4*index->printMIPS(reg, out, help));
+            //(4*index->printMIPS(reg, out, help));
             out << "(" << r3 << ")" << std::endl;
         }
         else{
@@ -200,7 +200,7 @@ public:
         }
         else if(help.globalexists(variable)){
             out << "SW " << r2 << ", ";
-            (4*index->printMIPS(reg, out, help));
+            //(4*index->printMIPS(reg, out, help));
             out << "(" << r3 << ")" << std::endl;
             help.regFlag[std::stoi(r3.substr(1))] = 0;
         }
@@ -302,7 +302,7 @@ public:
             out << "LUI " << r3 << ", %hi(" << variable << ")" << std::endl;
             out << "ADDI " << r2 << ", " << r2 << ", %lo(" << variable << ")" << std::endl;
             out << "LW " << r2 << ", ";
-            (4*index->printMIPS(reg, out, help));
+            //(4*index->printMIPS(reg, out, help));
             out << "(" << r3 << ")" << std::endl;
         }
         else{
@@ -315,7 +315,7 @@ public:
         }
         else if(help.globalexists(variable)){
             out << "SW " << r2 << ", ";
-            (4*index->printMIPS(reg, out, help));
+            //(4*index->printMIPS(reg, out, help));
             out << "(" << r3 << ")" << std::endl;
             help.regFlag[std::stoi(r3.substr(1))] = 0;
         }
