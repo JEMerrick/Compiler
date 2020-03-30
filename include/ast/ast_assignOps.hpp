@@ -81,7 +81,7 @@ public:
       val->printMIPS(r1, out, help);
       out << "ADDU " << reg << ", $0, " << r1 << std::endl;
       if(help.localexists(variable)){
-          out << "SW " << reg << ", " << help.findarrayelement(variable) << "$fp" << std::endl;
+          //out << "SW " << reg << ", " << help.findarrayelement(variable, ) << "$fp" << std::endl;
       }
       else if(help.globalexists(variable)){
           std::string r2 = "$" + std::to_string(help.findreg());
