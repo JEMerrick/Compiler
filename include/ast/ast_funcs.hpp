@@ -32,7 +32,7 @@ public:
         out << "SW $fp, 0($sp)" << std::endl;
         out << "SW $31, -4($sp)" << std::endl;
         out << "MOVE $fp, $sp" << std::endl;
-        if(varList == NULL){
+        if(varList != NULL){
             help.parameters=0;
             varList->printMIPS(reg, out, help);
         }
