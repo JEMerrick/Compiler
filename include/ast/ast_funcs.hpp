@@ -38,17 +38,14 @@ public:
             out << "varlist" << '\n';
         }
         if(branch != NULL){
-            out << "branch" << '\n';
             std::string newdreg = "$" + std::to_string(help.findreg());
-            out << "branch" << '\n';
             branch->printMIPS(newdreg, out, help);
-            out << "branch" << '\n';
             help.regFlag[std::stoi(newdreg.substr(1))] = 0;
         }
         out << "MOVE $sp, $fp" << std::endl;
         out << "MOVZ $31, $31, $0" << std::endl;
         out << "LW $fp, 4($sp)" << std::endl;
-        out << "ADDIU $sp, $sp, 8";
+        out << "ADDIU $sp, $sp, 8" << std::endl;
         if(funcName != "main"){
             out << "JR $31" << std::endl;
         }
