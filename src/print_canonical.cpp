@@ -2,11 +2,8 @@
 #include <iostream>
 #include <fstream>
 
-extern "C" FILE *yyin;
-
 int main()
 {
-    yyin = fopen(argv[2], "r");
     const Base* ast = parseAST();
 
     Py myPython;
