@@ -1,6 +1,6 @@
 int g()
 {
-    return 20;
+    return -20;
 }
 
 int f()

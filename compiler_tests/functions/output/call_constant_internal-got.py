@@ -1,5 +1,5 @@
 def g():
-	return 20
+	return - (20)
 def f():
 	return g()
 
