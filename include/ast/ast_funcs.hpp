@@ -26,7 +26,7 @@ public:
         help.newfunc();
         out << ".text" << std::endl;
         out << ".align 2" << std::endl;
-        out << ".globl" << std::endl;
+        out << ".globl " << funcName << std::endl;
         out << ".ent " << funcName << std::endl;
         out << funcName << ":" << std::endl;
         out << "ADDIU $sp, $sp, -8" << std::endl;
