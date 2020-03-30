@@ -181,11 +181,11 @@ public:
         out << type << " " << id;
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
-        out << id;
         if(nextArg!=NULL){
             nextArg->printPy(out, myPy);
             out << ", ";
         }
+        out << id;
 
     }
 };
@@ -222,12 +222,12 @@ public:
         }
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
-        if(id != NULL){
-            id->printPy(out, myPy);
-        }
         if(nextArg!=NULL){
             nextArg->printPy(out, myPy);
             out << ", ";
+        }
+        if(id != NULL){
+            id->printPy(out, myPy);
         }
 
     }

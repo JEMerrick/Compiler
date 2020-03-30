@@ -30,7 +30,9 @@ public:
         out << "}";
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
+        myPy.indent++;
         scop->printPy(out, myPy);
+        myPy.indent--;
     }
 };
 
@@ -38,15 +40,15 @@ class For
     : public Base
 {
 
-protected:
-    BasePtr condition;
-    BasePtr branch;
+protected:    
     BasePtr initial;
+    BasePtr condition;
     BasePtr incrementordecrement;
+    BasePtr branch;
 
 public:
-    For(BasePtr _condition, BasePtr _branch, BasePtr _initial, BasePtr _incrementordecrement)
-        : condition (_condition), branch (_branch), initial(_initial), incrementordecrement(_incrementordecrement)
+    For(BasePtr _initial, BasePtr _condition, BasePtr _incrementordecrement, BasePtr _branch)
+        : initial(_initial), condition (_condition), incrementordecrement(_incrementordecrement), branch (_branch)
     {}
 
     ~For(){
@@ -71,7 +73,7 @@ public:
       out << "}";
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
-      for(int i = myPy.indent; i > 0; i--){
+      for(int i = myPy.indent; i > 1; i--){
         out << "\t";
       }
       initial->printPy(out, myPy);
@@ -82,9 +84,12 @@ public:
       out << "while ";
       condition->printPy(out, myPy);
       out << ":" << std::endl;
-      myPy.indent++;
       branch->printPy(out, myPy);
-      myPy.indent--;
+      out << std::endl;
+      for(int i = myPy.indent; i > 0; i--){
+          out << "\t";
+      }
+      incrementordecrement->printPy(out, myPy);
       out << std::endl;
     }
 };
@@ -123,9 +128,7 @@ public:
         out << "while ";
         condition->printPy(out, myPy);
         out << ":" << std::endl;
-        myPy.indent++;
         branch->printPy(out, myPy);
-        myPy.indent--;
     }
 };
 

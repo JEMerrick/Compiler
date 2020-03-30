@@ -63,9 +63,7 @@ public:
         out << "if (";
         condition->printPy(out, myPy);
         out << ") :\n";
-        myPy.indent++;
         branch->printPy(out, myPy);
-        myPy.indent--;
     }
 };
 
@@ -111,19 +109,13 @@ public:
         out << "if (";
         condition->printPy(out, myPy);
         out << ") :\n";
-        myPy.indent++;
         branch->printPy(out, myPy);
-        myPy.indent--;
         out << std::endl;
         for(int i = myPy.indent; i > 0; i--){
           out << "\t";
         }
         out << "else :\n";
-        out << std::endl;
-        myPy.indent++;
         elseBranch->printPy(out, myPy);
-        out << std::endl;
-        myPy.indent--;
     }
 };
 
@@ -154,9 +146,7 @@ public:
         out << "switch (";
         condition->printPy(out, myPy);
         out << ") :\n";
-        myPy.indent++;
         branch->printPy(out, myPy);
-        myPy.indent--;
     }
 };
 #endif

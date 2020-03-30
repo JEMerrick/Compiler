@@ -92,7 +92,7 @@ EXPR_ASSIGN : EXPR_COND { $$ = $1; }
 EXPR_COND : OR { $$ = $1; }
 
 OR : AND { $$ = $1; }
-    | AND T_OR BOR {$$ = new OrOperator($1, $3); }
+    | OR T_OR BOR {$$ = new OrOperator($1, $3); }
 
 AND : BOR { $$ = $1; }
     | AND T_AND BOR {$$ = new AndOperator($1, $3);}
@@ -101,10 +101,10 @@ BOR : BXOR { $$ = $1; }
     | BOR T_BOR BXOR {$$ = new BitOr($1, $3);}
 
 BXOR : BAND { $$ = $1; }
-    | BOR T_BXOR BXOR {$$ = new ExorOperator($1, $3);}
+    | BXOR T_BXOR BXOR {$$ = new ExorOperator($1, $3);}
 
 BAND : EQUAL { $$ = $1; }
-    | BAND T_BAND EQUAL {$$ = new OrOperator($1, $3);}
+    | BAND T_BAND EQUAL {$$ = new BitAnd($1, $3);}
 
 EQUAL : LESS { $$ = $1; }
     | EQUAL T_EQUAL LESS {$$ = new EqualOperator($1, $3);}
@@ -167,7 +167,7 @@ JMP_ST : T_RETURN T_SEMIC { $$ = new Return_stmt(NULL); }
 
 IF_ST : T_IF T_LBRAC EXPR T_RBRAC STMT { $$ = new If($3, $5); }
         | T_IF T_LBRAC EXPR T_RBRAC STMT T_ELSE STMT { $$ = new IfElse($3, $5, $7); }
-        | T_SWITCH EXPR STMT { $$ = new Switch($2, $3); }
+        | T_SWITCH T_LBRAC EXPR T_RBRAC STMT { $$ = new Switch($3, $5); }
 
 
 ITER_ST : T_WHILE T_LBRAC EXPR T_RBRAC STMT { $$ = new While($3, $5); }
