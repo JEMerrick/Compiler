@@ -10,7 +10,7 @@ if [[ ! -f bin/c_compiler ]] ; then
     have_compiler=1
 fi
 input_dir="compiler_tests"
-working="working"
+working="tmp/formative_compiler"
 mkdir -p ${working}
 testsTotal=0
 testsPassed=0
@@ -48,9 +48,14 @@ for SUBDIR in ${input_dir}/* ; do
         testsTotal=$((${testsTotal}+1))
         if [[ ${have_compiler} -ne 0 ]] ; then
             echo -e "${YELLOW}$base, Fail, No C compiler/translator${NC}"
-        else [[ ${EXIT_CODE} -ne 0 ]] ; then
+        elif [[ ${EXIT_CODE} -ne 0 ]] ; then
             echo -e "${RED}$base, Fail, Expected 0, got ${EXIT_CODE}${NC}"
             echo "$base" >> failingTests.txt
+        else
+            echo -e "${GREEN}$base, Pass${NC}"
+            echo "$base" >> passingTests.txt
+            testsPassed=$((${testsPassed}+1))
+        fi
     done
 done
 echo -e "Passed ${testsPassed} out of ${testsTotal} tests.\n"
