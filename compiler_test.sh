@@ -10,7 +10,7 @@ if [[ ! -f bin/c_compiler ]] ; then
     have_compiler=1
 fi
 input_dir="compiler_tests"
-working="tmp/formative_compiler"
+working="working"
 mkdir -p ${working}
 testsTotal=0
 testsPassed=0
