@@ -48,7 +48,7 @@ public:
         out << "MOVE $sp, $fp" << std::endl;
         out << "MOVZ $31, $31, $0" << std::endl;
         out << "LW $fp, 4($sp)" << std::endl;
-        out << "ADDIU $sp, $sp, 8"
+        out << "ADDIU $sp, $sp, 8";
         if(funcName != "main"){
             out << "JR $31" << std::endl;
         }
