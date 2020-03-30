@@ -29,22 +29,26 @@ public:
         out << ".globl" << std::endl;
         out << ".ent" << std::endl;
         out << funcName << ":" << std::endl;
-        out << "SW $fp, 0($sp)" << std::endl;
-        out << "SW $31, -4($sp)" << std::endl;
+        out << "ADDIU $sp, $sp, -8" << std::endl;
+        out << "SW $31, 4($sp)" << std::endl;
         out << "MOVE $fp, $sp" << std::endl;
         if(varList != NULL){
-            help.parameters=0;
+            out << "varlist" << '\n';
             varList->printMIPS(reg, out, help);
+            out << "varlist" << '\n';
         }
         if(branch != NULL){
+            out << "branch" << '\n';
             std::string newdreg = "$" + std::to_string(help.findreg());
+            out << "branch" << '\n';
             branch->printMIPS(newdreg, out, help);
+            out << "branch" << '\n';
             help.regFlag[std::stoi(newdreg.substr(1))] = 0;
         }
-        out << "LW $31, -4($fp)" << std::endl;
-        out << "LW $fp, 0($fp)" << std::endl;
         out << "MOVE $sp, $fp" << std::endl;
-
+        out << "MOVZ $31, $31, $0" << std::endl;
+        out << "LW $fp, 4($sp)" << std::endl;
+        out << "ADDIU $sp, $sp, 8"
         if(funcName != "main"){
             out << "JR $31" << std::endl;
         }
