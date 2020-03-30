@@ -1,11 +1,8 @@
-def f():
-	x = 0
-	x = 0
-	while 	x < 0:
-		return 1
-	x = x + 1
+def bsqrt(lo, hi, v)
 
-	return 19937
+def main():
+	x = 0
+	return -(bsqrt(1, 1000, 64) == 8)
 
 # Boilerplat
 if __name__ == "__main__":

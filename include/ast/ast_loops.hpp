@@ -165,11 +165,11 @@ public:
             out << "\t";
         }
         out << "while True : \n";
-        branch->printPy(out, myPy);
-        out << "\tif (";
         condition->printPy(out, myPy);
+        out << "\n\t\tif (";
+        branch->printPy(out, myPy);
         out << "):\n";
-        out << "\t\tbreak;";
+        out << "\t\t\tbreak";
         
     }
 };
