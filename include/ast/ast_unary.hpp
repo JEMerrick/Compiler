@@ -43,10 +43,34 @@ public:
         expr->printC(out);
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
-        out << "-";
+        out << "-(";
         expr->printPy(out, myPy);
+        out << ")";
     }
 };
+
+// +
+class PlusOperator
+    : public Unary
+{
+public:
+    PlusOperator(const BasePtr _expr)
+        : Unary(_expr)
+    {}
+
+
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{}
+    virtual void printC (std::ostream &out) const override{
+        out << "+";
+        expr->printC(out);
+    }
+    virtual void printPy (std::ostream &out, Py &myPy) const override{
+        out << "+(";
+        expr->printPy(out, myPy);
+        out << ")";
+    }
+};
+
 
 
 //! logical negation

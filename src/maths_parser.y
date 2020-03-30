@@ -143,6 +143,8 @@ POSTFIX : PRIMATIVE { $$ = $1; }
         | T_VARIABLE T_LSBRAC EXPR T_RSBRAC T_DECREM { $$ = new PostDecrementArray(*$1, $3); }
         | T_VARIABLE T_LBRAC CALL_PARAM T_RBRAC { $$ = new FuncCall(*$1, $3); }
         | T_VARIABLE T_LBRAC T_RBRAC { $$ = new FuncCall(*$1, NULL); }
+        | T_PLUS EXPR { $$ = new PlusOperator($2); }
+        | T_MINUS EXPR { $$ = new NegOperator($2); }
 
 CALL_PARAM : CALL_PARAM T_COMMA EXPR { $$ = new ArgCall ($3, $1); }
              | EXPR { $$ = new ArgCall($1, NULL); }
