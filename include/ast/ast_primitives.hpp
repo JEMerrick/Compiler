@@ -17,7 +17,19 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const{
-        out << "LW VARIABLE " << reg << "$0";
+        if(help.globalexists(id)){
+            std::string r1 = "$" + std::to_string(help.findreg());
+            out << "LUI " << r1 << ", %hi(" << id << ")" << std::endl;
+            out << "ADDI " << r1 << ", " << r1 << ", %lo(" << id << ")" << std::endl;
+            out << "LW " << reg << ", 0(" << r1 << ")" << std::endl;
+            help.regFlag[std::stoi(r1.substr(1))] = 0;
+        }
+        else if(help.localexists(id)){
+            out << "LW " << reg << ", " << help.findlocal(id) << "($fp)" << std::endl;
+        }
+        else{
+            throw "variable not declared.";
+        }
     }
     virtual void printC (std::ostream &out) const{
         out << id;
