@@ -26,11 +26,11 @@ public:
         help.newfunc();
         out << ".text" << std::endl;
         out << ".align 2" << std::endl;
-        out << ".globl" << std::endl;
-        out << ".ent" << std::endl;
+        out << ".globl " << funcName << std::endl;
+        out << ".ent " << funcName << std::endl;
         out << funcName << ":" << std::endl;
         out << "ADDIU $sp, $sp, -8" << std::endl;
-        out << "SW $31, 4($sp)" << std::endl;
+        out << "SW $fp, 4($sp)" << std::endl;
         out << "MOVE $fp, $sp" << std::endl;
         if(varList != NULL){
             out << "varlist" << '\n';
@@ -47,7 +47,7 @@ public:
         out << "LW $fp, 4($sp)" << std::endl;
         out << "ADDIU $sp, $sp, 8" << std::endl;
         if(funcName != "main"){
-            out << "JR $31" << std::endl;
+            out << "J $31" << std::endl;
         }
         out << ".end " << funcName << std::endl;
     }
@@ -300,29 +300,31 @@ public:
     }
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-        var->printMIPS(reg, out, help);
-        if(nextVar != NULL){
-            nextVar->printMIPS(reg, out, help);
-            out << std::endl;
+        if(var != NULL){
+            if(nextVar != NULL){
+                nextVar->printMIPS(reg, out, help);
+                out << std::endl;
+            }
+            var->printMIPS(reg, out, help);
         }
     }
     virtual void printC (std::ostream &out) const override{
         if(var != NULL){
-          if(nextVar != NULL){
-              nextVar->printC(out);
-              out << ", ";
-          }
-          var->printC(out);
+            if(nextVar != NULL){
+                nextVar->printC(out);
+                out << ", ";
+              }
+            var->printC(out);
         }
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
-      if(var != NULL){
-        if(nextVar != NULL){
-            nextVar->printPy(out, myPy);
-            out << ", ";
-        }
+        if(var != NULL){
+            if(nextVar != NULL){
+                nextVar->printPy(out, myPy);
+                out << ", ";
+            }
         var->printPy(out, myPy);
-      }
+        }
     }
 };
 
