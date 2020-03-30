@@ -53,9 +53,9 @@ class AssignEqualArray
 {
 protected:
     BasePtr val;
-    double index;
+    BasePtr index;
 public:
-    AssignEqualArray(std::string &_variable, BasePtr _val, double _index)
+    AssignEqualArray(std::string &_variable, BasePtr _val, BasePtr _index)
         : AssignOp(_variable), val(_val), index(_index)
     {}
 
@@ -68,7 +68,9 @@ public:
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
         out << variable;
-        out << "[" << index << "]=";
+        out << "[";
+        index->printPy(out, myPy);
+        out << "]=";
         val->printPy(out, myPy);
     }
 };
@@ -102,9 +104,9 @@ class AddEqualArray
 {
 protected:
     BasePtr val;
-    double index;
+    BasePtr index;
 public:
-    AddEqualArray(std::string &_variable, BasePtr _val, double _index)
+    AddEqualArray(std::string &_variable, BasePtr _val, BasePtr _index)
         : AssignOp(_variable), val(_val), index(_index)
     {}
 
@@ -117,7 +119,9 @@ public:
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
         out << variable;
-        out << "[" << index << "]+=";
+        out << "[";
+        index->printPy(out, myPy);
+        out << "]+=";
         val->printPy(out, myPy);
     }
 };
@@ -152,9 +156,9 @@ class SubEqualArray
 {
 protected:
     BasePtr val;
-    double index;
+    BasePtr index;
 public:
-    SubEqualArray(std::string &_variable, BasePtr _val, double _index)
+    SubEqualArray(std::string &_variable, BasePtr _val, BasePtr _index)
         : AssignOp(_variable), val(_val), index(_index)
     {}
 
@@ -162,12 +166,16 @@ public:
     }
     virtual void printC (std::ostream &out) const override{
         out << variable;
-        out << "[" << index << "]-=";
+        out << "[";
+        index->printC(out);
+        out << "]-=";
         val->printC(out);
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
         out << variable;
-        out << "[" << index << "]-=";
+        out << "[" ;
+        index->printPy(out, myPy);
+        out << "]-=";
         val->printPy(out, myPy);
     }
 };
@@ -226,26 +234,29 @@ class PreIncrementArray
 {
 
 protected:
-    double index;
+    BasePtr index;
 
 public:
-    PreIncrementArray(std::string &_variable, double _index)
+    PreIncrementArray(std::string &_variable, BasePtr _index)
         : AssignOp(_variable), index(_index)
     {}
 
-    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{/* 
+        TODO sorry geroge gotta change this :/
         std::string r1 = "$" + std::to_string(help.findreg());
         std::string address;
         if(help.localexists(variable)){
             out << "LW " << r1 << ", " << help.findarrayelement(variable, index) << "($fp)" << std::endl;
-        }
+        }*/
     }
     virtual void printC (std::ostream &out) const override{
-        out << "++" << variable << "[" << index << "]" << std::endl;
+        //out << "++" << variable << "[" << index << "]" << std::endl;
 
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
-        out << "++" << variable << "[" << index << "]" << std::endl;
+        out << "++" << variable << "[";
+        index->printPy(out, myPy);
+        out << "]" << std::endl;
     }
 };
 
@@ -274,10 +285,10 @@ class PreDecrementArray
 {
 
 protected:
-    double index;
+    BasePtr index;
 
 public:
-    PreDecrementArray(std::string &_variable, double _index)
+    PreDecrementArray(std::string &_variable, BasePtr _index)
         : AssignOp(_variable), index(_index)
     {}
 
@@ -285,11 +296,13 @@ public:
 
     }
     virtual void printC (std::ostream &out) const override{
-        out << "--" << variable << "[" << index << "]" << std::endl;
+        //out << "--" << variable << "[" << index << "]" << std::endl;
 
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
-        out << "--" << variable << "[" << index << "]" << std::endl;
+        out << "--" << variable << "[";
+        index->printPy(out, myPy);
+        out << "]" << std::endl;
     }
 };
 
@@ -318,10 +331,10 @@ class PostIncrementArray
 {
 
 protected:
-    int index;
+    BasePtr index;
 
 public:
-    PostIncrementArray(std::string &_variable, double _index)
+    PostIncrementArray(std::string &_variable, BasePtr _index)
         : AssignOp(_variable), index(_index)
     {}
 
@@ -329,11 +342,13 @@ public:
 
     }
     virtual void printC (std::ostream &out) const override{
-        out << variable << "[" << index << "]++" << std::endl;
+        //out << variable << "[" << index << "]++" << std::endl;
 
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
-        out << variable << "[" << index << "]++" << std::endl;
+        out << variable << "[";
+        index->printPy(out, myPy);
+        out << "]++" << std::endl;
     }
 };
 
@@ -362,10 +377,10 @@ class PostDecrementArray
 {
 
 protected:
-    int index;
+    BasePtr index;
 
 public:
-    PostDecrementArray(std::string &_variable, double _index)
+    PostDecrementArray(std::string &_variable, BasePtr _index)
         : AssignOp(_variable), index(_index)
     {}
 
@@ -373,11 +388,13 @@ public:
 
     }
     virtual void printC (std::ostream &out) const override{
-        out << variable << "[" << index << "]--" << std::endl;
+        //out << variable << "[" << index << "]--" << std::endl;
 
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
-        out << variable << "[" << index << "]--" << std::endl;
+        out << variable << "[";
+        index->printPy(out, myPy);
+        out << "]--" << std::endl;
     }
 };
 

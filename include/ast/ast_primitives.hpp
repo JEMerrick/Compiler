@@ -55,21 +55,23 @@ class Array
     : public Base
 {
 protected:
-    std::string name;
-    int index;
+    std::string var;
+    BasePtr expr;
 public:
-    Array(std::string _name, int _index)
-        : name(_name), index(_index)
+    Array(std::string _var, BasePtr _expr)
+        : var(_var), expr(_expr)
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const{
 
     }
     virtual void printC (std::ostream &out) const{
-        out << name << "[" << index << "]";
+       // out << name << "[" << index << "]";
     }
     virtual void printPy (std::ostream &out, Py &myPy) const{
-        out << name << "[" << index << "]";
+        out << var << "[";
+        expr->printPy(out, myPy);
+        out << "]";
     }
 
 };
