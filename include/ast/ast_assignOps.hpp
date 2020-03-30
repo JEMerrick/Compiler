@@ -39,7 +39,7 @@ public:
         val->printMIPS(r1, out, help);
         out << "ADDU " << reg << ", $0, " << r1 << std::endl;
         if(help.localexists(variable)){
-            out << "SW " << reg << ", " << help.findlocal(variable) << "$fp" << std::endl;
+            out << "SW " << reg << ", " << help.findlocal(variable) << "($fp)" << std::endl;
         }
         else if(help.globalexists(variable)){
             std::string r2 = "$" + std::to_string(help.findreg());
@@ -120,7 +120,36 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-        out << "assign" << std::endl;
+        std::string r1 = "$" + std::to_string(help.findreg());
+        val->printMIPS(r1, out, help);
+        std::string r2 = "$" + std::to_string(help.findreg());
+
+        if(help.localexists(variable)){
+            out << "LW " << r2 << ", " << help.findlocal(variable) << "($fp)" << std::endl;
+        }
+        else if(help.globalexists(variable)){
+            std::string r3 = "$" + std::to_string(help.findreg());
+            out << "LUI " << r3 << ", %hi(" << variable << ")" << std::endl;
+            out << "ADDI " << r2 << ", " << r2 << ", %lo(" << variable << ")" << std::endl;
+            out << "LW " << r2 << ", 0(" << r3 << ")" << std::endl;
+        }
+        else{
+          throw "Variable not declared. ";
+        }
+        out << "ADDU " << r2 << ", " << r2 << ", " << r1 << std::endl;
+        out << "ADDU " << reg << ", $0, " << r2 << std::endl;
+        if(help.localexists(variable)){
+            out << "SW " << r2 << ", " << help.findlocal(variable) << "($fp)" << std::endl;
+        }
+        else if(help.globalexists(variable)){
+            out << "SW " << r2 << ", 0(" << r3 << ")" << std::endl;
+            help.regFlag[std::stoi(r3.substr(1))] = 0;
+        }
+        else{
+          throw "Variable not declared. ";
+        }
+        help.regFlag[std::stoi(r1.substr(1))] = 0;
+        help.regFlag[std::stoi(r2.substr(1))] = 0;
     }
     virtual void printC (std::ostream &out) const override{
         out << variable;
