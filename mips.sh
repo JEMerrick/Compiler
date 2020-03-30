@@ -1,46 +1,75 @@
 #!/bin/bash
-make clean
-make bin/c_compiler
-if [[ -z "$1" ]]; then
-    COMPILER=bin/c_compiler
+
+if [[ "$1" != "" ]] ; then
+    compiler="$1"
 else
-    COMPILER=$1
+    compiler="bin/c_compiler"
 fi
 
-mkdir -p working
+have_compiler=0
+if [[ ! -f bin/c_compiler ]] ; then
+    >&2 echo "Warning : cannot find compiler at path ${compiler}. Only checking C reference against itself."
+    have_compiler=1
+fi
 
-for DRIVER in compiler_tests/array/*_driver.c ; do
-    NAME=$(basename $DRIVER _driver.c)
+working="test_tmp"
+mkdir -p ${working}
+working_exec="exec_tmp"
+mkdir -p ${working_exec}
+
+for DRIVER in compiler_tests/array/*'_driver'.c ; do
+
+    driver=$(basename ${DRIVER%.c})
+    NAME=$(basename ${DRIVER%_driver.c})
     TESTCODE=compiler_tests/array/$NAME.c
 
-    >&2 echo "Test case $NAME"
+    echo "-------------------------------"
+    echo " "
+    echo "Test case $NAME"
+    echo " "
 
-    # Compile driver with normal GCC
-    bin/c_compiler -S ${NAME}.c -o ${NAME}.s
-    if [[ $? -ne 0 ]]; then
-        >&2 echo "ERROR : Couldn't compile driver program using GCC."
-        continue
-    fi
-
-    # Compile test function with compiler under test to assembly
-    mips-linux-gnu-gcc -mfp32 -o ${NAME}.o -c ${NAME}.s
-    if [[ $? -ne 0 ]]; then
-        >&2 echo "ERROR : Compiler returned error message."
-        continue
-    fi
-
-    # Link driver object and assembly into executable
-    mips-linux-gnu-gcc -mfp32 -static -o ${NAME} ${NAME}.o ${NAME}_driver.c
-    if [[ $? -ne 0 ]]; then
-        >&2 echo "ERROR : Linker returned error message."
-        continue
-    fi
-
-    # Run the actual executable
-    qemu-mips ${NAME}
-    if [[ $? -ne 0 ]]; then
-        >&2 echo "ERROR : Testcase returned $?, but expected 0."
+    # Compile ${NAME}.c using the compiler under test into assembly.
+    echo "compiling $TESTCODE using ${compiler}..."
+    ${compiler} -S $TESTCODE -o ${working}/$NAME-got.s
+    if [[ ! -f ${working}/$NAME-got.s ]] ; then
+        >&2 echo "ERROR : Your C Compiler failed to compile $TESTCODE into $NAME-got.s"
+        TEST_OUTPUT=20
     else
-	echo "pass"
+        #Compile ${NAME}_driver.c using MIPS GCC.
+        echo "compiling $DRIVER using mips-linux-gnu-gcc..."
+        mips-linux-gnu-gcc -c $DRIVER -o ${working}/$driver-got.o
+        if [[ ! -f ${working}/$driver-got.o ]] ; then
+            >&2 echo "ERROR : mips-linux-gnu-gcc failed to compile $DRIVER into $driver-got.o"
+        else
+            #Link the generated assembly and the driver object into a MIPS executable.
+            echo "linking assembly and driver object..."
+            mips-linux-gnu-gcc -static ${working}/$NAME-got.s ${working}/$driver-got.o -o ${working_exec}/$NAME-got
+        fi
+
+        if [[ ! -f ${working_exec}/$NAME-got ]] ; then
+            >&2 echo "ERROR : mips-linux-gnu-gcc failed in linking $NAME-got.s and $driver-got.o into an executable"
+            TEST_OUTPUT=20
+        else
+            # Run the executable under QEMU
+            qemu-mips ${working_exec}/$NAME-got
+            TEST_OUTPUT=$?
+        fi
     fi
+
+    if [[ $TEST_OUTPUT -eq 20 ]] ; then
+        echo " "
+        echo "$NAME, Fail, no $NAME-got executable in ${working_exec}"
+    elif [[ $TEST_OUTPUT -ne 0 ]] ; then
+        echo " "
+        echo "$NAME, Fail, Expected "0", got ${TEST_OUTPUT}"
+    elif [[ ${have_compiler} -ne 0 ]] ; then
+        echo " "
+        echo "$NAME, Fail, No C compiler"
+    else
+        echo " "
+        echo "$NAME, Pass"
+    fi
+        echo " "
+        echo "-------------------------------"
+        echo " "
 done
