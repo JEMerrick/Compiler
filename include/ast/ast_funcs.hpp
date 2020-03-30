@@ -255,6 +255,8 @@ public:
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
         if(nextArg!= NULL){
             nextArg->printMIPS(reg, out, help);
+            std::cout << "ARGLIST" << '\n';
+            out << std::endl;
         }
         help.parameters++;
         arg->printMIPS(reg, out, help);
