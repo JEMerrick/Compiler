@@ -77,7 +77,7 @@ public:
       initial->printPy(out, myPy);
       out << std::endl;
       for(int i = myPy.indent; i > 0; i--){
-        out << "\t";
+          out << "\t";
       }
       out << "while ";
       condition->printPy(out, myPy);

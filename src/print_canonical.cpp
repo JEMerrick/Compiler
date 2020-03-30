@@ -1,12 +1,10 @@
 #include "ast.hpp"
 #include <iostream>
+#include <fstream>
 
 int main()
 {
     const Base* ast = parseAST();
-
-    ast -> printC(std::cout);
-    std::cout << std::endl;
 
     Py myPython;
     ast -> printPy(std::cout, myPython);
@@ -15,6 +13,7 @@ int main()
     MIPZ myMIPS;
     ast->printMIPS("Hi", std::cout, myMIPS);
     std::cout<<std::endl;
-    
+
     return 0;
+
 }

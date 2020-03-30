@@ -50,5 +50,28 @@ public:
 
 };
 
+class Array
+    : public Base
+{
+protected:
+    int index;
+    std::string name;
+public:
+    Array(std::string _name, int _index)
+        : name(_name), index(_index)
+    {}
+
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const{
+
+    }
+    virtual void printC (std::ostream &out) const{
+        out << name << "[" << index << "]";
+    }
+    virtual void printPy (std::ostream &out, Py &myPy) const{
+        out << name << "[" << index << "]";
+    }
+
+};
+
 
 #endif
