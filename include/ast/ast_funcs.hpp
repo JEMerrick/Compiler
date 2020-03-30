@@ -92,7 +92,11 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-        out << "funcs" << std::endl;
+        MIPZ newMIPZ(help);
+        newMIPZ.parameters = 0;
+        varList->printMIPS(reg, newMIPZ, out);
+        out << "ADDI $sp, $fp, " << newMIPZ.frameptr << std::endl;
+        out << "JAL " << funcName;
     }
     virtual void printC (std::ostream &out) const override{
         out << type << " " << funcName << "(";
@@ -123,7 +127,11 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-        out << "funcs" << std::endl;
+        MIPZ newMIPZ(help);
+        newMIPZ.parameters = 0;
+        varList->printMIPS(reg, newMIPZ, out);
+        out << "ADDI $sp, $fp, " << newMIPZ.frameptr << std::endl;
+        out << "JAL " << funcName;
     }
     virtual void printC (std::ostream &out) const override{
         if(varList != NULL){
@@ -160,7 +168,10 @@ public:
     }
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-        out << "funcs" << std::endl;
+        if(nextArg!= NULL){
+            nextArg->printMIPS(reg, out, help);
+        }
+        out << "SW $1, " << help.createlocal(id) << "($fp)" << std::endl;
     }
     virtual void printC (std::ostream &out) const override{
         if(nextArg != NULL){
@@ -199,7 +210,10 @@ public:
     }
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-        out << "funcs" << std::endl;
+        if(nextArg!= NULL){
+            nextArg->printMIPS(reg, out, help);
+        }
+        out << "SW $1, " << help.createlocal(id) << "($fp)" << std::endl;
     }
     virtual void printC (std::ostream &out) const override{
         if(nextArg != NULL){
@@ -238,7 +252,11 @@ public:
     }
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-        out << "funcs" << std::endl;
+        if(nextArg!= NULL){
+            nextArg->printMIPS(reg, out, help);
+        }
+        help.parameters++;
+        arg->printMIPS(reg, out, help);
     }
     virtual void printC (std::ostream &out) const override{
         if(arg != NULL){
