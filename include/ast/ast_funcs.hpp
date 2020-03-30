@@ -30,7 +30,7 @@ public:
         out << ".ent" << std::endl;
         out << funcName << ":" << std::endl;
         out << "ADDIU $sp, $sp, -8" << std::endl;
-        out << "SW $31, 4($sp)" << std::endl;
+        out << "SW $fp, 4($sp)" << std::endl;
         out << "MOVE $fp, $sp" << std::endl;
         if(varList != NULL){
             out << "varlist" << '\n';
@@ -47,7 +47,7 @@ public:
         out << "LW $fp, 4($sp)" << std::endl;
         out << "ADDIU $sp, $sp, 8" << std::endl;
         if(funcName != "main"){
-            out << "JR $31" << std::endl;
+            out << "J $31" << std::endl;
         }
         out << ".end " << funcName << std::endl;
     }
