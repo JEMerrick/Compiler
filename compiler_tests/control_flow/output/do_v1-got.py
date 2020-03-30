@@ -1,10 +1,10 @@
 def f():
 	x = 0
-	x = 0
-	while 	x < 0:
-		return 1
-	x = x + 1
-
+	x = 1
+	while True : 
+		x = 0
+		if (x):
+			break;
 	return 19937
 
 # Boilerplat

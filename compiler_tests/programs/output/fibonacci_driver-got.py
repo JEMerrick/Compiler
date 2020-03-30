@@ -1,11 +1,8 @@
-def f():
-	x = 0
-	x = 0
-	while 	x < 0:
-		return 1
-	x = x + 1
+def fib(x)
 
-	return 19937
+def main():
+	x = 0
+	return -(fib(6) == 8)
 
 # Boilerplat
 if __name__ == "__main__":

@@ -1,11 +1,11 @@
-def f():
-	x = 0
-	x = 0
-	while 	x < 0:
-		return 1
-	x = x + 1
+def g(x):
+	if ( x = 1 ) : 
+		return 10
+	if ( x = 2 ) : 
+		return 11
+	else :
+		return 12
 
-	return 19937
 
 # Boilerplat
 if __name__ == "__main__":

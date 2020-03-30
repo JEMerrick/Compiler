@@ -1,11 +1,7 @@
-def f():
-	x = 0
-	x = 0
-	while 	x < 0:
-		return 1
-	x = x + 1
+def f()
 
-	return 19937
+def main():
+	return -(f() == 11)
 
 # Boilerplat
 if __name__ == "__main__":
