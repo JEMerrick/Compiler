@@ -1,12 +1,13 @@
 #include "ast.hpp"
 #include <iostream>
+#include <fstream>
+
+extern "C" FILE *yyin;
 
 int main()
 {
+    yyin = fopen(argv[2], "r");
     const Base* ast = parseAST();
-
-    ast -> printC(std::cout);
-    std::cout << std::endl;
 
     Py myPython;
     ast -> printPy(std::cout, myPython);
