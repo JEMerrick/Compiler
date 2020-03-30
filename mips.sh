@@ -30,28 +30,28 @@ for DRIVER in compiler_tests/array/*'_driver'.c ; do
 
     # Compile ${NAME}.c using the compiler under test into assembly.
     echo "compiling $TESTCODE using ${compiler}..."
-    ${compiler} -S $TESTCODE -o ${working}/$NAME-got.s
-    if [[ ! -f ${working}/$NAME-got.s ]] ; then
+    ${compiler} -S $TESTCODE -o ${working}/$NAME.s
+    if [[ ! -f ${working}/$NAME.s ]] ; then
         >&2 echo "ERROR : Your C Compiler failed to compile $TESTCODE into $NAME-got.s"
         TEST_OUTPUT=20
     else
         #Compile ${NAME}_driver.c using MIPS GCC.
         echo "compiling $DRIVER using mips-linux-gnu-gcc..."
-        mips-linux-gnu-gcc -c $DRIVER -o ${working}/$driver-got.o
-        if [[ ! -f ${working}/$driver-got.o ]] ; then
+        mips-linux-gnu-gcc -c $DRIVER -o ${working}/$driver.o
+        if [[ ! -f ${working}/$driver.o ]] ; then
             >&2 echo "ERROR : mips-linux-gnu-gcc failed to compile $DRIVER into $driver-got.o"
         else
             #Link the generated assembly and the driver object into a MIPS executable.
             echo "linking assembly and driver object..."
-            mips-linux-gnu-gcc -static ${working}/$NAME-got.s ${working}/$driver-got.o -o ${working_exec}/$NAME-got
+            mips-linux-gnu-gcc -static ${working}/$NAME.s ${working}/$driver.o -o ${working_exec}/$NAME
         fi
 
-        if [[ ! -f ${working_exec}/$NAME-got ]] ; then
-            >&2 echo "ERROR : mips-linux-gnu-gcc failed in linking $NAME-got.s and $driver-got.o into an executable"
+        if [[ ! -f ${working_exec}/$NAME ]] ; then
+            >&2 echo "ERROR : mips-linux-gnu-gcc failed in linking $NAME.s and $driver.o into an executable"
             TEST_OUTPUT=20
         else
             # Run the executable under QEMU
-            qemu-mips ${working_exec}/$NAME-got
+            qemu-mips ${working_exec}/$NAME
             TEST_OUTPUT=$?
         fi
     fi
