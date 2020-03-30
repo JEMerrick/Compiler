@@ -38,8 +38,14 @@ public:
 
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{}
-    virtual void printC (std::ostream &out) const override{}
-    virtual void printPy (std::ostream &out, Py &myPy) const override{}
+    virtual void printC (std::ostream &out) const override{
+        out << "-";
+        expr->printC(out);
+    }
+    virtual void printPy (std::ostream &out, Py &myPy) const override{
+        out << "-";
+        expr->printPy(out, myPy);
+    }
 };
 
 
@@ -54,8 +60,14 @@ public:
 
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{}
-    virtual void printC (std::ostream &out) const override{}
-    virtual void printPy (std::ostream &out, Py &myPy) const override{}
+    virtual void printC (std::ostream &out) const override{
+        out << "!";
+        expr->printC(out);
+    }
+    virtual void printPy (std::ostream &out, Py &myPy) const override{
+        out << "!";
+        expr->printPy(out, myPy);
+    }
 };
 
 //~ bitwise negation
@@ -69,8 +81,14 @@ public:
 
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{}
-    virtual void printC (std::ostream &out) const override{}
-    virtual void printPy (std::ostream &out, Py &myPy) const override{}
+    virtual void printC (std::ostream &out) const override{
+        out << "~";
+        expr->printC(out);
+    }
+    virtual void printPy (std::ostream &out, Py &myPy) const override{
+        out << "~";
+        expr->printPy(out, myPy);
+    }
 };
 
 #endif

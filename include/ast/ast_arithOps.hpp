@@ -47,7 +47,7 @@ public:
         std::string r2 = "$" + std::to_string(help.findreg());
         right->printMIPS(r2, out, help);
         //ADDI RY 0, 5
-        out << "ADDU " << reg << ", " << r1 << ", " << r2;
+        out << "ADDU " << reg << ", " << r1 << ", " << r2 << std::endl;
         //ADDU RZ RY RX
         help.regFlag[std::stoi(r1.substr(1))] = 0;
         help.regFlag[std::stoi(r2.substr(1))] = 0;
@@ -79,7 +79,7 @@ public:
         left->printMIPS(r1, out, help);
         std::string r2 = "$" + std::to_string(help.findreg());
         right->printMIPS(r2, out, help);
-        out << "SUBU " << reg << ", " << r1 << ", " << r2;
+        out << "SUBU " << reg << ", " << r1 << ", " << r2 << std::endl;
         help.regFlag[std::stoi(r1.substr(1))] = 0;
         help.regFlag[std::stoi(r2.substr(1))] = 0;
     }
@@ -111,7 +111,7 @@ public:
         left->printMIPS(r1, out, help);
         std::string r2 = "$" + std::to_string(help.findreg());
         right->printMIPS(r2, out, help);
-        out << "MUL " << reg << ", " << r1 << ", " << r2;
+        out << "MUL " << reg << ", " << r1 << ", " << r2 << std::endl;
         help.regFlag[std::stoi(r1.substr(1))] = 0;
         help.regFlag[std::stoi(r2.substr(1))] = 0;
     }
@@ -142,7 +142,7 @@ public:
         left->printMIPS(r1, out, help);
         std::string r2 = "$" + std::to_string(help.findreg());
         right->printMIPS(r2, out, help);
-        out << "DIV " << r1 << ", " << r2;
+        out << "DIV " << r1 << ", " << r2 << std::endl;
         out << "MFLO " << reg << std::endl;
         help.regFlag[std::stoi(r1.substr(1))] = 0;
         help.regFlag[std::stoi(r2.substr(1))] = 0;
@@ -175,7 +175,7 @@ public:
         left->printMIPS(r1, out, help);
         std::string r2 = "$" + std::to_string(help.findreg());
         right->printMIPS(r2, out, help);
-        out << "DIV " << r1 << ", " << r2;
+        out << "DIV " << r1 << ", " << r2 << std::endl;
         out << "MFHI " << reg << std::endl;
         help.regFlag[std::stoi(r1.substr(1))] = 0;
         help.regFlag[std::stoi(r2.substr(1))] = 0;

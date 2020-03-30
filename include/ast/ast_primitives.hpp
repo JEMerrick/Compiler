@@ -17,7 +17,7 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const{
-        out << "LW " << reg << "$0";
+        out << "LW VARIABLE " << reg << "$0";
     }
     virtual void printC (std::ostream &out) const{
         out << id;
@@ -40,7 +40,7 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const{
-        out << "addi " << reg << "$0, " << value;
+        out << "ADDI " << reg << ", $0, " << value << std::endl;
     }
     virtual void printC (std::ostream &out) const{
         out << value;
