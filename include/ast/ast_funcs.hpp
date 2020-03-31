@@ -175,6 +175,10 @@ public:
 
         out << "SW $" << std::to_string((help.parameters++)+4) << ", " << help.createlocal(id) << "($fp)" << std::endl;
         out << "in ARG" << std::endl;
+
+        if(nextArg== NULL){
+            out << "LW $" << std::to_string((help.parameters++)+4) << ", " << help.createlocal(id) << "($fp)" << std::endl;
+        }
     }
     virtual void printC (std::ostream &out) const override{
         if(nextArg != NULL){
