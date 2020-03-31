@@ -198,13 +198,15 @@ public:
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
         std::string r1 = "$" + std::to_string(help.findreg());
+        out << "SW $" << std::to_string((help.parameters++)+4) << ", " << (help.createlocal(id))-4 << "($fp)" << std::endl;
+        out << "SW $" << std::to_string((help.parameters++)+4) << ", " << (help.createlocal(id))-4 << "($fp)" << std::endl;
         if(expr != NULL){
             expr->printMIPS(reg, out, help);
         }
         else{
             out << "ADDI " << r1 << ", $0, 0" << std::endl;
         }
-        out << "SW $2, " << (help.createlocal(id))-4 << "($fp)" << std::endl;
+        out << "SW $2, " << (help.createlocal(id)) << "($fp)" << std::endl;
         help.regFlag[std::stoi(r1.substr(1))] = 0;
     }
     virtual void printC (std::ostream &out) const override{
