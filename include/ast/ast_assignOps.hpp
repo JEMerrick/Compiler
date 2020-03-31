@@ -81,19 +81,7 @@ public:
       std::string r1 = "$" + std::to_string(help.findreg());
       val->printMIPS(r1, out, help);
       out << "ADDU " << reg << ", $0, " << r1 << std::endl;
-      if(help.localexists(variable)){
-          //out << "SW " << reg << ", " << help.findarrayelement(variable, ) << "$fp" << std::endl;
-      }
-      else if(help.globalexists(variable)){
-          std::string r2 = "$" + std::to_string(help.findreg());
-          out << "LUI " << r2 << ", %hi(" << variable << ")" << std::endl;
-          out << "ADDI " << r2 << ", " << r2 << ", %lo(" << variable << ")" << std::endl;
-          out << "SW " << reg << ", 0(" << r2 << ")" << std::endl;
-          help.regFlag[std::stoi(r2.substr(1))] = 0;
-      }
-      else{
-        throw "Variable not declared. ";
-      }
+
       help.regFlag[std::stoi(r1.substr(1))] = 0;
     }
     virtual void printC (std::ostream &out) const override{
@@ -139,6 +127,7 @@ public:
         }
         out << "ADDU " << r2 << ", " << r2 << ", " << r1 << std::endl;
         out << "ADDU " << reg << ", $0, " << r2 << std::endl;
+
         if(help.localexists(variable)){
             out << "SW " << r2 << ", " << help.findlocal(variable) << "($fp)" << std::endl;
         }
@@ -179,21 +168,8 @@ public:
         std::string r1 = "$" + std::to_string(help.findreg());
         val->printMIPS(r1, out, help);
         std::string r2 = "$" + std::to_string(help.findreg());
-        std::string r3 = "$" + std::to_string(help.findreg());
 
-        if(help.localexists(variable)){
-            //out << "LW " << r2 << ", " << help.findarrayelement(variable) << "($fp)" << std::endl;
-        }
-        else if(help.globalexists(variable)){
-            out << "LUI " << r3 << ", %hi(" << variable << ")" << std::endl;
-            out << "ADDI " << r2 << ", " << r2 << ", %lo(" << variable << ")" << std::endl;
-            out << "LW " << r2 << ", ";
-            //(4*index->printMIPS(reg, out, help));
-            out << "(" << r3 << ")" << std::endl;
-        }
-        else{
-          throw "Variable not declared. ";
-        }
+
         out << "ADDU " << r2 << ", " << r2 << ", " << r1 << std::endl;
         out << "ADDU " << reg << ", $0, " << r2 << std::endl;
         if(help.localexists(variable)){
@@ -294,35 +270,10 @@ public:
         std::string r1 = "$" + std::to_string(help.findreg());
         val->printMIPS(r1, out, help);
         std::string r2 = "$" + std::to_string(help.findreg());
-        std::string r3 = "$" + std::to_string(help.findreg());
 
-        if(help.localexists(variable)){
-            //out << "LW " << r2 << ", " << help.findarrayelement(variable) << "($fp)" << std::endl;
-        }
-        else if(help.globalexists(variable)){
-            out << "LUI " << r3 << ", %hi(" << variable << ")" << std::endl;
-            out << "ADDI " << r2 << ", " << r2 << ", %lo(" << variable << ")" << std::endl;
-            out << "LW " << r2 << ", ";
-            //(4*index->printMIPS(reg, out, help));
-            out << "(" << r3 << ")" << std::endl;
-        }
-        else{
-          throw "Variable not declared. ";
-        }
         out << "SUBU " << r2 << ", " << r2 << ", " << r1 << std::endl;
         out << "ADDU " << reg << ", $0, " << r2 << std::endl;
-        if(help.localexists(variable)){
-            //out << "SW " << r2 << ", " << help.findarrayelement(variable, ) << "($fp)" << std::endl;
-        }
-        else if(help.globalexists(variable)){
-            out << "SW " << r2 << ", ";
-            //(4*index->printMIPS(reg, out, help));
-            out << "(" << r3 << ")" << std::endl;
-            help.regFlag[std::stoi(r3.substr(1))] = 0;
-        }
-        else{
-          throw "Variable not declared. ";
-        }
+
         help.regFlag[std::stoi(r1.substr(1))] = 0;
         help.regFlag[std::stoi(r2.substr(1))] = 0;
     }
@@ -403,7 +354,7 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-        out << "array" << std::endl;
+
     }
     virtual void printC (std::ostream &out) const override{
         //out << "++" << variable << "[" << index << "]" << std::endl;
@@ -476,7 +427,7 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-        out << "array" << std::endl;
+
     }
     virtual void printC (std::ostream &out) const override{
         //out << "--" << variable << "[" << index << "]" << std::endl;
@@ -549,7 +500,7 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-        out << "array" << std::endl;
+
     }
     virtual void printC (std::ostream &out) const override{
         //out << variable << "[" << index << "]++" << std::endl;
@@ -622,7 +573,7 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-        out << "assign" << std::endl;
+        
     }
     virtual void printC (std::ostream &out) const override{
         //out << variable << "[" << index << "]--" << std::endl;
