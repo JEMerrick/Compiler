@@ -16,6 +16,18 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+        help.createglobal(id);
+        out << ".globl " << id << std::endl;
+        out << ".data" << std::endl;
+        out << ".align 2" << std::endl;
+        out << id << ":" << std::endl;
+        if(expr != NULL){
+            out << ".word ";
+            expr->printMIPS(reg, out, help);
+        }
+        else{
+            out << ".word 0" << std::endl;
+        }
     }
     virtual void printC (std::ostream &out) const override{
         out << id << "=";
@@ -101,7 +113,9 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-        expr->printMIPS(reg, out, help);
+        if(expr != NULL){
+            expr->printMIPS(reg, out, help);
+        }
     }
     virtual void printC (std::ostream &out) const override{
         expr->printC(out);
@@ -129,6 +143,10 @@ public:
         reg = "$2";
         retval->printMIPS(reg, out, help);
         //this goes to number primitive
+        out << "LW " << "$31, -4($fp)" << std::endl;
+        out << "LW $fp, 0($fp)" << std::endl;
+        out << "ADDI $sp, $fp, 0" << std::endl;
+        out << "J $31" << std::endl;
     }
     virtual void printC (std::ostream &out) const override{
         out << "return ";
@@ -156,6 +174,9 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+        if(list != NULL){
+            list->printMIPS(reg, out, help);
+        }
     }
     virtual void printC (std::ostream &out) const override{
         out << type << " ";
@@ -179,6 +200,9 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+        if(expr != NULL){
+            expr->printMIPS(reg, out, help);
+        }
     }
     virtual void printC (std::ostream &out) const override{
         out << id << "=";
@@ -229,7 +253,7 @@ public:
         }
     }
 };
-    
+
 
 class StructDecl
     : public Base
