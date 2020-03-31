@@ -39,9 +39,9 @@ public:
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
         out << "enter and " << std::endl;
-        std::string r1 = "$" + std::to_string(help.findreg());
+        std::string r1 = "$" + std::to_string(help.parameters++);
         left->printMIPS(r1, out, help);
-        std::string r2 = "$" + std::to_string(help.findreg());
+        std::string r2 = "$" + std::to_string(help.parameters);
         right->printMIPS(r2, out, help);
         out << "AND " << reg << ", " << r1 << ", " << r2 << std::endl;
         help.regFlag[std::stoi(r1.substr(1))] = 0;

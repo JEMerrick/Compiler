@@ -17,6 +17,7 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const{
+        out << "enter variable " << std::endl;
         if(help.globalexists(id)){
             std::string r1 = "$" + std::to_string(help.findreg());
             out << "LUI " << r1 << ", %hi(" << id << ")" << std::endl;
