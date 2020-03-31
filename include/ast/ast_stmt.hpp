@@ -16,6 +16,18 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+        help.createglobal(id);
+        out << ".globl " << id << std::endl;
+        out << ".data" << std::endl;
+        out << ".align 2" << std::endl;
+        out << id << ":" << std::endl;
+        if(expr != NULL){
+            out << ".word ";
+            expr->printMIPS(reg, out, help);
+        }
+        else{
+            out << ".word 0" << std::endl;
+        }
     }
     virtual void printC (std::ostream &out) const override{
         out << id << "=";
@@ -101,7 +113,9 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-        expr->printMIPS(reg, out, help);
+        if(expr != NULL){
+            expr->printMIPS(reg, out, help);
+        }
     }
     virtual void printC (std::ostream &out) const override{
         expr->printC(out);
@@ -156,6 +170,9 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+        if(list != NULL){
+            list->printMIPS(reg, out, help);
+        }
     }
     virtual void printC (std::ostream &out) const override{
         out << type << " ";
@@ -179,6 +196,17 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+        std::string r1 = "$" + std::to_string(help.findreg());
+        out << "SW $" << std::to_string((help.parameters++)+4) << ", " << (help.createlocal(id))-4 << "($fp)" << std::endl;
+        out << "SW $" << std::to_string((help.parameters++)+4) << ", " << (help.createlocal(id))-4 << "($fp)" << std::endl;
+        if(expr != NULL){
+            expr->printMIPS(reg, out, help);
+        }
+        else{
+            out << "ADDI " << r1 << ", $0, 0" << std::endl;
+        }
+        out << "SW $2, " << (help.createlocal(id))-4 << "($fp)" << std::endl;
+        help.regFlag[std::stoi(r1.substr(1))] = 0;
     }
     virtual void printC (std::ostream &out) const override{
         out << id << "=";
@@ -229,7 +257,7 @@ public:
         }
     }
 };
-    
+
 
 class StructDecl
     : public Base

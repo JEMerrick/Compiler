@@ -40,7 +40,7 @@ class For
     : public Base
 {
 
-protected:    
+protected:
     BasePtr initial;
     BasePtr condition;
     BasePtr incrementordecrement;
@@ -62,15 +62,15 @@ public:
 
     }
     virtual void printC (std::ostream &out) const override{
-      out << "for(";
-      initial->printC(out);
-      out << "; ";
-      condition->printC(out);
-      out << "; ";
-      incrementordecrement->printC(out);
-      out << ") {" << std::endl;
-      branch->printC(out);
-      out << "}";
+        out << "for(";
+        initial->printC(out);
+        out << "; ";
+        condition->printC(out);
+        out << "; ";
+        incrementordecrement->printC(out);
+        out << ") {" << std::endl;
+        branch->printC(out);
+        out << "}";
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
       for(int i = myPy.indent; i > 1; i--){
@@ -170,7 +170,7 @@ public:
         branch->printPy(out, myPy);
         out << "):\n";
         out << "\t\t\tbreak";
-        
+
     }
 };
 

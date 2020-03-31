@@ -17,7 +17,6 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const{
-        out << "enter variable " << std::endl;
         if(help.globalexists(id)){
             std::string r1 = "$" + std::to_string(help.findreg());
             out << "LUI " << r1 << ", %hi(" << id << ")" << std::endl;
@@ -26,7 +25,7 @@ public:
             help.regFlag[std::stoi(r1.substr(1))] = 0;
         }
         else if(help.localexists(id)){
-            out << "LW " << reg << ", " << help.findlocal(id) << "($fp)" << std::endl;
+            out << "LW " << reg << ", " << 4+help.findlocal(id) << "($fp)" << std::endl;
         }
         else{
             throw "variable not declared.";
@@ -76,7 +75,19 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const{
-
+        if(help.localexists(var)){
+            //out << "LW "<< reg<<", "<<help.findarrayelement(id, element)<<"($fp)"<<std::endl;
+        }else if(help.globalexists(var)){
+            std::string r1 = "$" + std::to_string(help.findreg());
+            out << "LUI " << r1 << ", %hi(" << var << ")" << std::endl;
+            out << "ADDI " << r1 << ", " << r1 << ", %lo(" << var << ")" << std::endl;
+            out << "LW " << reg << ", ";
+            expr->printMIPS(reg, out, help); // times 4
+            out << "(" << r1 << ")" << std::endl;
+            help.regFlag[std::stoi(r1.substr(1))] = 0;
+        }else{
+            throw "Variable not declared. ";
+        }
     }
     virtual void printC (std::ostream &out) const{
        // out << name << "[" << index << "]";
@@ -95,18 +106,18 @@ class Struct
 protected:
     std::string var;
     BasePtr inside;
-    
+
 public:
     Struct (std::string _var, BasePtr _inside)
     : var(_var), inside(_inside)
     {}
-        
+
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const{
     }
     virtual void printC (std::ostream &out) const{
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
-        out << "class " << var << "(object):\n";      
+        out << "class " << var << "(object):\n";
         myPy.indent++;
         for(int i = 0; i < myPy.globalv.size(); i++){
             for(int j = myPy.indent; j > 0; j--){
@@ -122,7 +133,7 @@ public:
         out << "]\n";
         myPy.indent--;
     }
-    
+
 };
 
 class StructVar
@@ -136,7 +147,7 @@ public:
     StructVar(std::string _type, std::string _var)
     : type(_type), var(_var)
     {}
-    
+
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const{
     }
     virtual void printC (std::ostream &out) const{
@@ -162,7 +173,7 @@ public:
     }
     virtual void printC (std::ostream &out) const{
     }
-     virtual void printPy (std::ostream &out, Py &myPy) const override{         
+     virtual void printPy (std::ostream &out, Py &myPy) const override{
          if(nextVar != NULL){
              nextVar->printPy(out, myPy);
              out << ", ";

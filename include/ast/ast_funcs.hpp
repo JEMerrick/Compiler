@@ -29,22 +29,26 @@ public:
         out << ".globl " << funcName << std::endl;
         out << ".ent " << funcName << std::endl;
         out << funcName << ":" << std::endl;
-        out << "ADDIU $sp, $sp, -8" << std::endl;
-        out << "SW $fp, 4($sp)" << std::endl;
+        // out << "ADDIU $sp, $sp, -8" << std::endl;
+        // out << "SW $fp, 4($sp)" << std::endl;
+        out << "SW $fp, 0($sp)" << std::endl; // new
+        out << "SW $31, -4($sp)" << std::endl;
         out << "MOVE $fp, $sp" << std::endl;
         if(varList != NULL){
             varList->printMIPS(reg, out, help);
-            out << "exit varlist" << std::endl;
         }
         if(branch != NULL){
             std::string newdreg = "$" + std::to_string(help.findreg());
             branch->printMIPS(newdreg, out, help);
             help.regFlag[std::stoi(newdreg.substr(1))] = 0;
         }
+        out << "LW " << "$31, -4($fp)" << std::endl;
+        out << "LW " << "$fp, 0($fp)" << std::endl;
         out << "MOVE $sp, $fp" << std::endl;
-        out << "MOVZ $31, $31, $0" << std::endl;
-        out << "LW $fp, 4($sp)" << std::endl;
-        out << "ADDIU $sp, $sp, 8" << std::endl;
+        //out << "MOVZ $31, $31, $0" << std::endl;
+        //out << "LW $fp, 4($sp)" << std::endl;
+        //out << "ADDIU $sp, $sp, 8" << std::endl;
+
         if(funcName != "main"){
             out << "J $31" << std::endl;
         }
@@ -168,13 +172,13 @@ public:
     }
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+        if(nextArg == NULL){
+            help.createlocal(id);
+        }
         if(nextArg!= NULL){
             nextArg->printMIPS(reg, out, help);
         }
-        out << "SW $" << std::to_string((help.parameters++)+4) << ", " << help.createlocal(id) << "($fp)" << std::endl;
-        if(nextArg == NULL){
-            out << "LW $" << std::to_string((help.parameters)) << ", " << help.createlocal(id) << "($fp)" << std::endl;
-        }
+        out << "SW $" << std::to_string((help.parameters++)+4) << ", " << (help.createlocal(id))-4 << "($fp)" << std::endl;
     }
     virtual void printC (std::ostream &out) const override{
         if(nextArg != NULL){
@@ -217,7 +221,6 @@ public:
           nextArg->printMIPS(reg, out, help);
       }
       //out << "SW $" << std::to_string((help.parameters++)+4) << help.createlocal(id) << "($fp)" << std::endl;
-      out << "in ARGCALL" << std::endl;
     }
     virtual void printC (std::ostream &out) const override{
         if(nextArg != NULL){
@@ -257,14 +260,11 @@ public:
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
         if(nextArg!= NULL){
-            out << "NEXTARGLIST" << '\n';
             nextArg->printMIPS(reg, out, help);
             out << std::endl;
         }
         help.parameters++;
-        out << "ARGLIST" << '\n';
         arg->printMIPS(reg, out, help);
-        out << "ARGLIST" << '\n';
     }
     virtual void printC (std::ostream &out) const override{
         if(arg != NULL){
