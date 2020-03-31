@@ -35,6 +35,7 @@ extern "C" int fileno(FILE *stream);
 [>][>]          { return T_RSHIFT; }
 [=]             { return T_ASSIGN; }
 [,]             { return T_COMMA; }
+[.]             { return T_DOT; }
 [\[]             { return T_LSBRAC; }
 [\]]             { return T_RSBRAC; }
 
@@ -70,6 +71,8 @@ extern "C" int fileno(FILE *stream);
 "-="            { yylval.string = new std::string(yytext); return T_SUBEQUAL; }
 "++"            { yylval.string = new std::string(yytext); return T_INCREM; }
 "--"            { yylval.string = new std::string(yytext); return T_DECREM; }
+
+"struct"        { yylval.string = new std::string(yytext); return T_STRUCT; }
 
 
 

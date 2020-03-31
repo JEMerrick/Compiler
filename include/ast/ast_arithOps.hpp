@@ -194,5 +194,25 @@ public:
     }
 };
 
+class DotOperator
+    : public ArithOp
+{
+public:
+    DotOperator(BasePtr _left, BasePtr _right)
+        : ArithOp(_left, _right)
+    {}
+
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+    }
+    virtual void printC (std::ostream &out) const override{
+
+    }
+    virtual void printPy (std::ostream &out, Py &myPy) const override{
+        left->printPy(out, myPy);
+        out << ".";
+        right->printPy(out, myPy);
+    }
+};
+
 
 #endif

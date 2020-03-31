@@ -1,7 +1,10 @@
-def g():
-	return -(20)
+class x(object):
+	__slots__ = [y]
+
 def f():
-	return g()
+	z = x()
+	z.y = 13
+	return z.y
 
 # Boilerplat
 if __name__ == "__main__":
