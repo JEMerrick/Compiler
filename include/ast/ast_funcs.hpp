@@ -216,7 +216,6 @@ public:
           nextArg->printMIPS(reg, out, help);
       }
       //out << "SW $" << std::to_string((help.parameters++)+4) << help.createlocal(id) << "($fp)" << std::endl;
-      out << "in ARGCALL" << std::endl;
     }
     virtual void printC (std::ostream &out) const override{
         if(nextArg != NULL){
@@ -256,14 +255,11 @@ public:
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
         if(nextArg!= NULL){
-            out << "NEXTARGLIST" << '\n';
             nextArg->printMIPS(reg, out, help);
             out << std::endl;
         }
         help.parameters++;
-        out << "ARGLIST" << '\n';
         arg->printMIPS(reg, out, help);
-        out << "ARGLIST" << '\n';
     }
     virtual void printC (std::ostream &out) const override{
         if(arg != NULL){
