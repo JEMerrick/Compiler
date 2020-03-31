@@ -1,6 +1,6 @@
 int f()
 {
-    int x;
-    int *y=&x;
+    int y;
+    int *x=&y;
     return 13;
 }

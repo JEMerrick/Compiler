@@ -1,4 +1,4 @@
-def f(ba, ):
+def f(a, b):
 	return a + b
 
 # Boilerplat

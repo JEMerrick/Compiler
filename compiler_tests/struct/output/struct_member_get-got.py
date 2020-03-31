@@ -1,5 +1,5 @@
 class x(object):
-	__slots__ = [y]
+	__slots__ = ('y')
 
 def f():
 	z = x()

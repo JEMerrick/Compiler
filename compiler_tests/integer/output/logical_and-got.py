@@ -1,5 +1,5 @@
 def f(x, y):
-	return x && y
+	return x and y
 
 # Boilerplat
 if __name__ == "__main__":

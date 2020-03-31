@@ -131,9 +131,9 @@ public:
         for(int j = myPy.indent; j > 0; j--){
                 out << "\t";
         }
-        out << "__slots__ = [";
+        out << "__slots__ = ('";
         inside->printPy(out, myPy);
-        out << "]\n";
+        out << "')\n";
         myPy.indent--;
     }
 
@@ -179,7 +179,7 @@ public:
      virtual void printPy (std::stringstream &out, Py &myPy) const override{
          if(nextVar != NULL){
              nextVar->printPy(out, myPy);
-             out << ", ";
+             out << "', '";
          }
          var->printPy(out, myPy);
     }
@@ -282,8 +282,8 @@ public:
         for(int j = myPy.indent; j > 0; j--){
             out << "\t";
         }
-        out << "*";
         var->printPy(out, myPy);
+        out << " = None";
     }
 
 };
@@ -307,7 +307,6 @@ public:
             nextVar->printPy(out, myPy);
             out << ", ";
         }
-        out << "*";
         var->printPy(out, myPy);
     }
 

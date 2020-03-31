@@ -2,14 +2,16 @@ def f():
 	i = 0
 	x = [8]
 	acc = 0
-	i++
-	while 	i = 8:
-		i < 16
+	i = 8
+	while (i < 16):
+		x[i - 8]=i
+		i++
 
 	acc = 0
-	i++
-	while 	i = 0:
-		i < 8
+	i = 0
+	while (i < 8):
+		acc = acc + x[i + 0]
+		i++
 
 	return acc
 
