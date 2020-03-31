@@ -25,7 +25,7 @@ public:
             help.regFlag[std::stoi(r1.substr(1))] = 0;
         }
         else if(help.localexists(id)){
-            out << "LW " << reg << ", " << help.findlocal(id) << "($fp)" << std::endl;
+            out << "LW " << reg << ", " << 4+help.findlocal(id) << "($fp)" << std::endl;
         }
         else{
             throw "variable not declared.";
