@@ -44,7 +44,6 @@ public:
         right->printMIPS(reg, out, help);
         out << "AND " << reg << ", " << r1 << ", " << reg << std::endl;
         help.regFlag[std::stoi(r1.substr(1))] = 0;
-        help.regFlag[std::stoi(r2.substr(1))] = 0;
     }
     virtual void printC (std::ostream &out) const override{
         left->printC(out);
