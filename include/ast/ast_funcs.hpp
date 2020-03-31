@@ -29,8 +29,10 @@ public:
         out << ".globl " << funcName << std::endl;
         out << ".ent " << funcName << std::endl;
         out << funcName << ":" << std::endl;
-        out << "ADDIU $sp, $sp, -8" << std::endl;
-        out << "SW $fp, 4($sp)" << std::endl;
+        // out << "ADDIU $sp, $sp, -8" << std::endl;
+        // out << "SW $fp, 4($sp)" << std::endl;
+        out << "SW $fp, 0($sp)" << std::endl;
+        out << "SW $31, -4($sp)" << std::endl;
         out << "MOVE $fp, $sp" << std::endl;
         if(varList != NULL){
             varList->printMIPS(reg, out, help);
