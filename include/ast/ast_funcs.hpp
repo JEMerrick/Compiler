@@ -31,7 +31,7 @@ public:
         out << funcName << ":" << std::endl;
         // out << "ADDIU $sp, $sp, -8" << std::endl;
         // out << "SW $fp, 4($sp)" << std::endl;
-        out << "SW $fp, 0($sp)" << std::endl;
+        out << "SW $fp, 0($sp)" << std::endl; // new
         out << "SW $31, -4($sp)" << std::endl;
         out << "MOVE $fp, $sp" << std::endl;
         if(varList != NULL){
@@ -42,10 +42,13 @@ public:
             branch->printMIPS(newdreg, out, help);
             help.regFlag[std::stoi(newdreg.substr(1))] = 0;
         }
+        out << "LW " << "$31, -4($fp)" << std::endl;
+        out << "LW " << "$fp, 0($fp)" << std::endl;
         out << "MOVE $sp, $fp" << std::endl;
-        out << "MOVZ $31, $31, $0" << std::endl;
-        out << "LW $fp, 4($sp)" << std::endl;
-        out << "ADDIU $sp, $sp, 8" << std::endl;
+        //out << "MOVZ $31, $31, $0" << std::endl;
+        //out << "LW $fp, 4($sp)" << std::endl;
+        //out << "ADDIU $sp, $sp, 8" << std::endl;
+
         if(funcName != "main"){
             out << "J $31" << std::endl;
         }
