@@ -170,20 +170,6 @@ public:
         std::string r2 = "$" + std::to_string(help.findreg());
 
 
-        out << "ADDU " << r2 << ", " << r2 << ", " << r1 << std::endl;
-        out << "ADDU " << reg << ", $0, " << r2 << std::endl;
-        if(help.localexists(variable)){
-            //out << "SW " << r2 << ", " << help.findarrayelement(variable, ) << "($fp)" << std::endl;
-        }
-        else if(help.globalexists(variable)){
-            out << "SW " << r2 << ", ";
-            //(4*index->printMIPS(reg, out, help));
-            out << "(" << r3 << ")" << std::endl;
-            help.regFlag[std::stoi(r3.substr(1))] = 0;
-        }
-        else{
-          throw "Variable not declared. ";
-        }
         help.regFlag[std::stoi(r1.substr(1))] = 0;
         help.regFlag[std::stoi(r2.substr(1))] = 0;
     }
@@ -573,7 +559,7 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-        
+
     }
     virtual void printC (std::ostream &out) const override{
         //out << variable << "[" << index << "]--" << std::endl;
