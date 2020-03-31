@@ -74,24 +74,24 @@ public:
         out << "}";
     }
     virtual void printPy (std::stringstream &out, Py &myPy) const override{
-      for(int i = myPy.indent; i > 1; i--){
-        out << "\t";
-      }
-      initial->printPy(out, myPy);
-      out << std::endl;
-      for(int i = myPy.indent; i > 0; i--){
+        for(int i = myPy.indent; i > 1; i--){
           out << "\t";
-      }
-      out << "while ";
-      condition->printPy(out, myPy);
-      out << ":" << std::endl;
-      branch->printPy(out, myPy);
-      out << std::endl;
-      for(int i = myPy.indent; i > 0; i--){
-          out << "\t";
-      }
-      incrementordecrement->printPy(out, myPy);
-      out << std::endl;
+        }
+        initial->printPy(out, myPy);
+        out << std::endl;
+        for(int i = myPy.indent; i > 0; i--){
+            out << "\t";
+        }
+        out << "while ";
+        condition->printPy(out, myPy);
+        out << ":" << std::endl;
+        branch->printPy(out, myPy);
+        out << std::endl;
+        for(int i = myPy.indent; i > 0; i--){
+            out << "\t";
+        }
+        incrementordecrement->printPy(out, myPy);
+        out << std::endl;
     }
 };
 

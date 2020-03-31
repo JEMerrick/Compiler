@@ -50,7 +50,7 @@ public:
             help.regFlag[std::stoi(r2.substr(1))] = 0;
         }
         else{
-          throw "Variable not declared. ";
+            throw "Variable not declared. ";
         }
         help.regFlag[std::stoi(r1.substr(1))] = 0;
     }
@@ -81,7 +81,6 @@ public:
       std::string r1 = "$" + std::to_string(help.findreg());
       val->printMIPS(r1, out, help);
       out << "ADDU " << reg << ", $0, " << r1 << std::endl;
-
       help.regFlag[std::stoi(r1.substr(1))] = 0;
     }
     virtual void printC (std::ostream &out) const override{
@@ -136,7 +135,7 @@ public:
             help.regFlag[std::stoi(r3.substr(1))] = 0;
         }
         else{
-          throw "Variable not declared. ";
+            throw "Variable not declared. ";
         }
         help.regFlag[std::stoi(r1.substr(1))] = 0;
         help.regFlag[std::stoi(r2.substr(1))] = 0;
@@ -168,8 +167,6 @@ public:
         std::string r1 = "$" + std::to_string(help.findreg());
         val->printMIPS(r1, out, help);
         std::string r2 = "$" + std::to_string(help.findreg());
-
-
         help.regFlag[std::stoi(r1.substr(1))] = 0;
         help.regFlag[std::stoi(r2.substr(1))] = 0;
     }
@@ -212,7 +209,7 @@ public:
             out << "LW " << r2 << ", 0(" << r3 << ")" << std::endl;
         }
         else{
-          throw "Variable not declared. ";
+            throw "Variable not declared. ";
         }
         out << "SUBU " << r2 << ", " << r2 << ", " << r1 << std::endl;
         out << "ADDU " << reg << ", $0, " << r2 << std::endl;
@@ -224,7 +221,7 @@ public:
             help.regFlag[std::stoi(r3.substr(1))] = 0;
         }
         else{
-          throw "Variable not declared. ";
+            throw "Variable not declared. ";
         }
         help.regFlag[std::stoi(r1.substr(1))] = 0;
         help.regFlag[std::stoi(r2.substr(1))] = 0;

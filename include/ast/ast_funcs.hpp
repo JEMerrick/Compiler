@@ -30,9 +30,7 @@ public:
         out << ".globl " << funcName << std::endl;
         out << ".ent " << funcName << std::endl;
         out << funcName << ":" << std::endl;
-        // out << "ADDIU $sp, $sp, -8" << std::endl;
-        // out << "SW $fp, 4($sp)" << std::endl;
-        out << "SW $fp, 0($sp)" << std::endl; // new
+        out << "SW $fp, 0($sp)" << std::endl;
         out << "SW $31, -4($sp)" << std::endl;
         out << "MOVE $fp, $sp" << std::endl;
         if(varList != NULL){
@@ -46,9 +44,6 @@ public:
         out << "LW " << "$31, -4($fp)" << std::endl;
         out << "LW " << "$fp, 0($fp)" << std::endl;
         out << "MOVE $sp, $fp" << std::endl;
-        //out << "MOVZ $31, $31, $0" << std::endl;
-        //out << "LW $fp, 4($sp)" << std::endl;
-        //out << "ADDIU $sp, $sp, 8" << std::endl;
 
         if(funcName != "main"){
             out << "J $31" << std::endl;
@@ -61,7 +56,7 @@ public:
             varList->printC(out);
         }
         out << ") {" << std::endl;
-        branch->printC(out);//return 1
+        branch->printC(out);
         out << "}" << std::endl;
 
     }
@@ -218,10 +213,9 @@ public:
     }
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-      if(nextArg!= NULL){
-          nextArg->printMIPS(reg, out, help);
-      }
-      //out << "SW $" << std::to_string((help.parameters++)+4) << help.createlocal(id) << "($fp)" << std::endl;
+        if(nextArg!= NULL){
+            nextArg->printMIPS(reg, out, help);
+        }
     }
     virtual void printC (std::ostream &out) const override{
         if(nextArg != NULL){
@@ -269,21 +263,21 @@ public:
     }
     virtual void printC (std::ostream &out) const override{
         if(arg != NULL){
-          if(nextArg != NULL){
-              nextArg->printC(out);
-              out << ", ";
-          }
-          arg->printC(out);
+            if(nextArg != NULL){
+                nextArg->printC(out);
+                out << ", ";
+            }
+            arg->printC(out);
         }
     }
     virtual void printPy (std::stringstream &out, Py &myPy) const override{
-      if(arg != NULL){
-        if(nextArg != NULL){
-            nextArg->printPy(out, myPy);
-            out << ", ";
+        if(arg != NULL){
+            if(nextArg != NULL){
+                nextArg->printPy(out, myPy);
+                out << ", ";
+            }
+            arg->printPy(out, myPy);
         }
-        arg->printPy(out, myPy);
-      }
     }
 };
 
@@ -319,7 +313,7 @@ public:
             if(nextVar != NULL){
                 nextVar->printC(out);
                 out << ", ";
-              }
+            }
             var->printC(out);
         }
     }
@@ -329,7 +323,7 @@ public:
                 nextVar->printPy(out, myPy);
                 out << ", ";
             }
-        var->printPy(out, myPy);
+            var->printPy(out, myPy);
         }
     }
 };
@@ -361,21 +355,21 @@ public:
     }
     virtual void printC (std::ostream &out) const override{
         if(func != NULL){
-          if(nextFunc != NULL){
-              nextFunc->printC(out);
-              out << std::endl;
-          }
-          func->printC(out);
+            if(nextFunc != NULL){
+                nextFunc->printC(out);
+                out << std::endl;
+            }
+            func->printC(out);
         }
     }
     virtual void printPy (std::stringstream &out, Py &myPy) const override{
-      if(func != NULL){
-        if(nextFunc != NULL){
-            nextFunc->printPy(out, myPy);
-            out << std::endl;
+        if(func != NULL){
+            if(nextFunc != NULL){
+                nextFunc->printPy(out, myPy);
+                out << std::endl;
+            }
+            func->printPy(out, myPy);
         }
-        func->printPy(out, myPy);
-      }
     }
 };
 
@@ -406,21 +400,21 @@ public:
     }
     virtual void printC (std::ostream &out) const override{
         if(statement != NULL){
-          if(branch != NULL){
-              branch->printC(out);
-              out << std::endl;
-          }
-          statement->printC(out);
+            if(branch != NULL){
+                branch->printC(out);
+                out << std::endl;
+            }
+            statement->printC(out);
         }
     }
     virtual void printPy (std::stringstream &out, Py &myPy) const override{
-      if(statement != NULL){
-        if(branch != NULL){
-            branch->printPy(out, myPy);
-            out << std::endl;
+        if(statement != NULL){
+            if(branch != NULL){
+                branch->printPy(out, myPy);
+                out << std::endl;
+            }
+            statement->printPy(out, myPy);
         }
-        statement->printPy(out, myPy);
-      }
     }
 };
 

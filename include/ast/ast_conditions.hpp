@@ -176,7 +176,7 @@ public:
     }
     virtual void printPy (std::stringstream &out, Py &myPy) const override{
         for(int i = myPy.indent; i > 0; i--){
-          out << "\t";
+            out << "\t";
         }
         if(index != 1000){
             out << "if ( " << myPy.switchVar[myPy.switchVar.size() - 1] << " = " << index;
@@ -203,7 +203,7 @@ public:
             myPy.indent--;
             out << std::endl;
         }
-        
+
     }
 };
 #endif

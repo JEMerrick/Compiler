@@ -44,12 +44,9 @@ public:
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
         std::string r1 = "$" + std::to_string(help.findreg());
         left->printMIPS(r1, out, help);
-        //ADDI RX 0, 5
         std::string r2 = "$" + std::to_string(help.findreg());
         right->printMIPS(r2, out, help);
-        //ADDI RY 0, 5
         out << "ADDU " << reg << ", " << r1 << ", " << r2 << std::endl;
-        //ADDU RZ RY RX
         help.regFlag[std::stoi(r1.substr(1))] = 0;
         help.regFlag[std::stoi(r2.substr(1))] = 0;
     }

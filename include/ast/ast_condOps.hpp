@@ -80,10 +80,7 @@ public:
         std::string r2 = "$" + std::to_string(help.findreg());
         right->printMIPS(r2, out, help);
         std::string label = help.makelabl();
-
-        //out << "ADDI " << reg << ", $0, 0" << std::endl;
         out << "BEQ " << r1 << ", " << r2 << ", " << label << std::endl;
-        //out << "ADDI " << reg << ", $0, 1" << std::endl;
         out << label << ":" << std::endl;
         help.regFlag[std::stoi(r1.substr(1))] = 0;
         help.regFlag[std::stoi(r2.substr(1))] = 0;
