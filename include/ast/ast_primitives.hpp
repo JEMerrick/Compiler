@@ -17,7 +17,6 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const{
-        out << "enter variable " << std::endl;
         if(help.globalexists(id)){
             std::string r1 = "$" + std::to_string(help.findreg());
             out << "LUI " << r1 << ", %hi(" << id << ")" << std::endl;
@@ -95,18 +94,18 @@ class Struct
 protected:
     std::string var;
     BasePtr inside;
-    
+
 public:
     Struct (std::string _var, BasePtr _inside)
     : var(_var), inside(_inside)
     {}
-        
+
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const{
     }
     virtual void printC (std::ostream &out) const{
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
-        out << "class " << var << "(object):\n";      
+        out << "class " << var << "(object):\n";
         myPy.indent++;
         for(int i = 0; i < myPy.globalv.size(); i++){
             for(int j = myPy.indent; j > 0; j--){
@@ -122,7 +121,7 @@ public:
         out << "]\n";
         myPy.indent--;
     }
-    
+
 };
 
 class StructVar
@@ -136,7 +135,7 @@ public:
     StructVar(std::string _type, std::string _var)
     : type(_type), var(_var)
     {}
-    
+
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const{
     }
     virtual void printC (std::ostream &out) const{
@@ -162,7 +161,7 @@ public:
     }
     virtual void printC (std::ostream &out) const{
     }
-     virtual void printPy (std::ostream &out, Py &myPy) const override{         
+     virtual void printPy (std::ostream &out, Py &myPy) const override{
          if(nextVar != NULL){
              nextVar->printPy(out, myPy);
              out << ", ";
