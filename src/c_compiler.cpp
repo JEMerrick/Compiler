@@ -3,7 +3,7 @@
 #include <string>
 #include <sstream>
 #include "ast.hpp"
-extern "C" int yydebug;
+//extern "C" int yydebug;
 
 extern "C" FILE *yyin;
 
