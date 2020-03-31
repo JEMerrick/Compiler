@@ -67,11 +67,11 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-      std::string r1 = "$" + std::to_string(help.parameters+1);
-      left->printMIPS(r1, out, help);
-      right->printMIPS(reg, out, help);
-      out << "OR " << reg << ", " << r1 << ", " << reg << std::endl;
-      help.regFlag[std::stoi(r1.substr(1))] = 0;
+        std::string r1 = "$" + std::to_string(help.parameters+1);
+        left->printMIPS(r1, out, help);
+        right->printMIPS(reg, out, help);
+        out << "OR " << reg << ", " << r1 << ", " << reg << std::endl;
+        help.regFlag[std::stoi(r1.substr(1))] = 0;
     }
     virtual void printC (std::ostream &out) const override{
         left->printC(out);
@@ -95,11 +95,11 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-      std::string r1 = "$" + std::to_string(help.parameters+1);
-      left->printMIPS(r1, out, help);
-      right->printMIPS(reg, out, help);
-      out << "XOR " << reg << ", " << r1 << ", " << reg << std::endl;
-      help.regFlag[std::stoi(r1.substr(1))] = 0;
+        std::string r1 = "$" + std::to_string(help.parameters+1);
+        left->printMIPS(r1, out, help);
+        right->printMIPS(reg, out, help);
+        out << "XOR " << reg << ", " << r1 << ", " << reg << std::endl;
+        help.regFlag[std::stoi(r1.substr(1))] = 0;
     }
     virtual void printC (std::ostream &out) const override{
         left->printC(out);
@@ -123,11 +123,11 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-      std::string r1 = "$" + std::to_string(help.parameters+1);
-      left->printMIPS(r1, out, help);
-      right->printMIPS(reg, out, help);
-      out << "SLL " << reg << ", " << r1 << ", " << reg << std::endl;
-      help.regFlag[std::stoi(r1.substr(1))] = 0;
+        std::string r1 = "$" + std::to_string(help.parameters+1);
+        left->printMIPS(r1, out, help);
+        right->printMIPS(reg, out, help);
+        out << "SLL " << reg << ", " << r1 << ", " << reg << std::endl;
+        help.regFlag[std::stoi(r1.substr(1))] = 0;
     }
     virtual void printC (std::ostream &out) const override{
         left->printC(out);
@@ -151,11 +151,11 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-      std::string r1 = "$" + std::to_string(help.parameters+1);
-      left->printMIPS(r1, out, help);
-      right->printMIPS(reg, out, help);
-      out << "SLR " << reg << ", " << r1 << ", " << reg << std::endl;
-      help.regFlag[std::stoi(r1.substr(1))] = 0;
+        std::string r1 = "$" + std::to_string(help.parameters+1);
+        left->printMIPS(r1, out, help);
+        right->printMIPS(reg, out, help);
+        out << "SLR " << reg << ", " << r1 << ", " << reg << std::endl;
+        help.regFlag[std::stoi(r1.substr(1))] = 0;
     }
     virtual void printC (std::ostream &out) const override{
         left->printC(out);

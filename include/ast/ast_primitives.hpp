@@ -78,7 +78,8 @@ public:
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const{
         if(help.localexists(var)){
             //out << "LW "<< reg<<", "<<help.findarrayelement(id, element)<<"($fp)"<<std::endl;
-        }else if(help.globalexists(var)){
+        }
+        else if(help.globalexists(var)){
             std::string r1 = "$" + std::to_string(help.findreg());
             out << "LUI " << r1 << ", %hi(" << var << ")" << std::endl;
             out << "ADDI " << r1 << ", " << r1 << ", %lo(" << var << ")" << std::endl;
@@ -86,7 +87,8 @@ public:
             expr->printMIPS(reg, out, help); // times 4
             out << "(" << r1 << ")" << std::endl;
             help.regFlag[std::stoi(r1.substr(1))] = 0;
-        }else{
+        }
+        else{
             throw "Variable not declared. ";
         }
     }
@@ -259,7 +261,7 @@ public:
         Ref->printPy(out, myPy);
         out << "_ref_fn)\n";
     }
-    
+
 };
 
 class DecPoint
@@ -278,12 +280,12 @@ public:
     virtual void printPy (std::stringstream &out, Py &myPy) const{
         myPy.flag = 1;
         for(int j = myPy.indent; j > 0; j--){
-                out << "\t";
+            out << "\t";
         }
         var->printPy(out, myPy);
         out << " = None";
     }
-    
+
 };
 
 class PArg
@@ -327,7 +329,7 @@ public:
     virtual void printPy (std::stringstream &out, Py &myPy) const{
         myPy.flag = 1;
         for(int j = myPy.indent; j > 0; j--){
-                out << "\t";
+            out << "\t";
         }
         Point->printPy(out, myPy);
         out << ".deref(";
@@ -336,7 +338,7 @@ public:
         Ref->printPy(out, myPy);
         out << ")";
     }
-    
+
 };
 
 class PReturn
@@ -355,7 +357,7 @@ public:
     virtual void printPy (std::stringstream &out, Py &myPy) const{
         myPy.flag = 1;
         for(int j = myPy.indent; j > 0; j--){
-                out << "\t";
+            out << "\t";
         }
         out << "return ";
         Point->printPy(out, myPy);
