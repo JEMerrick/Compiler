@@ -143,10 +143,6 @@ public:
         reg = "$2";
         retval->printMIPS(reg, out, help);
         //this goes to number primitive
-        out << "LW " << "$31, -4($fp)" << std::endl;
-        out << "LW $fp, 0($fp)" << std::endl;
-        out << "ADDI $sp, $fp, 0" << std::endl;
-        out << "J $31" << std::endl;
     }
     virtual void printC (std::ostream &out) const override{
         out << "return ";
