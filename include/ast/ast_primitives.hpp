@@ -78,7 +78,7 @@ public:
         if(help.localexists(var)){
             //out << "LW "<< reg<<", "<<help.findarrayelement(id, element)<<"($fp)"<<std::endl;
         }else if(help.globalexists(var)){
-
+            std::string r1 = "$" + std::to_string(help.findreg());
             out << "LUI " << r1 << ", %hi(" << var << ")" << std::endl;
             out << "ADDI " << r1 << ", " << r1 << ", %lo(" << var << ")" << std::endl;
             out << "LW " << reg << ", ";
