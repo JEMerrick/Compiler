@@ -69,6 +69,9 @@ extern "C" int fileno(FILE *stream);
 "while"         { yylval.string = new std::string(yytext); return T_WHILE; }
 "+="            { yylval.string = new std::string(yytext); return T_ADDEQUAL; }
 "-="            { yylval.string = new std::string(yytext); return T_SUBEQUAL; }
+"/="            { yylval.string = new std::string(yytext); return T_DIVEQUAL; }
+"*="            { yylval.string = new std::string(yytext); return T_MULEQUAL; }
+"%="            { yylval.string = new std::string(yytext); return T_MODEQUAL; }
 "++"            { yylval.string = new std::string(yytext); return T_INCREM; }
 "--"            { yylval.string = new std::string(yytext); return T_DECREM; }
 

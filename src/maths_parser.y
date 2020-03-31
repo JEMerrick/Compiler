@@ -30,7 +30,7 @@
 %token T_LSHIFT T_RSHIFT
 %token T_EQUAL T_NEQUAL T_GT T_LT T_LEQUAL T_GEQUAL T_ASSIGN
 %token T_BNOT T_NOT T_AND T_OR T_BAND T_BOR T_BXOR T_MOD
-%token T_ADDEQUAL T_SUBEQUAL T_INCREM T_DECREM
+%token T_ADDEQUAL T_SUBEQUAL T_INCREM T_DECREM T_DIVEQUAL T_MULEQUAL T_MODEQUAL
 %token T_WHILE T_DO T_IF T_ELSE T_FOR T_BREAK T_CONTINUE T_SWITCH T_CASE T_DEFAULT
 %token T_INT T_VOID T_CHAR T_SHORT T_LONG T_FLOAT T_DOUBLE T_SIGNED T_RETURN
 %token T_STRUCT
@@ -107,7 +107,9 @@ EXPR_ASSIGN : EXPR_COND { $$ = $1; }
             | T_VARIABLE T_LSBRAC EXPR T_RSBRAC T_ADDEQUAL EXPR_ASSIGN { $$ = new AddEqualArray(*$1, $6, $3); }
             | T_VARIABLE T_SUBEQUAL EXPR_ASSIGN { $$ = new SubEqualOperator(*$1, $3); }
             | T_VARIABLE T_LSBRAC EXPR T_RSBRAC T_SUBEQUAL EXPR_ASSIGN { $$ = new SubEqualArray(*$1, $6, $3); }
-            
+            | T_VARIABLE T_MULEQUAL EXPR_ASSIGN { $$ = new MulEqualOperator(*$1, $3); }
+            | T_VARIABLE T_DIVEQUAL EXPR_ASSIGN { $$ = new DivEqualOperator(*$1, $3); }
+            | T_VARIABLE T_MODEQUAL EXPR_ASSIGN { $$ = new ModEqualOperator(*$1, $3); }
 
 EXPR_COND : OR { $$ = $1; }
 
