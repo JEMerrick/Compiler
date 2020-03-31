@@ -634,4 +634,25 @@ public:
     }
 };
 
+class DotAssign
+    : public Base
+{
+private:
+    BasePtr expr;
+public:
+    DotAssign(BasePtr _expr)
+    : expr(_expr)
+    {}
+
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+    }
+    virtual void printC (std::ostream &out) const override{
+
+    }
+    virtual void printPy (std::ostream &out, Py &myPy) const override{
+        out << " = ";
+        expr->printPy(out, myPy);
+    }
+};
+
 #endif

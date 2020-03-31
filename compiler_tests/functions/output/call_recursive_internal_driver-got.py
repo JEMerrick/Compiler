@@ -1,7 +1,7 @@
-def g():
-	return -(20)
-def f():
-	return g()
+def f(n)
+
+def main():
+	return -(f(5) == 15)
 
 # Boilerplat
 if __name__ == "__main__":

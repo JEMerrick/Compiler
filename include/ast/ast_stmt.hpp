@@ -229,4 +229,28 @@ public:
         }
     }
 };
-        
+    
+
+class StructDecl
+    : public Base
+{
+protected:
+    std::string id;
+    std::string id2;
+public:
+    StructDecl(std::string _id, std::string _id2)
+        : id(_id), id2(_id2)
+    {}
+
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+    }
+    virtual void printC (std::ostream &out) const override{
+
+    }
+    virtual void printPy (std::ostream &out, Py &myPy) const override{
+        for(int i = myPy.indent; i > 0; i--){
+            out << "\t";
+        }
+        out << id2 << " = " << id << "()";
+    }
+};

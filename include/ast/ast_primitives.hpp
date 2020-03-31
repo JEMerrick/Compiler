@@ -88,5 +88,86 @@ public:
 
 };
 
+class Struct
+    : public Base
+{
+protected:
+    std::string var;
+    BasePtr inside;
+    
+public:
+    Struct (std::string _var, BasePtr _inside)
+    : var(_var), inside(_inside)
+    {}
+        
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const{
+    }
+    virtual void printC (std::ostream &out) const{
+    }
+    virtual void printPy (std::ostream &out, Py &myPy) const override{
+        out << "class " << var << "(object):\n";      
+        myPy.indent++;
+        for(int i = 0; i < myPy.globalv.size(); i++){
+            for(int j = myPy.indent; j > 0; j--){
+                out << "\t";
+            }
+            out << "global " << myPy.globalv[i] << std::endl;
+        }
+        for(int j = myPy.indent; j > 0; j--){
+                out << "\t";
+        }
+        out << "__slots__ = [";
+        inside->printPy(out, myPy);
+        out << "]\n";
+        myPy.indent--;
+    }
+    
+};
+
+class StructVar
+    : public Base
+{
+protected:
+    std::string type;
+    std::string var;
+
+public:
+    StructVar(std::string _type, std::string _var)
+    : type(_type), var(_var)
+    {}
+    
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const{
+    }
+    virtual void printC (std::ostream &out) const{
+    }
+     virtual void printPy (std::ostream &out, Py &myPy) const override{
+         out << var;
+    }
+};
+
+class StructVarList
+    : public Base
+{
+protected:
+    BasePtr var;
+    BasePtr nextVar;
+
+public:
+    StructVarList(BasePtr _var, BasePtr _nextVar)
+    : var(_var), nextVar(_nextVar)
+    {}
+
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const{
+    }
+    virtual void printC (std::ostream &out) const{
+    }
+     virtual void printPy (std::ostream &out, Py &myPy) const override{         
+         if(nextVar != NULL){
+             nextVar->printPy(out, myPy);
+             out << ", ";
+         }
+         var->printPy(out, myPy);
+    }
+};
 
 #endif
