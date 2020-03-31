@@ -107,9 +107,12 @@ EXPR_ASSIGN : EXPR_COND { $$ = $1; }
             | T_VARIABLE T_LSBRAC EXPR T_RSBRAC T_ADDEQUAL EXPR_ASSIGN { $$ = new AddEqualArray(*$1, $6, $3); }
             | T_VARIABLE T_SUBEQUAL EXPR_ASSIGN { $$ = new SubEqualOperator(*$1, $3); }
             | T_VARIABLE T_LSBRAC EXPR T_RSBRAC T_SUBEQUAL EXPR_ASSIGN { $$ = new SubEqualArray(*$1, $6, $3); }
-            | T_VARIABLE T_MULEQUAL EXPR_ASSIGN { $$ = new MulEqualOperator(*$1, $3); }
+            | T_VARIABLE T_MULEQUAL EXPR_ASSIGN { $$ = new MultEqualOperator(*$1, $3); }
+            | T_VARIABLE T_LSBRAC EXPR T_RSBRAC T_MULEQUAL EXPR_ASSIGN { $$ = new MultEqualArray(*$1, $6, $3); }
             | T_VARIABLE T_DIVEQUAL EXPR_ASSIGN { $$ = new DivEqualOperator(*$1, $3); }
+            | T_VARIABLE T_LSBRAC EXPR T_RSBRAC T_DIVEQUAL EXPR_ASSIGN { $$ = new DivEqualArray(*$1, $6, $3); }
             | T_VARIABLE T_MODEQUAL EXPR_ASSIGN { $$ = new ModEqualOperator(*$1, $3); }
+            | T_VARIABLE T_LSBRAC EXPR T_RSBRAC T_MODEQUAL EXPR_ASSIGN { $$ = new ModEqualArray(*$1, $6, $3); }
 
 EXPR_COND : OR { $$ = $1; }
 
