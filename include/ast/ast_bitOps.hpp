@@ -38,7 +38,6 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-        out << "enter and " << std::endl;
         std::string r1 = "$" + std::to_string(help.parameters+1);
         left->printMIPS(r1, out, help);
         right->printMIPS(reg, out, help);
