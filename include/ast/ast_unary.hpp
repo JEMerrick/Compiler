@@ -89,7 +89,7 @@ public:
         expr->printC(out);
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
-        out << "!";
+        out << " not ";
         expr->printPy(out, myPy);
     }
 };

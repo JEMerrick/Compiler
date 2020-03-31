@@ -94,7 +94,7 @@ public:
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
         left->printPy(out, myPy);
-        out << " && ";
+        out << " and ";
         right->printPy(out, myPy);
     }
 };
@@ -134,7 +134,7 @@ public:
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
         left->printPy(out, myPy);
-        out << " || ";
+        out << " or ";
         right->printPy(out, myPy);
     }
 };

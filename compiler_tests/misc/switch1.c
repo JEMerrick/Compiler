@@ -4,10 +4,10 @@ int g(int x)
     {
         case 1:
             return 10;
-            break;
         case 2:
             return 11;
-            break;
+        case 3:
+            return 13;
         default:
             return 12;
     }
