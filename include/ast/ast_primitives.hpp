@@ -75,7 +75,19 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const{
-
+        if(help.localexists(id)){
+            out << "LW "<<dstreg<<", "<<myContext.findLocalArrayElement(id, element)<<"($fp)"<<std::endl;
+        }else if(myContext.globalIntExists(id)){
+            std::string r1 = myContext.findTemp();
+            out << "LUI " << r1 << ", %hi(" << id << ")" << std::endl;
+            out << "ADDI " << r1 << ", " << r1 << ", %lo(" << id << ")" << std::endl;
+            out << "LW " << reg << ", ";
+            expr->printMIPS(reg, out, help); // times 4
+            out << "(" << r1 << ")" << std::endl;
+            help.regFlag[std::stoi(r1.substr(1))] = 0;
+        }else{
+            throw "Variable not declared. ";
+        }
     }
     virtual void printC (std::ostream &out) const{
        // out << name << "[" << index << "]";
