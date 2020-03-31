@@ -1,5 +1,6 @@
 x = [8]
 def f():
+	global x
 	return 11
 
 # Boilerplat

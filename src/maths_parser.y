@@ -191,9 +191,9 @@ STMT : JMP_ST { $$ = $1; }
 
 JMP_ST : T_RETURN T_SEMIC { $$ = new Return_stmt(NULL); }
         | T_RETURN EXPR T_SEMIC { $$ = new Return_stmt($2); }
-        | T_RETURN POINTER { $$ = new PReturn($2); }
-        | T_BREAK { $$ = new BBreak(); }
-        | T_CONTINUE { $$ = new CContinue(); }
+        | T_RETURN POINTER T_SEMIC { $$ = new PReturn($2); }
+        | T_BREAK T_SEMIC { $$ = new BBreak(); }
+        | T_CONTINUE T_SEMIC { $$ = new CContinue(); }
 
 IF_ST : T_IF T_LBRAC EXPR T_RBRAC STMT { $$ = new If($3, $5); }
         | T_IF T_LBRAC EXPR T_RBRAC STMT T_ELSE STMT { $$ = new IfElse($3, $5, $7); }

@@ -8,7 +8,7 @@ extern "C" int yydebug;
 extern "C" FILE *yyin;
 
 int main(int argc, char *argv[]){
-    yydebug = 1;
+    //yydebug = 1;
     //std::fstream fs;
     //fs.open(argv[2]);
     yyin = fopen(argv[2], "r");
@@ -49,6 +49,18 @@ int main(int argc, char *argv[]){
             ss2 << "\tdef __isub__(self, i):\n";
             ss2 << "\t\tassert isinstance(i, int)\n";
             ss2 << "\t\tself.index -= i\n\n";
+            ss2 << "\tdef __getitem__(self, i):\n";
+            ss2 << "\t\tassert isinstance(i, int)\n";
+            ss2 << "\t\tif isinstance(self.lval, list):\n";
+            ss2 << "\t\t\treturn self.lval[self.index + i]\n";
+            ss2 << "\t\treturn self.lval()\n\n";
+            ss2 << "\tdef __setitem__(self, i, v):\n";
+            ss2 << "\t\tassert isinstance(i, int)\n";
+            ss2 << "\t\tif isinstance(self.lval, list):\n";
+            ss2 << "\t\t\tself.lval[self.index + i] = v\n";
+            ss2 << "\t\t\treturn v\n";
+            ss2 << "\t\tself.lval(v)\n";
+            ss2 << "\t\treturn v\n\n";
         }
         std::cout << ss2.str();
         std::cout << ss1.str();

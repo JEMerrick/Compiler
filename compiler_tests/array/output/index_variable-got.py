@@ -1,9 +1,10 @@
 def f():
 	i = 0
 	x = [8]
-	i++
-	while 	i = 0:
-		i < 8
+	i = 0
+	while (i < 8):
+		x[i]=i
+		i++
 
 	return x[4]
 

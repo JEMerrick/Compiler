@@ -4,7 +4,7 @@ def f():
 	while True : 
 		x = 0
 		if (x):
-			break;
+			break
 	return 19937
 
 # Boilerplat

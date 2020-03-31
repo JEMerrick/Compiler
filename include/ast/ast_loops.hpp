@@ -82,16 +82,20 @@ public:
       for(int i = myPy.indent; i > 0; i--){
           out << "\t";
       }
-      out << "while ";
+      out << "while (";
+      myPy.indent--;
       condition->printPy(out, myPy);
-      out << ":" << std::endl;
+      out << "):" << std::endl;
+      myPy.indent++;
       branch->printPy(out, myPy);
+      myPy.indent++;
       out << std::endl;
       for(int i = myPy.indent; i > 0; i--){
           out << "\t";
       }
       incrementordecrement->printPy(out, myPy);
       out << std::endl;
+      myPy.indent--;
     }
 };
 

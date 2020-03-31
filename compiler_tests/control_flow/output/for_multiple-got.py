@@ -3,9 +3,9 @@ def f():
 	y = 0
 	y = 0
 	x = 0
-	while 	x < 10:
+	while (x < 10):
 		y = y - 1
-	x = x + 1
+		x = x + 1
 
 	return y
 
