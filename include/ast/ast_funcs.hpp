@@ -172,7 +172,8 @@ public:
         if(nextArg!= NULL){
             nextArg->printMIPS(reg, out, help);
         }
-        out << "SW $" << std::to_string((help.parameters++)+4) << help.createlocal(id) << "($fp)" << std::endl;
+
+        out << "SW $" << std::to_string((help.parameters++)+4) << ", " << help.createlocal(id) << "($fp)" << std::endl;
         out << "in ARG" << std::endl;
     }
     virtual void printC (std::ostream &out) const override{
