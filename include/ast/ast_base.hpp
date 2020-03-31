@@ -28,7 +28,8 @@ class Py {
     public:
         int indent;
         std::vector<std::string> globalv;
-        std::vector<std::string> switchCase;
+        std::vector<std::string> switchVar;
+        std::vector<int> caseIndex;
         Py(): indent(0)
         {
             //TODO:constructor

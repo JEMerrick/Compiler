@@ -142,7 +142,7 @@ public:
         out << " }";*/
     }
     virtual void printPy (std::ostream &out, Py &myPy) const override{
-        myPy.switchCase.push_back(condition);
+        myPy.switchVar.push_back(condition);
         branch->printPy(out, myPy);
     }
 };
@@ -155,10 +155,11 @@ protected:
     int index;
     BasePtr stmt;
     BasePtr nextStmt;
+    std::string ifBreak;
 
 public:
-    Case(int _index, BasePtr _stmt, BasePtr _nextStmt)
-    : index(_index), stmt(_stmt), nextStmt(_nextStmt)
+    Case(int _index, BasePtr _stmt, BasePtr _nextStmt, std::string _ifBreak)
+    : index(_index), stmt(_stmt), nextStmt(_nextStmt), ifBreak(_ifBreak)
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
@@ -177,7 +178,15 @@ public:
           out << "\t";
         }
         if(index != 1000){
-            out << "if ( " << myPy.switchCase[myPy.switchCase.size() - 1] << " = " << index << " ) : \n";
+            out << "if ( " << myPy.switchVar[myPy.switchVar.size() - 1] << " = " << index;
+            for(int i = 0; i < myPy.caseIndex.size(); i++){
+                out << " || " << myPy.switchVar[myPy.switchVar.size() - 1] << " = " << myPy.caseIndex[i] ;
+            }
+            myPy.caseIndex.push_back(index);
+            if(ifBreak != ""){
+                myPy.caseIndex.clear();
+            }
+            out << " ) : \n";
             myPy.indent++;
             stmt->printPy(out, myPy);
             myPy.indent--;

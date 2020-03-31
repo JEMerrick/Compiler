@@ -37,7 +37,7 @@
 %type <expr> PROG FUNDEC PARAM_LIST SCOPE EXPR_ST EXPR EXPR_ASSIGN EXPR_COND OR AND BOR BXOR BAND EQUAL LESS SHIFT ADD MUL UNARY POSTFIX CALL_PARAM PRIMATIVE STMT JMP_ST IF_ST ITER_ST NEW_SCOPE DEC_ST DEC_LIST VAR_DEC G_DEC_ST G_DEC_LIST G_VAR_DEC LIST CASE
 %type <number> T_NUMBER
 %type <string> T_INT T_VOID T_CHAR T_SHORT T_LONG T_FLOAT T_DOUBLE T_SIGNED
-%type <string> T_VARIABLE TYPE
+%type <string> T_VARIABLE TYPE T_BREAK
 
 %start ROOT
 %%
@@ -173,9 +173,11 @@ IF_ST : T_IF T_LBRAC EXPR T_RBRAC STMT { $$ = new If($3, $5); }
         | T_IF T_LBRAC EXPR T_RBRAC STMT T_ELSE STMT { $$ = new IfElse($3, $5, $7); }
         | T_SWITCH T_LBRAC T_VARIABLE T_RBRAC T_LCURL CASE T_RCURL { $$ = new Switch(*$3, $6); }
 
-CASE : T_CASE T_NUMBER T_COLON STMT T_BREAK T_SEMIC { $$ = new Case($2, $4, NULL); }
-        | T_CASE T_NUMBER T_COLON STMT T_BREAK T_SEMIC CASE { $$ = new Case($2, $4, $7); }
-        | T_DEFAULT T_COLON STMT { $$ = new Case(1000, $3, NULL); }
+CASE : T_CASE T_NUMBER T_COLON STMT T_BREAK T_SEMIC { $$ = new Case($2, $4, NULL, *$5); }
+        | T_CASE T_NUMBER T_COLON STMT T_BREAK T_SEMIC CASE { $$ = new Case($2, $4, $7, *$5); }
+        | T_CASE T_NUMBER T_COLON STMT { $$ = new Case($2, $4, NULL, ""); }
+        | T_CASE T_NUMBER T_COLON STMT CASE { $$ = new Case($2, $4, $5, ""); }
+        | T_DEFAULT T_COLON STMT { $$ = new Case(1000, $3, NULL, ""); }
 
 
 ITER_ST : T_WHILE T_LBRAC EXPR T_RBRAC STMT { $$ = new While($3, $5); }
