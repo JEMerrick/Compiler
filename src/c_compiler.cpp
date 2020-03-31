@@ -51,7 +51,6 @@ int main(int argc, char *argv[]){
             ss2 << "\t\tself.index -= i\n\n";
         }
         std::cout << ss2.str();
-        std::cout << std::endl;
         std::cout << ss1.str();
         std::cout << std::endl;
         std::cout << std::endl;

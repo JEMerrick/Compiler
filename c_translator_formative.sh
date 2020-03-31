@@ -12,9 +12,9 @@ if [[ ! -f bin/c_compiler ]] ; then
     have_compiler=1
 fi
 
-input_dir="compiler_tests/pointer"
+input_dir="compiler_tests/programs"
 
-working="compiler_tests/pointer/output"
+working="compiler_tests/programs/output"
 mkdir -p ${working}
 
 for i in ${input_dir}/*.c ; do
