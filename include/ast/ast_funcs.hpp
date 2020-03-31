@@ -172,6 +172,9 @@ public:
             nextArg->printMIPS(reg, out, help);
         }
         out << "SW $" << std::to_string((help.parameters++)+4) << ", " << help.createlocal(id) << "($fp)" << std::endl;
+        if(nextArg == NULL){
+            out << "LW $" << std::to_string((help.parameters++)) << ", " << help.createlocal(id) << "($fp)" << std::endl;
+        }
     }
     virtual void printC (std::ostream &out) const override{
         if(nextArg != NULL){
