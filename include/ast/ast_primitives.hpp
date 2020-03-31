@@ -76,9 +76,9 @@ public:
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const{
         if(help.localexists(id)){
-            out << "LW "<<dstreg<<", "<<myContext.findLocalArrayElement(id, element)<<"($fp)"<<std::endl;
-        }else if(myContext.globalIntExists(id)){
-            std::string r1 = myContext.findTemp();
+            //out << "LW "<< reg<<", "<<help.findarrayelement(id, element)<<"($fp)"<<std::endl;
+        }else if(help.globalexists(id)){
+
             out << "LUI " << r1 << ", %hi(" << id << ")" << std::endl;
             out << "ADDI " << r1 << ", " << r1 << ", %lo(" << id << ")" << std::endl;
             out << "LW " << reg << ", ";
