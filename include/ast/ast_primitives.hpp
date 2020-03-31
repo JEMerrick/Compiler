@@ -75,12 +75,12 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const{
-        if(help.localexists(id)){
+        if(help.localexists(var)){
             //out << "LW "<< reg<<", "<<help.findarrayelement(id, element)<<"($fp)"<<std::endl;
-        }else if(help.globalexists(id)){
+        }else if(help.globalexists(var)){
 
-            out << "LUI " << r1 << ", %hi(" << id << ")" << std::endl;
-            out << "ADDI " << r1 << ", " << r1 << ", %lo(" << id << ")" << std::endl;
+            out << "LUI " << r1 << ", %hi(" << var << ")" << std::endl;
+            out << "ADDI " << r1 << ", " << r1 << ", %lo(" << var << ")" << std::endl;
             out << "LW " << reg << ", ";
             expr->printMIPS(reg, out, help); // times 4
             out << "(" << r1 << ")" << std::endl;
