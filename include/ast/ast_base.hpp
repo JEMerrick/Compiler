@@ -17,11 +17,12 @@ typedef const Base *BasePtr;
 class Base {
 
     public:
+        
         virtual ~Base(){}
         virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const = 0;
         virtual void printC (std::ostream &out) const = 0;
         virtual void printPy (std::ostream &out, Py &myPy) const = 0;
-
+        void printPoint(std::ostream &out, int &flag) const{};
 };
 
 class Py {
@@ -30,6 +31,9 @@ class Py {
         std::vector<std::string> globalv;
         std::vector<std::string> switchVar;
         std::vector<int> caseIndex;
+        std::vector<std::string> pointers;
+        std::vector<std::string> references;
+        
         Py(): indent(0)
         {
             //TODO:constructor

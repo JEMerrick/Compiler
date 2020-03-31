@@ -20,6 +20,8 @@ int main(int argc, char *argv[]){
         //ofstream outfile;
         //outfile.open(argv[4]);
         Py myPython;
+        int myFlag = 0; 
+        ast->printPoint(std::cout, myFlag);
         ast->printPy(std::cout, myPython);
         std::cout << std::endl;
         std::cout << std::endl;

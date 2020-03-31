@@ -35,7 +35,7 @@
 %token T_INT T_VOID T_CHAR T_SHORT T_LONG T_FLOAT T_DOUBLE T_SIGNED T_RETURN
 %token T_STRUCT
 
-%type <expr> PROG FUNDEC PARAM_LIST SCOPE EXPR_ST EXPR EXPR_ASSIGN EXPR_COND OR AND BOR BXOR BAND EQUAL LESS SHIFT ADD MUL UNARY POSTFIX CALL_PARAM PRIMATIVE STMT JMP_ST IF_ST ITER_ST NEW_SCOPE DEC_ST DEC_LIST VAR_DEC G_DEC_ST G_DEC_LIST G_VAR_DEC LIST CASE STRUCT_ST INSIDE INSIDE_VARS SPECIAL SPECIAL_ASSIGN
+%type <expr> PROG FUNDEC PARAM_LIST SCOPE EXPR_ST EXPR EXPR_ASSIGN EXPR_COND OR AND BOR BXOR BAND EQUAL LESS SHIFT ADD MUL UNARY POSTFIX CALL_PARAM PRIMATIVE STMT JMP_ST IF_ST ITER_ST NEW_SCOPE DEC_ST DEC_LIST VAR_DEC G_DEC_ST G_DEC_LIST G_VAR_DEC LIST CASE STRUCT_ST INSIDE INSIDE_VARS SPECIAL SPECIAL_ASSIGN POINTER REFERENCE
 %type <number> T_NUMBER
 %type <string> T_INT T_VOID T_CHAR T_SHORT T_LONG T_FLOAT T_DOUBLE T_SIGNED T_STRUCT
 %type <string> T_VARIABLE TYPE T_BREAK
@@ -83,6 +83,8 @@ TYPE : T_INT { $$ = $1; }
 
 PARAM_LIST : PARAM_LIST T_COMMA TYPE T_VARIABLE { $$ = new Arg (*$3, *$4, $1); }
              | TYPE T_VARIABLE { $$ = new Arg(*$1, *$2, NULL); }
+             | TYPE POINTER { $$ = new PArg($2, NULL); }
+             | PARAM_LIST T_COMMA TYPE POINTER { $$ = new PArg($4, $1); }
 
 SCOPE : SCOPE STMT { $$ = new BranchList($2, $1); }
         | STMT { $$ = new BranchList($1, NULL); }
@@ -174,6 +176,11 @@ PRIMATIVE : T_VARIABLE { $$ = new Variable(*$1); }
             | T_LBRAC EXPR T_RBRAC { $$ = $2; }
             | T_VARIABLE T_LSBRAC EXPR T_RSBRAC { $$ = new Array(*$1, $3); }
 
+            
+POINTER : T_TIMES T_VARIABLE { $$ = new Pointer(*$2); }
+
+REFERENCE : T_BAND T_VARIABLE { $$ = new Reference(*$2); }
+
 STMT : JMP_ST { $$ = $1; }
         | EXPR_ST { $$ = $1; }
         | IF_ST { $$ = $1; }
@@ -184,7 +191,7 @@ STMT : JMP_ST { $$ = $1; }
 
 JMP_ST : T_RETURN T_SEMIC { $$ = new Return_stmt(NULL); }
         | T_RETURN EXPR T_SEMIC { $$ = new Return_stmt($2); }
-        //| T_RETURN STMT { $$ = new Return_stmt($2); }
+        | T_RETURN POINTER { $$ = new PReturn($2); }
         | T_BREAK { $$ = new BBreak(); }
         | T_CONTINUE { $$ = new CContinue(); }
 
@@ -207,6 +214,9 @@ ITER_ST : T_WHILE T_LBRAC EXPR T_RBRAC STMT { $$ = new While($3, $5); }
 NEW_SCOPE : T_LCURL SCOPE T_RCURL { $$ = new Scope($2); }
 
 DEC_ST : TYPE DEC_LIST T_SEMIC { $$ = new Decl_stmt(*$1, $2); }
+        | TYPE POINTER T_ASSIGN REFERENCE T_SEMIC { $$ = new PointRef($2, $4); }
+        | TYPE POINTER T_SEMIC { $$ = new DecPoint($2); }
+        | POINTER T_ASSIGN EXPR T_SEMIC { $$ = new AssignPoint($1, $3); }
 
 
 DEC_LIST : VAR_DEC { $$ = new ArgList($1, NULL); }
@@ -219,6 +229,7 @@ VAR_DEC : T_VARIABLE T_ASSIGN T_LSBRAC EXPR T_RSBRAC { $$ = new DeclareArray (*$
         | T_VARIABLE T_ASSIGN EXPR { $$ = new Declare (*$1, $3); }
         | T_VARIABLE { $$ = new Declare(*$1, NULL);}
         | T_VARIABLE T_VARIABLE { $$ = new StructDecl(*$1, *$2); }
+        
         
 LIST : PRIMATIVE { $$ = new VarList($1, NULL); }
         | PRIMATIVE T_COMMA LIST { $$ = new VarList($1, $3); }
@@ -233,7 +244,9 @@ G_VAR_DEC : T_VARIABLE T_ASSIGN T_LSBRAC EXPR T_RSBRAC { $$ = new GDeclareArray 
         | T_VARIABLE T_LSBRAC EXPR T_RSBRAC { $$ = new GDeclareArray (*$1, $3); }
         | T_VARIABLE T_LSBRAC T_RSBRAC { $$ = new GDeclareArray (*$1, NULL); }
         | T_VARIABLE T_ASSIGN EXPR { $$ = new DecGlobal (*$1, $3); }
-        | T_VARIABLE { $$ = new DecGlobal(*$1, NULL);}
+        | T_VARIABLE { $$ = new DecGlobal(*$1, NULL); }
+        
+        
 
 
 

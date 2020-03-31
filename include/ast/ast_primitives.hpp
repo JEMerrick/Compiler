@@ -171,4 +171,316 @@ public:
     }
 };
 
+class Pointer
+    : public Base
+{
+protected:
+    std::string var;
+public:
+    Pointer(std::string _var)
+    : var(_var)
+    {}
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const{
+    }
+    virtual void printC (std::ostream &out) const{
+    }
+    virtual void printPy (std::ostream &out, Py &myPy) const{
+        myPy.pointers.push_back(var);
+        out << var;
+    }
+    void printPoint(std::ostream &out, int &flag) const{
+        if(flag == 0){
+            out << "class Pointer:\n";
+            out << "\tdef __init__(self, lval, index = 0):\n";
+            out << "\t\tself.lval = lval\n";
+            out << "\t\tself.index = index\n\n";
+            out << "\tdef deref(self, *_set):\n";
+            out << "\t\tif isinstance(self.lval, list):\n";
+            out << "\t\t\tif len(_set) > 0:\n";
+            out << "\t\t\t\tself.lval[self.index] = _set[0]\n";
+            out << "\t\t\treturn self.lval[self.index]\n";
+            out << "\t\treturn self.lval(*_set)\n\n";
+            out << "\tdef __add__(self, i):\n";
+            out << "\t\tassert isinstance(i, int)\n";
+            out << "\t\treturn Pointer(self.lval, self.index + i)\n\n";
+            out << "\tdef __sub__(self, i):\n";
+            out << "\t\tassert isinstance(i, int)\n";
+            out << "\t\treturn Pointer(self.lval, self.index - i)\n\n";
+            out << "\tdef __iadd__(self, i):\n";
+            out << "\t\tassert isinstance(i, int)\n";
+            out << "\t\tself.index += i\n\n";
+            out << "\tdef __isub__(self, i):\n";
+            out << "\t\tassert isinstance(i, int)\n";
+            out << "\t\tself.index -= i\n\n";
+            flag = 1;
+        }
+    }
+};
+
+class Reference
+    : public Base
+{
+protected:
+    std::string var;
+public:
+    Reference(std::string _var)
+    : var(_var)
+    {}
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const{
+    }
+    virtual void printC (std::ostream &out) const{
+    }
+    virtual void printPy (std::ostream &out, Py &myPy) const{
+        myPy.references.push_back(var);
+        out << var;
+    }
+};
+
+
+class PointRef
+    : public Base
+{
+protected:
+    BasePtr Point;
+    BasePtr Ref;
+public:
+    PointRef(BasePtr _Point, BasePtr _Ref)
+    : Point(_Point), Ref(_Ref)
+    {}
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const{
+    }
+    virtual void printC (std::ostream &out) const{
+    }
+    virtual void printPy (std::ostream &out, Py &myPy) const{
+        out << "\tdef _";
+        Ref->printPy(out, myPy);
+        out << "_ref_fn(*_set):\n";
+        out << "\t\tnonlocal ";
+        Ref->printPy(out, myPy);
+        out << "\n";
+        out << "\t\tif len(_set) > 0\n";
+        out << "\t\t\t";
+        Ref->printPy(out, myPy);
+        out << " = _set[0]\n";
+        out << "\t\treturn ";
+        Ref->printPy(out, myPy);
+        out << "\n\t";
+        Point->printPy(out, myPy);
+        out << " = Pointer(_";
+        Ref->printPy(out, myPy);
+        out << "_ref_fn)\n";
+    }
+    
+    void printPoint(std::ostream &out, int &flag) const{
+        if(flag == 0){
+            out << "class Pointer:\n";
+            out << "\tdef __init__(self, lval, index = 0):\n";
+            out << "\t\tself.lval = lval\n";
+            out << "\t\tself.index = index\n\n";
+            out << "\tdef deref(self, *_set):\n";
+            out << "\t\tif isinstance(self.lval, list):\n";
+            out << "\t\t\tif len(_set) > 0:\n";
+            out << "\t\t\t\tself.lval[self.index] = _set[0]\n";
+            out << "\t\t\treturn self.lval[self.index]\n";
+            out << "\t\treturn self.lval(*_set)\n\n";
+            out << "\tdef __add__(self, i):\n";
+            out << "\t\tassert isinstance(i, int)\n";
+            out << "\t\treturn Pointer(self.lval, self.index + i)\n\n";
+            out << "\tdef __sub__(self, i):\n";
+            out << "\t\tassert isinstance(i, int)\n";
+            out << "\t\treturn Pointer(self.lval, self.index - i)\n\n";
+            out << "\tdef __iadd__(self, i):\n";
+            out << "\t\tassert isinstance(i, int)\n";
+            out << "\t\tself.index += i\n\n";
+            out << "\tdef __isub__(self, i):\n";
+            out << "\t\tassert isinstance(i, int)\n";
+            out << "\t\tself.index -= i\n\n";
+            flag = 1;
+        }
+        
+    }
+};
+
+class DecPoint
+    : public Base
+{
+protected:
+    BasePtr var;
+public:
+    DecPoint(BasePtr _var)
+    : var(_var)
+    {}
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const{
+    }
+    virtual void printC (std::ostream &out) const{
+    }
+    virtual void printPy (std::ostream &out, Py &myPy) const{
+        for(int j = myPy.indent; j > 0; j--){
+                out << "\t";
+        }
+        out << "*";
+        var->printPy(out, myPy);
+    }
+    
+    void printPoint(std::ostream &out, int &flag) const{
+        if(flag == 0){
+            out << "class Pointer:\n";
+            out << "\tdef __init__(self, lval, index = 0):\n";
+            out << "\t\tself.lval = lval\n";
+            out << "\t\tself.index = index\n\n";
+            out << "\tdef deref(self, *_set):\n";
+            out << "\t\tif isinstance(self.lval, list):\n";
+            out << "\t\t\tif len(_set) > 0:\n";
+            out << "\t\t\t\tself.lval[self.index] = _set[0]\n";
+            out << "\t\t\treturn self.lval[self.index]\n";
+            out << "\t\treturn self.lval(*_set)\n\n";
+            out << "\tdef __add__(self, i):\n";
+            out << "\t\tassert isinstance(i, int)\n";
+            out << "\t\treturn Pointer(self.lval, self.index + i)\n\n";
+            out << "\tdef __sub__(self, i):\n";
+            out << "\t\tassert isinstance(i, int)\n";
+            out << "\t\treturn Pointer(self.lval, self.index - i)\n\n";
+            out << "\tdef __iadd__(self, i):\n";
+            out << "\t\tassert isinstance(i, int)\n";
+            out << "\t\tself.index += i\n\n";
+            out << "\tdef __isub__(self, i):\n";
+            out << "\t\tassert isinstance(i, int)\n";
+            out << "\t\tself.index -= i\n\n";
+            flag = 1;
+        }
+    }
+};
+
+class PArg
+    : public Base
+{
+protected:
+    BasePtr var;
+    BasePtr nextVar;
+public:
+    PArg(BasePtr _var, BasePtr _nextVar)
+    : var(_var), nextVar(_nextVar)
+    {}
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const{
+    }
+    virtual void printC (std::ostream &out) const{
+    }
+    virtual void printPy (std::ostream &out, Py &myPy) const{
+        if(nextVar!=NULL){
+            nextVar->printPy(out, myPy);
+            out << ", ";
+        }
+        out << "*";
+        var->printPy(out, myPy);
+    }
+
+    void printPoint(std::ostream &out, int &flag) const{
+        if(flag == 0){
+            out << "class Pointer:\n";
+            out << "\tdef __init__(self, lval, index = 0):\n";
+            out << "\t\tself.lval = lval\n";
+            out << "\t\tself.index = index\n\n";
+            out << "\tdef deref(self, *_set):\n";
+            out << "\t\tif isinstance(self.lval, list):\n";
+            out << "\t\t\tif len(_set) > 0:\n";
+            out << "\t\t\t\tself.lval[self.index] = _set[0]\n";
+            out << "\t\t\treturn self.lval[self.index]\n";
+            out << "\t\treturn self.lval(*_set)\n\n";
+            out << "\tdef __add__(self, i):\n";
+            out << "\t\tassert isinstance(i, int)\n";
+            out << "\t\treturn Pointer(self.lval, self.index + i)\n\n";
+            out << "\tdef __sub__(self, i):\n";
+            out << "\t\tassert isinstance(i, int)\n";
+            out << "\t\treturn Pointer(self.lval, self.index - i)\n\n";
+            out << "\tdef __iadd__(self, i):\n";
+            out << "\t\tassert isinstance(i, int)\n";
+            out << "\t\tself.index += i\n\n";
+            out << "\tdef __isub__(self, i):\n";
+            out << "\t\tassert isinstance(i, int)\n";
+            out << "\t\tself.index -= i\n\n";
+            flag = 1;
+        }
+    }
+};
+
+class AssignPoint
+    : public Base
+{
+protected:
+    BasePtr Point;
+    BasePtr Ref;
+public:
+    AssignPoint(BasePtr _Point, BasePtr _Ref)
+    : Point(_Point), Ref(_Ref)
+    {}
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const{
+    }
+    virtual void printC (std::ostream &out) const{
+    }
+    virtual void printPy (std::ostream &out, Py &myPy) const{
+        for(int j = myPy.indent; j > 0; j--){
+                out << "\t";
+        }
+        Point->printPy(out, myPy);
+        out << ".deref(";
+        Point->printPy(out, myPy);
+        out << ", ";
+        Ref->printPy(out, myPy);
+        out << ")";
+    }
+    
+    void printPoint(std::ostream &out, int &flag) const{
+        if(flag == 0){
+            out << "class Pointer:\n";
+            out << "\tdef __init__(self, lval, index = 0):\n";
+            out << "\t\tself.lval = lval\n";
+            out << "\t\tself.index = index\n\n";
+            out << "\tdef deref(self, *_set):\n";
+            out << "\t\tif isinstance(self.lval, list):\n";
+            out << "\t\t\tif len(_set) > 0:\n";
+            out << "\t\t\t\tself.lval[self.index] = _set[0]\n";
+            out << "\t\t\treturn self.lval[self.index]\n";
+            out << "\t\treturn self.lval(*_set)\n\n";
+            out << "\tdef __add__(self, i):\n";
+            out << "\t\tassert isinstance(i, int)\n";
+            out << "\t\treturn Pointer(self.lval, self.index + i)\n\n";
+            out << "\tdef __sub__(self, i):\n";
+            out << "\t\tassert isinstance(i, int)\n";
+            out << "\t\treturn Pointer(self.lval, self.index - i)\n\n";
+            out << "\tdef __iadd__(self, i):\n";
+            out << "\t\tassert isinstance(i, int)\n";
+            out << "\t\tself.index += i\n\n";
+            out << "\tdef __isub__(self, i):\n";
+            out << "\t\tassert isinstance(i, int)\n";
+            out << "\t\tself.index -= i\n\n";
+            flag = 1;
+        }
+        
+    }
+};
+
+class PReturn
+    : public Base
+{
+protected:
+    BasePtr Point;
+public:
+    PReturn(BasePtr _Point)
+    : Point(_Point)
+    {}
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const{
+    }
+    virtual void printC (std::ostream &out) const{
+    }
+    virtual void printPy (std::ostream &out, Py &myPy) const{
+        for(int j = myPy.indent; j > 0; j--){
+                out << "\t";
+        }
+        out << "return ";
+        Point->printPy(out, myPy);
+        out << ".deref()\n";
+    }
+
+};
+
 #endif
