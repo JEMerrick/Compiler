@@ -1,5 +1,7 @@
 #include <iostream>
 #include <fstream>
+#include <string>
+#include <sstream>
 #include "ast.hpp"
 extern "C" int yydebug;
 
@@ -20,9 +22,37 @@ int main(int argc, char *argv[]){
         //ofstream outfile;
         //outfile.open(argv[4]);
         Py myPython;
-        int myFlag = 0; 
-        ast->printPoint(std::cout, myFlag);
-        ast->printPy(std::cout, myPython);
+        std::stringstream ss1, ss2;
+        ast->printPy(ss1, myPython);
+        
+        
+        if(myPython.flag == 1){
+            ss2 << "class Pointer:\n";
+            ss2 << "\tdef __init__(self, lval, index = 0):\n";
+            ss2 << "\t\tself.lval = lval\n";
+            ss2 << "\t\tself.index = index\n\n";
+            ss2 << "\tdef deref(self, *_set):\n";
+            ss2 << "\t\tif isinstance(self.lval, list):\n";
+            ss2 << "\t\t\tif len(_set) > 0:\n";
+            ss2 << "\t\t\t\tself.lval[self.index] = _set[0]\n";
+            ss2 << "\t\t\treturn self.lval[self.index]\n";
+            ss2 << "\t\treturn self.lval(*_set)\n\n";
+            ss2 << "\tdef __add__(self, i):\n";
+            ss2 << "\t\tassert isinstance(i, int)\n";
+            ss2 << "\t\treturn Pointer(self.lval, self.index + i)\n\n";
+            ss2 << "\tdef __sub__(self, i):\n";
+            ss2 << "\t\tassert isinstance(i, int)\n";
+            ss2 << "\t\treturn Pointer(self.lval, self.index - i)\n\n";
+            ss2 << "\tdef __iadd__(self, i):\n";
+            ss2 << "\t\tassert isinstance(i, int)\n";
+            ss2 << "\t\tself.index += i\n\n";
+            ss2 << "\tdef __isub__(self, i):\n";
+            ss2 << "\t\tassert isinstance(i, int)\n";
+            ss2 << "\t\tself.index -= i\n\n";
+        }
+        std::cout << ss2.str();
+        std::cout << std::endl;
+        std::cout << ss1.str();
         std::cout << std::endl;
         std::cout << std::endl;
         //outfile.close();

@@ -2,6 +2,7 @@
 #define H_FUNCS
 
 #include <iostream>
+#include <sstream>
 #include <string>
 
 #include "ast_base.hpp"
@@ -64,7 +65,7 @@ public:
         out << "}" << std::endl;
 
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const override{
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
         out << "def " << funcName << "(";
         if(varList != NULL){
             varList->printPy(out, myPy);
@@ -109,7 +110,7 @@ public:
         }
         out << ");" << std::endl;
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const override{
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
         out << "def " << funcName << "(";
         if(varList != NULL){
             varList->printPy(out, myPy);
@@ -143,7 +144,7 @@ public:
         }
         out << ");" << std::endl;
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const override{
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
         out << funcName << "(";
         if(varList != NULL){
             varList->printPy(out, myPy);
@@ -187,7 +188,7 @@ public:
         }
         out << type << " " << id;
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const override{
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
         if(nextArg!=NULL){
             nextArg->printPy(out, myPy);
             out << ", ";
@@ -228,7 +229,7 @@ public:
             out << ", ";
         }
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const override{
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
         if(nextArg!=NULL){
             nextArg->printPy(out, myPy);
             out << ", ";
@@ -275,7 +276,7 @@ public:
           arg->printC(out);
         }
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const override{
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
       if(arg != NULL){
         if(nextArg != NULL){
             nextArg->printPy(out, myPy);
@@ -322,7 +323,7 @@ public:
             var->printC(out);
         }
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const override{
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
         if(var != NULL){
             if(nextVar != NULL){
                 nextVar->printPy(out, myPy);
@@ -367,7 +368,7 @@ public:
           func->printC(out);
         }
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const override{
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
       if(func != NULL){
         if(nextFunc != NULL){
             nextFunc->printPy(out, myPy);
@@ -412,7 +413,7 @@ public:
           statement->printC(out);
         }
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const override{
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
       if(statement != NULL){
         if(branch != NULL){
             branch->printPy(out, myPy);

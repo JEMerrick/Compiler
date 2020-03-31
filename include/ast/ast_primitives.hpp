@@ -3,6 +3,7 @@
 
 #include <string>
 #include <iostream>
+#include <sstream>
 
 #include "ast_base.hpp"
 
@@ -34,7 +35,7 @@ public:
     virtual void printC (std::ostream &out) const{
         out << id;
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const{
+    virtual void printPy (std::stringstream &out, Py &myPy) const{
         out << id;
     }
 
@@ -57,7 +58,7 @@ public:
     virtual void printC (std::ostream &out) const{
         out << value;
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const{
+    virtual void printPy (std::stringstream &out, Py &myPy) const{
         out << value;
     }
 
@@ -92,7 +93,7 @@ public:
     virtual void printC (std::ostream &out) const{
        // out << name << "[" << index << "]";
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const{
+    virtual void printPy (std::stringstream &out, Py &myPy) const{
         out << var << "[";
         expr->printPy(out, myPy);
         out << "]";
@@ -116,7 +117,7 @@ public:
     }
     virtual void printC (std::ostream &out) const{
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const override{
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
         out << "class " << var << "(object):\n";
         myPy.indent++;
         for(int i = 0; i < myPy.globalv.size(); i++){
@@ -152,7 +153,7 @@ public:
     }
     virtual void printC (std::ostream &out) const{
     }
-     virtual void printPy (std::ostream &out, Py &myPy) const override{
+     virtual void printPy (std::stringstream &out, Py &myPy) const override{
          out << var;
     }
 };
@@ -173,7 +174,7 @@ public:
     }
     virtual void printC (std::ostream &out) const{
     }
-     virtual void printPy (std::ostream &out, Py &myPy) const override{
+     virtual void printPy (std::stringstream &out, Py &myPy) const override{
          if(nextVar != NULL){
              nextVar->printPy(out, myPy);
              out << ", ";
@@ -195,37 +196,12 @@ public:
     }
     virtual void printC (std::ostream &out) const{
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const{
+    virtual void printPy (std::stringstream &out, Py &myPy) const{
+        myPy.flag = 1;
         myPy.pointers.push_back(var);
         out << var;
     }
-    void printPoint(std::ostream &out, int &flag) const{
-        if(flag == 0){
-            out << "class Pointer:\n";
-            out << "\tdef __init__(self, lval, index = 0):\n";
-            out << "\t\tself.lval = lval\n";
-            out << "\t\tself.index = index\n\n";
-            out << "\tdef deref(self, *_set):\n";
-            out << "\t\tif isinstance(self.lval, list):\n";
-            out << "\t\t\tif len(_set) > 0:\n";
-            out << "\t\t\t\tself.lval[self.index] = _set[0]\n";
-            out << "\t\t\treturn self.lval[self.index]\n";
-            out << "\t\treturn self.lval(*_set)\n\n";
-            out << "\tdef __add__(self, i):\n";
-            out << "\t\tassert isinstance(i, int)\n";
-            out << "\t\treturn Pointer(self.lval, self.index + i)\n\n";
-            out << "\tdef __sub__(self, i):\n";
-            out << "\t\tassert isinstance(i, int)\n";
-            out << "\t\treturn Pointer(self.lval, self.index - i)\n\n";
-            out << "\tdef __iadd__(self, i):\n";
-            out << "\t\tassert isinstance(i, int)\n";
-            out << "\t\tself.index += i\n\n";
-            out << "\tdef __isub__(self, i):\n";
-            out << "\t\tassert isinstance(i, int)\n";
-            out << "\t\tself.index -= i\n\n";
-            flag = 1;
-        }
-    }
+
 };
 
 class Reference
@@ -241,7 +217,8 @@ public:
     }
     virtual void printC (std::ostream &out) const{
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const{
+    virtual void printPy (std::stringstream &out, Py &myPy) const{
+        myPy.flag = 1;
         myPy.references.push_back(var);
         out << var;
     }
@@ -262,7 +239,8 @@ public:
     }
     virtual void printC (std::ostream &out) const{
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const{
+    virtual void printPy (std::stringstream &out, Py &myPy) const{
+        myPy.flag = 1;
         out << "\tdef _";
         Ref->printPy(out, myPy);
         out << "_ref_fn(*_set):\n";
@@ -282,34 +260,6 @@ public:
         out << "_ref_fn)\n";
     }
     
-    void printPoint(std::ostream &out, int &flag) const{
-        if(flag == 0){
-            out << "class Pointer:\n";
-            out << "\tdef __init__(self, lval, index = 0):\n";
-            out << "\t\tself.lval = lval\n";
-            out << "\t\tself.index = index\n\n";
-            out << "\tdef deref(self, *_set):\n";
-            out << "\t\tif isinstance(self.lval, list):\n";
-            out << "\t\t\tif len(_set) > 0:\n";
-            out << "\t\t\t\tself.lval[self.index] = _set[0]\n";
-            out << "\t\t\treturn self.lval[self.index]\n";
-            out << "\t\treturn self.lval(*_set)\n\n";
-            out << "\tdef __add__(self, i):\n";
-            out << "\t\tassert isinstance(i, int)\n";
-            out << "\t\treturn Pointer(self.lval, self.index + i)\n\n";
-            out << "\tdef __sub__(self, i):\n";
-            out << "\t\tassert isinstance(i, int)\n";
-            out << "\t\treturn Pointer(self.lval, self.index - i)\n\n";
-            out << "\tdef __iadd__(self, i):\n";
-            out << "\t\tassert isinstance(i, int)\n";
-            out << "\t\tself.index += i\n\n";
-            out << "\tdef __isub__(self, i):\n";
-            out << "\t\tassert isinstance(i, int)\n";
-            out << "\t\tself.index -= i\n\n";
-            flag = 1;
-        }
-        
-    }
 };
 
 class DecPoint
@@ -325,7 +275,8 @@ public:
     }
     virtual void printC (std::ostream &out) const{
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const{
+    virtual void printPy (std::stringstream &out, Py &myPy) const{
+        myPy.flag = 1;
         for(int j = myPy.indent; j > 0; j--){
                 out << "\t";
         }
@@ -333,33 +284,6 @@ public:
         var->printPy(out, myPy);
     }
     
-    void printPoint(std::ostream &out, int &flag) const{
-        if(flag == 0){
-            out << "class Pointer:\n";
-            out << "\tdef __init__(self, lval, index = 0):\n";
-            out << "\t\tself.lval = lval\n";
-            out << "\t\tself.index = index\n\n";
-            out << "\tdef deref(self, *_set):\n";
-            out << "\t\tif isinstance(self.lval, list):\n";
-            out << "\t\t\tif len(_set) > 0:\n";
-            out << "\t\t\t\tself.lval[self.index] = _set[0]\n";
-            out << "\t\t\treturn self.lval[self.index]\n";
-            out << "\t\treturn self.lval(*_set)\n\n";
-            out << "\tdef __add__(self, i):\n";
-            out << "\t\tassert isinstance(i, int)\n";
-            out << "\t\treturn Pointer(self.lval, self.index + i)\n\n";
-            out << "\tdef __sub__(self, i):\n";
-            out << "\t\tassert isinstance(i, int)\n";
-            out << "\t\treturn Pointer(self.lval, self.index - i)\n\n";
-            out << "\tdef __iadd__(self, i):\n";
-            out << "\t\tassert isinstance(i, int)\n";
-            out << "\t\tself.index += i\n\n";
-            out << "\tdef __isub__(self, i):\n";
-            out << "\t\tassert isinstance(i, int)\n";
-            out << "\t\tself.index -= i\n\n";
-            flag = 1;
-        }
-    }
 };
 
 class PArg
@@ -376,7 +300,7 @@ public:
     }
     virtual void printC (std::ostream &out) const{
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const{
+    virtual void printPy (std::stringstream &out, Py &myPy) const{
         if(nextVar!=NULL){
             nextVar->printPy(out, myPy);
             out << ", ";
@@ -385,33 +309,6 @@ public:
         var->printPy(out, myPy);
     }
 
-    void printPoint(std::ostream &out, int &flag) const{
-        if(flag == 0){
-            out << "class Pointer:\n";
-            out << "\tdef __init__(self, lval, index = 0):\n";
-            out << "\t\tself.lval = lval\n";
-            out << "\t\tself.index = index\n\n";
-            out << "\tdef deref(self, *_set):\n";
-            out << "\t\tif isinstance(self.lval, list):\n";
-            out << "\t\t\tif len(_set) > 0:\n";
-            out << "\t\t\t\tself.lval[self.index] = _set[0]\n";
-            out << "\t\t\treturn self.lval[self.index]\n";
-            out << "\t\treturn self.lval(*_set)\n\n";
-            out << "\tdef __add__(self, i):\n";
-            out << "\t\tassert isinstance(i, int)\n";
-            out << "\t\treturn Pointer(self.lval, self.index + i)\n\n";
-            out << "\tdef __sub__(self, i):\n";
-            out << "\t\tassert isinstance(i, int)\n";
-            out << "\t\treturn Pointer(self.lval, self.index - i)\n\n";
-            out << "\tdef __iadd__(self, i):\n";
-            out << "\t\tassert isinstance(i, int)\n";
-            out << "\t\tself.index += i\n\n";
-            out << "\tdef __isub__(self, i):\n";
-            out << "\t\tassert isinstance(i, int)\n";
-            out << "\t\tself.index -= i\n\n";
-            flag = 1;
-        }
-    }
 };
 
 class AssignPoint
@@ -428,7 +325,8 @@ public:
     }
     virtual void printC (std::ostream &out) const{
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const{
+    virtual void printPy (std::stringstream &out, Py &myPy) const{
+        myPy.flag = 1;
         for(int j = myPy.indent; j > 0; j--){
                 out << "\t";
         }
@@ -440,34 +338,6 @@ public:
         out << ")";
     }
     
-    void printPoint(std::ostream &out, int &flag) const{
-        if(flag == 0){
-            out << "class Pointer:\n";
-            out << "\tdef __init__(self, lval, index = 0):\n";
-            out << "\t\tself.lval = lval\n";
-            out << "\t\tself.index = index\n\n";
-            out << "\tdef deref(self, *_set):\n";
-            out << "\t\tif isinstance(self.lval, list):\n";
-            out << "\t\t\tif len(_set) > 0:\n";
-            out << "\t\t\t\tself.lval[self.index] = _set[0]\n";
-            out << "\t\t\treturn self.lval[self.index]\n";
-            out << "\t\treturn self.lval(*_set)\n\n";
-            out << "\tdef __add__(self, i):\n";
-            out << "\t\tassert isinstance(i, int)\n";
-            out << "\t\treturn Pointer(self.lval, self.index + i)\n\n";
-            out << "\tdef __sub__(self, i):\n";
-            out << "\t\tassert isinstance(i, int)\n";
-            out << "\t\treturn Pointer(self.lval, self.index - i)\n\n";
-            out << "\tdef __iadd__(self, i):\n";
-            out << "\t\tassert isinstance(i, int)\n";
-            out << "\t\tself.index += i\n\n";
-            out << "\tdef __isub__(self, i):\n";
-            out << "\t\tassert isinstance(i, int)\n";
-            out << "\t\tself.index -= i\n\n";
-            flag = 1;
-        }
-        
-    }
 };
 
 class PReturn
@@ -483,7 +353,8 @@ public:
     }
     virtual void printC (std::ostream &out) const{
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const{
+    virtual void printPy (std::stringstream &out, Py &myPy) const{
+        myPy.flag = 1;
         for(int j = myPy.indent; j > 0; j--){
                 out << "\t";
         }

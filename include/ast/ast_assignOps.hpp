@@ -2,6 +2,7 @@
 #define H_ASSIGNOPS
 
 #include <iostream>
+#include <sstream>
 #include <string>
 #include "ast_base.hpp"
 
@@ -21,7 +22,7 @@ public:
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const = 0;
     virtual void printC (std::ostream &out) const = 0;
-    virtual void printPy (std::ostream &out, Py &myPy) const = 0;
+    virtual void printPy (std::stringstream &out, Py &myPy) const = 0;
 };
 
 class AssignEqualOperator
@@ -58,7 +59,7 @@ public:
         out << " = ";
         val->printC(out);
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const override{
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
         out << variable;
         out << " = ";
         val->printPy(out, myPy);
@@ -100,7 +101,7 @@ public:
         out << "[" << index << "]=";
         val->printC(out);
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const override{
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
         out << variable;
         out << "[";
         index->printPy(out, myPy);
@@ -156,7 +157,7 @@ public:
         out << " += ";
         val->printC(out);
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const override{
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
         out << variable;
         out << " += ";
         val->printPy(out, myPy);
@@ -215,7 +216,7 @@ public:
         out << "[" << index << "]+=";
         val->printC(out);
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const override{
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
         out << variable;
         out << "[";
         index->printPy(out, myPy);
@@ -271,7 +272,7 @@ public:
         out << " -= ";
         val->printC(out);
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const override{
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
         out << variable;
         out << " -= ";
         val->printPy(out, myPy);
@@ -332,7 +333,7 @@ public:
         out << "]-=";
         val->printC(out);
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const override{
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
         out << variable;
         out << "[" ;
         index->printPy(out, myPy);
@@ -384,7 +385,7 @@ public:
         out << "++" << variable;
 
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const override{
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
         out << "++" << variable;
     }
 };
@@ -408,7 +409,7 @@ public:
         //out << "++" << variable << "[" << index << "]" << std::endl;
 
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const override{
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
         out << "++" << variable << "[";
         index->printPy(out, myPy);
         out << "]" << std::endl;
@@ -457,7 +458,7 @@ public:
     virtual void printC (std::ostream &out) const override{
         out << "--" << variable;
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const override{
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
         out << "--" << variable;
     }
 };
@@ -481,7 +482,7 @@ public:
         //out << "--" << variable << "[" << index << "]" << std::endl;
 
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const override{
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
         out << "--" << variable << "[";
         index->printPy(out, myPy);
         out << "]" << std::endl;
@@ -530,7 +531,7 @@ public:
     virtual void printC (std::ostream &out) const override{
         out << variable << "++";
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const override{
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
         out << variable << "++";
     }
 };
@@ -554,7 +555,7 @@ public:
         //out << variable << "[" << index << "]++" << std::endl;
 
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const override{
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
         out << variable << "[";
         index->printPy(out, myPy);
         out << "]++" << std::endl;
@@ -603,7 +604,7 @@ public:
     virtual void printC (std::ostream &out) const override{
         out << variable << "--";
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const override{
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
         out << variable << "--";
     }
 };
@@ -627,7 +628,7 @@ public:
         //out << variable << "[" << index << "]--" << std::endl;
 
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const override{
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
         out << variable << "[";
         index->printPy(out, myPy);
         out << "]--" << std::endl;
@@ -649,7 +650,7 @@ public:
     virtual void printC (std::ostream &out) const override{
 
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const override{
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
         out << " = ";
         expr->printPy(out, myPy);
     }

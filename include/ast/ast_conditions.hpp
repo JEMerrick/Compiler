@@ -2,6 +2,7 @@
 #define H_CONDITIONS
 
 #include <iostream>
+#include <sstream>
 
 #include "ast_base.hpp"
 
@@ -27,7 +28,7 @@ public:
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const = 0;
     virtual void printC (std::ostream &out) const = 0;
-    virtual void printPy (std::ostream &out, Py &myPy) const = 0;
+    virtual void printPy (std::stringstream &out, Py &myPy) const = 0;
 };
 
 class If
@@ -56,7 +57,7 @@ public:
         branch->printC(out);
         out << " }";
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const override{
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
         for(int i = myPy.indent; i > 0; i--){
           out << "\t";
         }
@@ -102,7 +103,7 @@ public:
         out << std::endl;
         out << "}";
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const override{
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
         for(int i = myPy.indent; i > 0; i--){
           out << "\t";
         }
@@ -141,7 +142,7 @@ public:
         branch->printC(out);
         out << " }";*/
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const override{
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
         myPy.switchVar.push_back(condition);
         branch->printPy(out, myPy);
     }
@@ -173,7 +174,7 @@ public:
         branch->printC(out);
         out << " }";*/
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const override{
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
         for(int i = myPy.indent; i > 0; i--){
           out << "\t";
         }

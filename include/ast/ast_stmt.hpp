@@ -1,6 +1,7 @@
 //TODO: BREAK, CONTINUE, RETURN, EXPGRESSION STMT, DECLARE STMT,
 #include <string>
 #include <iostream>
+#include <sstream>
 
 #include "ast_base.hpp"
 
@@ -34,7 +35,7 @@ public:
         expr->printC(out);
         out << ";";
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const override{
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
         myPy.globalv.push_back(id);
         out << id;
         if(expr != NULL){
@@ -63,7 +64,7 @@ public:
     }
     virtual void printC (std::ostream &out) const override{}
 
-    virtual void printPy (std::ostream &out, Py &myPy) const override{
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
         myPy.globalv.push_back(id);
         for(int i = myPy.indent; i > 0; i--){
             out << "\t";
@@ -94,7 +95,7 @@ public:
     virtual void printC (std::ostream &out) const override{
         out << ";";
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const override{
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
         for(int i = myPy.indent; i > 0; i--){
             out << "\t";
         }
@@ -121,7 +122,7 @@ public:
         expr->printC(out);
         out << ";";
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const override{
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
         for(int i = myPy.indent; i > 0; i--){
             out << "\t";
         }
@@ -149,7 +150,7 @@ public:
         retval->printC(out);
         out << ";";
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const override{
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
         for(int i = myPy.indent; i > 0; i--){
             out << "\t";
         }
@@ -179,7 +180,7 @@ public:
         list->printC(out);
         out << ";";
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const override{
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
         list->printPy(out, myPy);
     }
 };
@@ -213,7 +214,7 @@ public:
         expr->printC(out);
         out << ";";
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const override{
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
         for(int i = myPy.indent; i > 0; i--){
             out << "\t";
         }
@@ -243,7 +244,7 @@ public:
     }
     virtual void printC (std::ostream &out) const override{}
 
-    virtual void printPy (std::ostream &out, Py &myPy) const override{
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
         for(int i = myPy.indent; i > 0; i--){
             out << "\t";
         }
@@ -275,7 +276,7 @@ public:
     virtual void printC (std::ostream &out) const override{
 
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const override{
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
         for(int i = myPy.indent; i > 0; i--){
             out << "\t";
         }

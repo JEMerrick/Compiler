@@ -3,6 +3,7 @@
 
 #include <string>
 #include <iostream>
+#include <sstream>
 #include <math.h>
 
 #include "ast_base.hpp"
@@ -28,7 +29,7 @@ public:
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const = 0;
     virtual void printC (std::ostream &out) const = 0;
-    virtual void printPy (std::ostream &out, Py &myPy) const = 0;
+    virtual void printPy (std::stringstream &out, Py &myPy) const = 0;
 };
 
 class AddOperator
@@ -59,7 +60,7 @@ public:
         right->printC(out);
         out << " )";
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const override{
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
         left->printPy(out, myPy);
         out << " + ";
         right->printPy(out, myPy);
@@ -90,7 +91,7 @@ public:
         right->printC(out);
         out << " )";
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const override{
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
         left->printPy(out, myPy);
         out << " - ";
         right->printPy(out, myPy);
@@ -122,7 +123,7 @@ public:
         right->printC(out);
         out << " )";
       }
-    virtual void printPy (std::ostream &out, Py &myPy) const override{
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
         left->printPy(out, myPy);
         out << " * ";
         right->printPy(out, myPy);
@@ -154,7 +155,7 @@ public:
         right->printC(out);
         out << " )";
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const override{
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
         left->printPy(out, myPy);
         out << " / ";
         right->printPy(out, myPy);
@@ -187,7 +188,7 @@ public:
         right->printC(out);
         out << " )";
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const override{
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
         left->printPy(out, myPy);
         out << " % ";
         right->printPy(out, myPy);
@@ -207,7 +208,7 @@ public:
     virtual void printC (std::ostream &out) const override{
 
     }
-    virtual void printPy (std::ostream &out, Py &myPy) const override{
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
         left->printPy(out, myPy);
         out << ".";
         right->printPy(out, myPy);

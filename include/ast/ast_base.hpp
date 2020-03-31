@@ -3,6 +3,7 @@
 
 #include <string>
 #include <iostream>
+#include <sstream>
 #include <map>
 #include <vector>
 
@@ -21,8 +22,7 @@ class Base {
         virtual ~Base(){}
         virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const = 0;
         virtual void printC (std::ostream &out) const = 0;
-        virtual void printPy (std::ostream &out, Py &myPy) const = 0;
-        void printPoint(std::ostream &out, int &flag) const{};
+        virtual void printPy (std::stringstream &out, Py &myPy) const = 0;
 };
 
 class Py {
@@ -33,14 +33,16 @@ class Py {
         std::vector<int> caseIndex;
         std::vector<std::string> pointers;
         std::vector<std::string> references;
+        int flag;
         
-        Py(): indent(0)
+        Py(): indent(0), flag(0)
         {
             //TODO:constructor
         }
         Py(Py &prevPy){
             //TODO:copy constructor
             indent = prevPy.indent;
+            flag = prevPy.flag;
         }
 
         ~Py(){
