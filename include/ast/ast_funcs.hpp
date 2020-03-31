@@ -34,6 +34,7 @@ public:
         out << "MOVE $fp, $sp" << std::endl;
         if(varList != NULL){
             varList->printMIPS(reg, out, help);
+            out << "exit varlist" << std::endl;
         }
         if(branch != NULL){
             std::string newdreg = "$" + std::to_string(help.findreg());
@@ -173,9 +174,7 @@ public:
         if(nextArg!= NULL){
             nextArg->printMIPS(reg, out, help);
         }
-
         out << "SW $" << std::to_string((help.parameters++)+4) << ", " << help.createlocal(id) << "($fp)" << std::endl;
-        out << "in ARG" << std::endl;
     }
     virtual void printC (std::ostream &out) const override{
         if(nextArg != NULL){
