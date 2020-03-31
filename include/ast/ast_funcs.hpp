@@ -168,9 +168,6 @@ public:
     }
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-        if(nextArg== NULL){
-            out << "LW $" << std::to_string((help.parameters)) << ", " << help.createlocal(id) << "($fp)" << std::endl;
-        }
         if(nextArg!= NULL){
             nextArg->printMIPS(reg, out, help);
         }
