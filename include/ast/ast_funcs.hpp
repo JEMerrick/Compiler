@@ -33,9 +33,8 @@ public:
         out << "SW $fp, 4($sp)" << std::endl;
         out << "MOVE $fp, $sp" << std::endl;
         if(varList != NULL){
-            out << "varlist" << '\n';
             varList->printMIPS(reg, out, help);
-            out << "varlist" << '\n';
+            out << "exit varlist" << std::endl;
         }
         if(branch != NULL){
             std::string newdreg = "$" + std::to_string(help.findreg());
@@ -172,7 +171,10 @@ public:
         if(nextArg!= NULL){
             nextArg->printMIPS(reg, out, help);
         }
-        out << "SW $1, " << help.createlocal(id) << "($fp)" << std::endl;
+        out << "SW $" << std::to_string((help.parameters++)+4) << ", " << help.createlocal(id) << "($fp)" << std::endl;
+        if(nextArg == NULL){
+            out << "LW $" << std::to_string((help.parameters)) << ", " << help.createlocal(id) << "($fp)" << std::endl;
+        }
     }
     virtual void printC (std::ostream &out) const override{
         if(nextArg != NULL){
@@ -211,10 +213,11 @@ public:
     }
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-        if(nextArg!= NULL){
-            nextArg->printMIPS(reg, out, help);
-        }
-        out << "SW $1, " << "($fp)" << std::endl;
+      if(nextArg!= NULL){
+          nextArg->printMIPS(reg, out, help);
+      }
+      //out << "SW $" << std::to_string((help.parameters++)+4) << help.createlocal(id) << "($fp)" << std::endl;
+      out << "in ARGCALL" << std::endl;
     }
     virtual void printC (std::ostream &out) const override{
         if(nextArg != NULL){
@@ -254,12 +257,14 @@ public:
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
         if(nextArg!= NULL){
+            out << "NEXTARGLIST" << '\n';
             nextArg->printMIPS(reg, out, help);
-            std::cout << "ARGLIST" << '\n';
             out << std::endl;
         }
         help.parameters++;
+        out << "ARGLIST" << '\n';
         arg->printMIPS(reg, out, help);
+        out << "ARGLIST" << '\n';
     }
     virtual void printC (std::ostream &out) const override{
         if(arg != NULL){

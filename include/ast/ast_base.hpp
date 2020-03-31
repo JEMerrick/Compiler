@@ -114,7 +114,7 @@ class MIPZ {
 
         int createlocal(std::string str){
           localVars[str] = frameptr;
-          frameptr -= 4;
+          frameptr += 4;
           return (frameptr + 4);
         }
 
