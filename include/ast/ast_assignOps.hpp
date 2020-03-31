@@ -365,20 +365,19 @@ public:
             throw "variable not declared.";
         }
 
-        out << "ADDI" << r1 << ", " << r1 << ", 1" << std::endl;
-        out << "ADDU" << reg << ", " << r1 << ", $0" << std::endl;
+        out << "ADDI " << r1 << ", " << r1 << ", 1" << std::endl;
+        out << "ADDU " << reg << ", " << r1 << ", $0" << std::endl;
 
         if(help.localexists(variable)){
             out << "SW " << r1 << ", " << help.findlocal(variable) << "($fp)" << std::endl;
         }
         else if(help.globalexists(variable)){
-
+            out << r1 << ", 0(" << address << ")" << std::endl;
+            help.regFlag[std::stoi(address.substr(1))] = 0;
         }
         else{
             throw "variable not declared.";
         }
-
-
         help.regFlag[std::stoi(r1.substr(1))] = 0;
     }
     virtual void printC (std::ostream &out) const override{
@@ -402,13 +401,8 @@ public:
         : AssignOp(_variable), index(_index)
     {}
 
-    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{/*
-        TODO sorry geroge gotta change this :/
-        std::string r1 = "$" + std::to_string(help.findreg());
-        std::string address;
-        if(help.localexists(variable)){
-            out << "LW " << r1 << ", " << help.findarrayelement(variable, index) << "($fp)" << std::endl;
-        }*/
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+        out << "array" << std::endl;
     }
     virtual void printC (std::ostream &out) const override{
         //out << "++" << variable << "[" << index << "]" << std::endl;
@@ -431,7 +425,34 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-        out << "assign" << std::endl;
+        std::string r1 = "$" + std::to_string(help.findreg());
+        if(help.localexists(variable)){
+            out << "LW " << r1 << ", " << help.findlocal(variable) << "($fp)" << std::endl;
+        }
+        std::string address = "$" + std::to_string(help.findreg());
+        if(help.globalexists(variable)){
+            out << "LUI" << address << ", %hi(" << variable << ")" << std::endl;
+            out << "ADDI" << address << ", " << address << ", %lo(" << variable << ")" << std::endl;
+            out << "LW" << r1 << ", 0(" << address << ")" << std::endl;
+        }
+        else{
+            throw "variable not declared.";
+        }
+
+        out << "ADDIU " << r1 << ", " << r1 << ", 1" << std::endl;
+        out << "ADDU " << reg << ", " << r1 << ", $0" << std::endl;
+
+        if(help.localexists(variable)){
+            out << "SW " << r1 << ", " << help.findlocal(variable) << "($fp)" << std::endl;
+        }
+        else if(help.globalexists(variable)){
+            out << r1 << ", 0(" << address << ")" << std::endl;
+            help.regFlag[std::stoi(address.substr(1))] = 0;
+        }
+        else{
+            throw "variable not declared.";
+        }
+        help.regFlag[std::stoi(r1.substr(1))] = 0;
     }
     virtual void printC (std::ostream &out) const override{
         out << "--" << variable;
@@ -454,7 +475,7 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-        out << "assign" << std::endl;
+        out << "array" << std::endl;
     }
     virtual void printC (std::ostream &out) const override{
         //out << "--" << variable << "[" << index << "]" << std::endl;
@@ -477,7 +498,34 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-        out << "assign" << std::endl;
+        std::string r1 = "$" + std::to_string(help.findreg());
+        if(help.localexists(variable)){
+            out << "LW " << r1 << ", " << help.findlocal(variable) << "($fp)" << std::endl;
+        }
+        std::string address = "$" + std::to_string(help.findreg());
+        if(help.globalexists(variable)){
+            out << "LUI" << address << ", %hi(" << variable << ")" << std::endl;
+            out << "ADDI" << address << ", " << address << ", %lo(" << variable << ")" << std::endl;
+            out << "LW" << r1 << ", 0(" << address << ")" << std::endl;
+        }
+        else{
+            throw "variable not declared.";
+        }
+
+        out << "ADDU " << reg << ", " << r1 << ", $0" << std::endl;
+        out << "ADDI " << r1 << ", " << r1 << ", 1" << std::endl;
+
+        if(help.localexists(variable)){
+            out << "SW " << r1 << ", " << help.findlocal(variable) << "($fp)" << std::endl;
+        }
+        else if(help.globalexists(variable)){
+            out << r1 << ", 0(" << address << ")" << std::endl;
+            help.regFlag[std::stoi(address.substr(1))] = 0;
+        }
+        else{
+            throw "variable not declared.";
+        }
+        help.regFlag[std::stoi(r1.substr(1))] = 0;
     }
     virtual void printC (std::ostream &out) const override{
         out << variable << "++";
@@ -500,7 +548,7 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-        out << "assign" << std::endl;
+        out << "array" << std::endl;
     }
     virtual void printC (std::ostream &out) const override{
         //out << variable << "[" << index << "]++" << std::endl;
@@ -523,7 +571,34 @@ public:
     {}
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-        out << "assign" << std::endl;
+        std::string r1 = "$" + std::to_string(help.findreg());
+        if(help.localexists(variable)){
+            out << "LW " << r1 << ", " << help.findlocal(variable) << "($fp)" << std::endl;
+        }
+        std::string address = "$" + std::to_string(help.findreg());
+        if(help.globalexists(variable)){
+            out << "LUI" << address << ", %hi(" << variable << ")" << std::endl;
+            out << "ADDI" << address << ", " << address << ", %lo(" << variable << ")" << std::endl;
+            out << "LW" << r1 << ", 0(" << address << ")" << std::endl;
+        }
+        else{
+            throw "variable not declared.";
+        }
+
+        out << "ADDU " << reg << ", " << r1 << ", $0" << std::endl;
+        out << "ADDIU " << r1 << ", " << r1 << ", -1" << std::endl;
+
+        if(help.localexists(variable)){
+            out << "SW " << r1 << ", " << help.findlocal(variable) << "($fp)" << std::endl;
+        }
+        else if(help.globalexists(variable)){
+            out << r1 << ", 0(" << address << ")" << std::endl;
+            help.regFlag[std::stoi(address.substr(1))] = 0;
+        }
+        else{
+            throw "variable not declared.";
+        }
+        help.regFlag[std::stoi(r1.substr(1))] = 0;
     }
     virtual void printC (std::ostream &out) const override{
         out << variable << "--";
