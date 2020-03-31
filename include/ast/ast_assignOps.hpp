@@ -276,6 +276,190 @@ public:
     }
 };
 
+class MultEqualOperator
+    : public AssignOp
+{
+protected:
+    BasePtr val;
+public:
+    MultEqualOperator(std::string &_variable, BasePtr _val)
+        : AssignOp(_variable), val(_val)
+    {}
+
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+        std::string r1 = "$" + std::to_string(help.findreg());
+        val->printMIPS(r1, out, help);
+        std::string r2 = "$" + std::to_string(help.findreg());
+        std::string r3 = "$" + std::to_string(help.findreg());
+
+        if(help.localexists(variable)){
+            out << "LW " << r2 << ", " << help.findlocal(variable) << "($fp)" << std::endl;
+        }
+        else if(help.globalexists(variable)){
+            out << "LUI " << r3 << ", %hi(" << variable << ")" << std::endl;
+            out << "ADDI " << r2 << ", " << r2 << ", %lo(" << variable << ")" << std::endl;
+            out << "LW " << r2 << ", 0(" << r3 << ")" << std::endl;
+        }
+        else{
+            throw "Variable not declared. ";
+        }
+        out << "MUL " << reg << ", " << r2 << ", " << r1 << std::endl;
+        if(help.localexists(variable)){
+            out << "SW " << r2 << ", " << help.findlocal(variable) << "($fp)" << std::endl;
+        }
+        else if(help.globalexists(variable)){
+            out << "SW " << r2 << ", 0(" << r3 << ")" << std::endl;
+            help.regFlag[std::stoi(r3.substr(1))] = 0;
+        }
+        else{
+            throw "Variable not declared. ";
+        }
+        help.regFlag[std::stoi(r1.substr(1))] = 0;
+        help.regFlag[std::stoi(r2.substr(1))] = 0;
+    }
+    virtual void printC (std::ostream &out) const override{
+        out << variable;
+        out << " *= ";
+        val->printC(out);
+    }
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
+        out << variable;
+        out << " *= ";
+        val->printPy(out, myPy);
+    }
+};
+
+class MultEqualArray
+    : public AssignOp
+{
+protected:
+    BasePtr val;
+    BasePtr index;
+public:
+    MultEqualArray(std::string &_variable, BasePtr _val, BasePtr _index)
+        : AssignOp(_variable), val(_val), index(_index)
+    {}
+
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+        std::string r1 = "$" + std::to_string(help.findreg());
+        val->printMIPS(r1, out, help);
+        std::string r2 = "$" + std::to_string(help.findreg());
+
+        out << "MUL " << reg << ", " << r2 << ", " << r1 << std::endl;
+
+        help.regFlag[std::stoi(r1.substr(1))] = 0;
+        help.regFlag[std::stoi(r2.substr(1))] = 0;
+    }
+    virtual void printC (std::ostream &out) const override{
+        out << variable;
+        out << "[";
+        index->printC(out);
+        out << "]*=";
+        val->printC(out);
+    }
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
+        out << variable;
+        out << "[" ;
+        index->printPy(out, myPy);
+        out << "]*=";
+        val->printPy(out, myPy);
+    }
+};
+
+class DivEqualOperator
+    : public AssignOp
+{
+protected:
+    BasePtr val;
+public:
+    DivEqualOperator(std::string &_variable, BasePtr _val)
+        : AssignOp(_variable), val(_val)
+    {}
+
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+        std::string r1 = "$" + std::to_string(help.findreg());
+        val->printMIPS(r1, out, help);
+        std::string r2 = "$" + std::to_string(help.findreg());
+        std::string r3 = "$" + std::to_string(help.findreg());
+
+        if(help.localexists(variable)){
+            out << "LW " << r2 << ", " << help.findlocal(variable) << "($fp)" << std::endl;
+        }
+        else if(help.globalexists(variable)){
+            out << "LUI " << r3 << ", %hi(" << variable << ")" << std::endl;
+            out << "ADDI " << r2 << ", " << r2 << ", %lo(" << variable << ")" << std::endl;
+            out << "LW " << r2 << ", 0(" << r3 << ")" << std::endl;
+        }
+        else{
+            throw "Variable not declared. ";
+        }
+        out << "DIV " << r2 << ", " << r1 << std::endl;
+        out << "MFLO " << r2 << std::endl;
+        out << "ADDU " << reg << ", $0, " << r2 << std::endl;
+        if(help.localexists(variable)){
+            out << "SW " << r2 << ", " << help.findlocal(variable) << "($fp)" << std::endl;
+        }
+        else if(help.globalexists(variable)){
+            out << "SW " << r2 << ", 0(" << r3 << ")" << std::endl;
+            help.regFlag[std::stoi(r3.substr(1))] = 0;
+        }
+        else{
+            throw "Variable not declared. ";
+        }
+        help.regFlag[std::stoi(r1.substr(1))] = 0;
+        help.regFlag[std::stoi(r2.substr(1))] = 0;
+    }
+    virtual void printC (std::ostream &out) const override{
+        out << variable;
+        out << " /= ";
+        val->printC(out);
+    }
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
+        out << variable;
+        out << " /= ";
+        val->printPy(out, myPy);
+    }
+};
+
+class MultEqualArray
+    : public AssignOp
+{
+protected:
+    BasePtr val;
+    BasePtr index;
+public:
+    MultEqualArray(std::string &_variable, BasePtr _val, BasePtr _index)
+        : AssignOp(_variable), val(_val), index(_index)
+    {}
+
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+        std::string r1 = "$" + std::to_string(help.findreg());
+        val->printMIPS(r1, out, help);
+        std::string r2 = "$" + std::to_string(help.findreg());
+
+        out << "DIV " << r2 << ", " << r1 << std::endl;
+        out << "MFLO " << r2 << std::endl;
+        out << "ADDU " << reg << ", $0, " << r2 << std::endl;
+
+        help.regFlag[std::stoi(r1.substr(1))] = 0;
+        help.regFlag[std::stoi(r2.substr(1))] = 0;
+    }
+    virtual void printC (std::ostream &out) const override{
+        out << variable;
+        out << "[";
+        index->printC(out);
+        out << "]/=";
+        val->printC(out);
+    }
+    virtual void printPy (std::stringstream &out, Py &myPy) const override{
+        out << variable;
+        out << "[" ;
+        index->printPy(out, myPy);
+        out << "]/=";
+        val->printPy(out, myPy);
+    }
+};
+
 class PreIncrement
     : public AssignOp
 {
