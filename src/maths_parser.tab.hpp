@@ -101,26 +101,29 @@ extern int yydebug;
     T_SUBEQUAL = 293,
     T_INCREM = 294,
     T_DECREM = 295,
-    T_WHILE = 296,
-    T_DO = 297,
-    T_IF = 298,
-    T_ELSE = 299,
-    T_FOR = 300,
-    T_BREAK = 301,
-    T_CONTINUE = 302,
-    T_SWITCH = 303,
-    T_CASE = 304,
-    T_DEFAULT = 305,
-    T_INT = 306,
-    T_VOID = 307,
-    T_CHAR = 308,
-    T_SHORT = 309,
-    T_LONG = 310,
-    T_FLOAT = 311,
-    T_DOUBLE = 312,
-    T_SIGNED = 313,
-    T_RETURN = 314,
-    T_STRUCT = 315
+    T_DIVEQUAL = 296,
+    T_MULEQUAL = 297,
+    T_MODEQUAL = 298,
+    T_WHILE = 299,
+    T_DO = 300,
+    T_IF = 301,
+    T_ELSE = 302,
+    T_FOR = 303,
+    T_BREAK = 304,
+    T_CONTINUE = 305,
+    T_SWITCH = 306,
+    T_CASE = 307,
+    T_DEFAULT = 308,
+    T_INT = 309,
+    T_VOID = 310,
+    T_CHAR = 311,
+    T_SHORT = 312,
+    T_LONG = 313,
+    T_FLOAT = 314,
+    T_DOUBLE = 315,
+    T_SIGNED = 316,
+    T_RETURN = 317,
+    T_STRUCT = 318
   };
 #endif
 
@@ -135,7 +138,7 @@ union YYSTYPE
   double number;
   std::string *string;
 
-#line 139 "src/maths_parser.tab.hpp" /* yacc.c:1909  */
+#line 142 "src/maths_parser.tab.hpp" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
