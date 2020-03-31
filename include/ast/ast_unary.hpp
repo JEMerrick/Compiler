@@ -38,7 +38,12 @@ public:
     {}
 
 
-    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{}
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+        std::string r1 = "$" + std::to_string(help.findreg());
+        expr->printMIPS(r1, out, help);
+        out << "SUBU " << reg << ", $0, " << r1 << std::endl;
+        help.regFlag[std::stoi(r1.substr(1))] = 0;
+    }
     virtual void printC (std::ostream &out) const override{
         out << "-";
         expr->printC(out);
@@ -60,7 +65,12 @@ public:
     {}
 
 
-    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{}
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+        std::string r1 = "$" + std::to_string(help.findreg());
+        expr->printMIPS(r1, out, help);
+        out << "ADDU " << reg << ", $0, " << r1 << std::endl;
+        help.regFlag[std::stoi(r1.substr(1))] = 0;
+    }
     virtual void printC (std::ostream &out) const override{
         out << "+";
         expr->printC(out);
@@ -85,7 +95,9 @@ public:
     {}
 
 
-    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{}
+    virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
+        
+    }
     virtual void printC (std::ostream &out) const override{
         out << "!";
         expr->printC(out);
