@@ -172,13 +172,14 @@ public:
     }
 
     virtual void printMIPS (std::string reg, std::ostream &out, MIPZ &help) const override{
-        if(nextArg == NULL){
-            help.createlocal(id);
-        }
+        // if(nextArg == NULL){
+        //     help.createlocal(id);
+        // }
         if(nextArg!= NULL){
             nextArg->printMIPS(reg, out, help);
         }
-        out << "SW $" << std::to_string((help.parameters++)+4) << ", " << (help.createlocal(id))-4 << "($fp)" << std::endl;
+        out << "SW $" << std::to_string((help.parameters++)+4) << ", " << (help.createlocal(id)) << "($fp)" << std::endl;
+        //out << "SW $" << std::to_string((help.parameters++)+4) << ", " << (help.createlocal(id))-4 << "($fp)" << std::endl;
     }
     virtual void printC (std::ostream &out) const override{
         if(nextArg != NULL){
